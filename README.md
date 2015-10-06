@@ -1,5 +1,9 @@
 # Interview App for Prime Academy
 
+A simple app for generating a schedule pairing Prime Academy students with interested companies. End results will resemble this but INTERNET-IFIED:
+
+![Whiteboard schedule](http://i.imgur.com/bgxBY3Z.jpg)
+
 ## Problem
 - Through mailchimp email anyone tagged as a recruiter to get them signed up for Mock Interviews.
 - Keeping track of who RSVP’d in a Google spreadsheet manually.
