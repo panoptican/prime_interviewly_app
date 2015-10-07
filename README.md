@@ -44,5 +44,5 @@ A simple app for generating a schedule pairing Prime Academy students with inter
 Prime Digital Academy Assignment  
 Team Programming Project  
 Team: [Matt Brown](https://github.com/brow1726), [Vas Leckas](https://github.com/vleckas), [Jason Spidle](https://github.com/panoptican), [Brendan Telzrow](https://github.com/PsychicCat)  
-Technologies: JavaScript   
+Technologies: JavaScript, Angular, Node.js, Exress.js, MongoDB, ReactiveX   
 Instructor: [Joseph Szczesniak](https://github.com/NukaPunk) and [Antoinette Smith](https://github.com/antauth)
