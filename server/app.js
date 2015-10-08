@@ -8,10 +8,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 // Node environment variables and configration
 var dotenv = require('dotenv').load();
 var config = require('./config/env/development');
+
+//MongoDB connection
+mongoose.connect('mongodb://localhost:27017/interviewly_dev');
 
 // server configration
 var port = process.env.PORT || config.port;
@@ -20,6 +24,9 @@ var port = process.env.PORT || config.port;
 var index = require('./routes/index');
 
 // require APIs
+var event = require('./routes/event');
+var interviewee = require('./routes/interviewee');
+var interviewer = require('./routes/interviewer');
 var users = require('./routes/users');
 
 // view engine setup
@@ -49,6 +56,9 @@ app.use('/', index);
 
 // use APIs
 app.use('/users', users);
+app.use('/event', event);
+app.use('/interviewee', interviewee);
+app.use('/interviewer', interviewer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
