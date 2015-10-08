@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var newSchema = new Schema({
+var Interviewer = new Schema({
+    title:{type: String, required: true},
     fName:{type: String, required:true},
     lName:{type: String, required: true},
     email:{type: String, required: true},
-    bio: {type: String, required: false}
+    company: {type: String, required: true}
 });
 
-var interviewerSchema = mongoose.model('interviewer', newSchema);
+var interviewerSchema = mongoose.model('interviewer', Interviewer);
 
 module.exports =  interviewerSchema;
