@@ -24,10 +24,8 @@ var port = process.env.PORT || config.port;
 var index = require('./routes/index');
 
 // require APIs
-var event = require('./routes/event');
-var interviewee = require('./routes/interviewee');
-var interviewer = require('./routes/interviewer');
-var users = require('./routes/users');
+var api = require('./routes/api');
+
 
 // view engine setup
 // TODO update gulpfile to compile Jade files
@@ -55,10 +53,8 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'assets')));
 app.use('/', index);
 
 // use APIs
-app.use('/users', users);
-app.use('/event', event);
-app.use('/interviewee', interviewee);
-app.use('/interviewer', interviewer);
+app.use('/api', api);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
