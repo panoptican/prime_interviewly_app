@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 var Event = require('../models/event');
+var Student = require('../models/student');
 
 
 /* GET users listing. */
@@ -30,8 +31,21 @@ router.post('/event', function(req, res, next){
     res.sendStatus(200);
 });
 
-router.get('/users', function(req, res, next) {
-    res.send('respond with a resource');
+router.post('/student', function(req, res, next) {
+    console.log(req.body);
+
+    var student = new Student({
+        fName: req.body.fName,
+        lName: req.body.lName,
+        cohort: req.body.cohort,
+        email: req.body.email
+    });
+    student.save(function(err){
+        if(err){
+            throw(err);
+        }
+    });
+    res.sendStatus(200);
 });
 
 router.get('/students', function(req, res, next) {

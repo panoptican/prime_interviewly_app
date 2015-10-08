@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var newSchema = new Schema({
+var Student = new Schema({
     fName: {type: String, required: true},
     lName: {type: String, required: true},
     cohort: {type: String, required: true},
@@ -9,6 +9,6 @@ var newSchema = new Schema({
     preferences: {type: Array}
 });
 
-var IntervieweeSchema = mongoose.model('interviewee', newSchema);
+var studentSchema = mongoose.model('student', Student);
 
-module.exports =  IntervieweeSchema;
+module.exports =  studentSchema;
