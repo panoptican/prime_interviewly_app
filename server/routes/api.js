@@ -1,5 +1,8 @@
+var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
+var Event = require('../models/event');
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -8,19 +11,23 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/event', function(req, res, next){
+    console.log(req.body);
     var event = new Event({
         name: req.body.name,
-        organizer:req.body.organizer,
-        location:req.body.location.,
-        description:req.body.description,
-        date:req.body.date,
-        startTime:req.body.startTime,
-        endTime:req.body.endTime,
-        interviewDuration:req.body.duration,
-        Students:req.body.student,
-        Interviewers:req.body.interviewer
-
-    })
+        organizer: req.body.organizer,
+        location: req.body.location,
+        description: req.body.description,
+        date: req.body.date,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        interviewDuration: req.body.duration
+    });
+    event.save(function(err){
+        if(err){
+            throw(err);
+        }
+    });
+    res.sendStatus(200);
 });
 
 router.get('/users', function(req, res, next) {

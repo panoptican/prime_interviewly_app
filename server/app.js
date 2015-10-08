@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 // Node environment variables and configration
-var dotenv = require('dotenv').load();
+//var dotenv = require('dotenv').load();
 var config = require('./config/env/development');
 
 //MongoDB connection
