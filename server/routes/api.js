@@ -4,6 +4,7 @@ var router = express.Router();
 var Event = require('../models/event');
 var Student = require('../models/student');
 var Interviewer = require('../models/interviewer');
+var User = require('../models/users');
 
 
 /* GET users listing. */
@@ -66,7 +67,18 @@ router.post('/interviewer', function(req, res, next) {
     res.sendStatus(200);
 });
 
-router.get('/user', function(req, res, next) {
-    res.send('respond with a resource');
+router.post('/users', function(req, res, next) {
+    console.log(req.body);
+    var user = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
+    });
+    user.save(function(err){
+        if(err){
+            throw(err);
+        }
+    });
+    res.sendStatus(200);
 });
 module.exports = router;
