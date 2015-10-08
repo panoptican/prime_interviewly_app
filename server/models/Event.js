@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var eventSchema = new Schema({
+var newSchema = new Schema({
     name:{type: String, required: true},
     organizer:{type: String, required: true},
     location:{type: String, required: true},
@@ -14,3 +14,7 @@ var eventSchema = new Schema({
     Interviewers:{type: Array}
 
 });
+
+var eventSchema = mongoose.model('event', newSchema);
+
+module.exports =  eventSchema;
