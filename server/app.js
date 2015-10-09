@@ -10,7 +10,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 // Node environment variables and configration
-var dotenv = require('dotenv').load();
+//var dotenv = require('dotenv').load();
 var config = require('./config/env/development');
 
 // server configration
