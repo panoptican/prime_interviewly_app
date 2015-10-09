@@ -73,11 +73,13 @@ router.post('/users', function(req, res, next) {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
+
     });
     user.save(function(err){
         if(err){
-            throw(err);
+            console.log(err);
         }
+
     });
     res.sendStatus(200);
 });
