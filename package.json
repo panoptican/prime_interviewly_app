@@ -54,6 +54,7 @@
     "jade": "~1.11.0",
     "mongoose": "^4.1.10",
     "morgan": "~1.6.1",
+    "rx": "^4.0.1",
     "serve-favicon": "~2.3.0"
   },
   "license": "MIT"
