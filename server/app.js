@@ -8,10 +8,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var expressJwt = require('express-jwt');
 
 // Node environment variables and configration
 //var dotenv = require('dotenv').load();
 var config = require('./config/env/development');
+
+//MongoDB connection
+mongoose.connect('mongodb://localhost:27017/interviewly_dev');
 
 // server configration
 var port = process.env.PORT || config.port;
