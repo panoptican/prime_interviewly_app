@@ -23,6 +23,7 @@ var port = process.env.PORT || config.port;
 
 // require routes
 var index = require('./routes/index');
+var authenticate = require('./routes/Authenticate');
 
 // require APIs
 var api = require('./routes/api');
@@ -30,11 +31,11 @@ var api = require('./routes/api');
 
 // view engine setup
 // TODO update gulpfile to compile Jade files
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'jade');
 
 // serve favicon
-app.use(favicon(path.join(__dirname, '..', 'client', 'favicon.png')));
+app.use(favicon(path.join(__dirname, '..','server','app', 'favicon.png')));
 
 // log stuff
 app.use(logger('dev'));
@@ -47,11 +48,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-app.use(express.static(path.join(__dirname, '..', 'client', 'assets')));
+app.use(express.static(path.join(__dirname, '..', 'app', 'client', 'assets')));
 
 
 // use routes
 app.use('/', index);
+app.use('/authenticate', authenticate);
 
 // use APIs
 app.use('/api', api);
