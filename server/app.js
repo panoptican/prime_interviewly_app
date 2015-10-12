@@ -13,10 +13,10 @@ var expressJwt = require('express-jwt');
 
 // FOR TESTING: serve node package directories
 // TODO remove testing service before launch
-app.use('/assets/vendor',express.static(__dirname + '/node_modules/angular/'));
-app.use('/assets/vendor',express.static(__dirname + '/node_modules/angular-animate/'));
-app.use('/assets/vendor',express.static(__dirname + '/node_modules/angular-aria/'));
-app.use('/assets/vendor',express.static(__dirname + '/node_modules/angular-material/'));
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular')));
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-animate')));
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-aria')));
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-material')));
 
 // Node environment variables and configration
 //var dotenv = require('dotenv').load();
@@ -53,7 +53,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-app.use(express.static(path.join(__dirname, '..', 'server', 'assets')));
+app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 
 // use routes
 app.use('/', index);
