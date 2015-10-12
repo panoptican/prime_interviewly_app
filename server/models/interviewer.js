@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
 var Interviewer = new Schema({
     title:{type: String, required: true},
     fName:{type: String, required:true},

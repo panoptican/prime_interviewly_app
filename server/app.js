@@ -11,6 +11,13 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var expressJwt = require('express-jwt');
 
+// FOR TESTING: serve node package directories
+// TODO remove testing service before launch
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular')));
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-animate')));
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-aria')));
+app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-material')));
+
 // Node environment variables and configration
 //var dotenv = require('dotenv').load();
 var config = require('./config/env/development');
@@ -28,14 +35,14 @@ var authenticate = require('./routes/Authenticate');
 // require APIs
 var api = require('./routes/api');
 
-
 // view engine setup
 // TODO update gulpfile to compile Jade files
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'jade');
 
 // serve favicon
-app.use(favicon(path.join(__dirname, '..','server','app', 'favicon.png')));
+
+app.use(favicon(path.join(__dirname, '..', 'server/app/assets', 'favicon.png')));
 
 // log stuff
 app.use(logger('dev'));
@@ -48,16 +55,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-app.use(express.static(path.join(__dirname, '..', 'app', 'client', 'assets')));
 
-
+app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 // use routes
 app.use('/', index);
 app.use('/authenticate', authenticate);
 
 // use APIs
 app.use('/api', api);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
