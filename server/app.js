@@ -9,14 +9,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var expressJwt = require('express-jwt');
-
-// FOR TESTING: serve node package directories
-// TODO remove testing service before launch
-app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular')));
-app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-animate')));
-app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-aria')));
-app.use('/assets/vendor',express.static(path.join(__dirname, '..', 'node_modules/angular-material')));
 
 // Node environment variables and configration
 //var dotenv = require('dotenv').load();
