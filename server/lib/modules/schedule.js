@@ -27,9 +27,18 @@ var scheduler = {
 
                     var cycler = (i + shifter) % students.length;
                     var student = currentStudents[cycler];
+                    var lastCompany;
 
-                    //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before
-                    if(interview.interviewerID == interviewers[i].id && interview.student == student.name && interview.unavailable['slot' + s] == undefined && student.scheduled.count.total < interviewMax && student.scheduled.with[interview.interviewerID] == undefined){
+                    //checks to see the last company that student interviewed with
+                    schedule.forEach(function(interview){
+                       if(interview.slot == s - 1 && interview.student == student.name){
+                           lastCompany = interview.company;
+                       }
+                        return lastCompany;
+                    });
+
+                    //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
+                    if(interview.interviewerID == interviewers[i].id && interview.student == student.name && interview.unavailable['slot' + s] == undefined && student.scheduled.count.total < interviewMax && student.scheduled.with[interview.interviewerID] == undefined && interview.company !== lastCompany){
 
                         //if student has no previous matches with this company, book interview
                         if(student.scheduled.count[interview.company] == undefined){
@@ -42,8 +51,19 @@ var scheduler = {
                             schedule.push(match);
                             return true;
                         }
-                        //if student has no breaks, schedule break
-                        else if(student.scheduled.count.break == undefined && interviewer.breaks < 1){
+                        //if last slot and student has s-3 number of interviews you must book an interview for this student
+                        else if(s == interviewSlots && student.scheduled.count.total == s-3){
+                            var match = interview;
+                            match.slot = s;
+                            currentStudents[cycler].scheduled.count.total = 1 + (student.scheduled.count.total || 0);
+                            student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
+                            student.scheduled.with[match.interviewerID] = true;
+                            combinations.splice(k, 1);
+                            schedule.push(match);
+                            return true;
+                        }
+                        //if student has no breaks AND interviewer has no breaks AND interviewer is not single
+                        else if(student.scheduled.count.break == undefined && interviewer.breaks < 1 && interviewer.single == false){
                             var match = {
                                 slot: s,
                                 name: interviewer.name,
