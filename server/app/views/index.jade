@@ -1,11 +1,4 @@
-doctype html
-html(lang="en")
-    head
-        title= title
-        meta(charset='UTF-8')
-        meta(name='viewport', content='width=device-width')
-        block css
-            link(rel='stylesheet', href='assets/css/styles.css')
-    body
-        block js
-            script(src='app.js')
+extends ./layout.jade
+block content
+    h1 This is the header
+    p This is the paragraph

@@ -33,7 +33,7 @@ app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'jade');
 
 // serve favicon
-app.use(favicon(path.join(__dirname, '..', 'client/app', 'favicon.png')));
+app.use(favicon(path.join(__dirname, '..', 'server/app/assets', 'favicon.png')));
 
 // log stuff
 app.use(logger('dev'));
@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-app.use(express.static(path.join(__dirname, '..', 'client', 'assets')));
+app.use(express.static(path.join(__dirname, '..', 'server', 'assets')));
 
 // use routes
 app.use('/', index);
