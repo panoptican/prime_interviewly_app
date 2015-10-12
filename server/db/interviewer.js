@@ -11,12 +11,33 @@ var Interviewer = {
         });
         callback(null, newInterviewer);
     },
-    find: function(callback){
-        InterviewerModel.find({}, function(err, response){
+    find: function(query, callback){
+        InterviewerModel.find(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
-                callback(null, response);
+                callback(null, doc);
+            }
+        });
+    },
+    delete: function(query, callback){
+        var conditions = query || {};
+        InterviewerModel.findOneAndRemove(conditions, function(err, doc){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                callback(null, doc);
+            }
+        });
+    },
+    update: function(query, body, callback){
+        InterviewerModel.findOneAndUpdate(query, body, {new: true}, function(err, doc){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                callback(null, doc);
             }
         })
     }

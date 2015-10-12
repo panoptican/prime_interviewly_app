@@ -3,8 +3,10 @@ var router = express.Router();
 var Interviewer = require('../db/interviewer');
 
 /* GET interviewers */
-router.get('/interviewer', function(req, res, next) {
-    Interviewer.find(function(err, data){
+router.get('/interviewers', function(req, res, next) {
+    var query = req.query || {};
+
+    Interviewer.find(query, function(err, data){
       if(err){
         console.log(err);
         next(err);
@@ -15,7 +17,7 @@ router.get('/interviewer', function(req, res, next) {
 });
 
 /* POST add new interviewer */
-router.post('/interviewer', function(req, res, next){
+router.post('/interviewers', function(req, res, next){
     Interviewer.add(req.body, function(err, data){
       if(err){
         console.log(err);
@@ -24,6 +26,36 @@ router.post('/interviewer', function(req, res, next){
         res.json(data);
       }
     })
+});
+
+/* DELETE interviewer */
+router.delete('/interviewers', function(req, res, next){
+  if(Object.keys(req.query).length > 0){
+    Interviewer.delete(req.query, function(err, data){
+      if(err){
+        console.log(err);
+        next(err);
+      } else {
+        res.send('Deleted interviewer ' + data._id);
+      }
+    })
+  } else {
+    res.send('Invalid request. Must specify interviewer ID.');
+  }
+});
+
+/* PUT update interviewer */
+router.put('/interviewers', function(req, res, next){
+  if(Object.keys(req.query).length > 0){
+    Interviewer.update(req.query, req.body, function(err, data){
+      if(err){
+        console.log(err);
+        next(err);
+      } else {
+        res.send('Updated interviewer ' + data._id);
+      }
+    })
+  }
 });
 
 module.exports = router;
