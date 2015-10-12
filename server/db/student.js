@@ -1,18 +1,18 @@
-var InterviewerModel = require('../models/interviewer');
+var StudentModel = require('../models/student');
 
-var Interviewer = {
+var Student = {
     add: function(body, callback){
-        var newInterviewer = new InterviewerModel(body);
-        //save interviewer in database
-        newInterviewer.save(function(err){
+        var newStudent = new StudentModel(body);
+        //save student in database
+        newStudent.save(function(err){
             if(err){
                 console.log(err);
             }
         });
-        callback(null, newInterviewer);
+        callback(null, newStudent);
     },
     find: function(query, callback){
-        InterviewerModel.find(query, function(err, doc){
+        StudentModel.find(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
@@ -22,7 +22,7 @@ var Interviewer = {
     },
     delete: function(query, callback){
         var conditions = query || {};
-        InterviewerModel.findOneAndRemove(conditions, function(err, doc){
+        StudentModel.findOneAndRemove(conditions, function(err, doc){
             if(err){
                 console.log(err);
                 next(err);
@@ -31,9 +31,9 @@ var Interviewer = {
             }
         });
     },
-    update: function(query, body, callback){
-        InterviewerModel.findOneAndUpdate(query, body, {new: true}, function(err, doc){
-            if(err){
+    update: function(query, body, callback) {
+        StudentModel.findOneAndUpdate(query, body, {new: true}, function (err, doc) {
+            if (err) {
                 console.log(err);
                 next(err);
             } else {
@@ -43,4 +43,4 @@ var Interviewer = {
     }
 };
 
-module.exports = Interviewer;
+module.exports = Student;
