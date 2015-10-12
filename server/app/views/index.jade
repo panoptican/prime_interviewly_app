@@ -1,0 +1,18 @@
+extends layout
+block content
+    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3")
+        md-button(href="/home") Interviewly
+        span(flex)
+        .menu(layout-align="center center" ng-controller="menu")
+            md-menu
+                md-button(ng-click="ctrl.openMenu($mdOpenMenu, $event)") menu
+                md-menu-content
+                    md-menu-item
+                        md-button logout
+                    md-menu-item
+                        md-button archived
+                    md-menu-item
+                        md-button account
+    .views(ng-view="")
+
+
