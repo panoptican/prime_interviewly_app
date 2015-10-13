@@ -39,7 +39,6 @@ router.get('/test', function(req, res, next){
     {name: "name", company: "Horizontal Integration", scheduled: {}, unavailable: {}, id: 6, breaks: 0},
     {name: "Joel", company: "BI", scheduled: {}, unavailable: {}, id: 7, breaks: 0},
     {name: "Terrie", company: "BI", scheduled: {}, unavailable: {}, id: 8, breaks: 0},
-    {name: "name", company: "ESP.IT", scheduled: {}, unavailable: {}, id: 9, breaks: 0},
     {name: "Ashley", company: "Digital People", scheduled: {}, unavailable: {}, id: 10, breaks: 0},
     {name: "Katie", company: "Digital People", scheduled: {}, unavailable: {}, id: 11, breaks: 0},
     {name: "Erin", company: "Digital People", scheduled: {}, unavailable: {}, id: 12, breaks: 0},
