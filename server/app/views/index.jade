@@ -5,6 +5,9 @@ block content
         md-button(href="/events") Events
         md-button(href="/students") Students
         md-button(href="/interviewers") Interviewers
+        md-button(ng-controller="student" ng-click="openStudents($event)") Student
+        md-button Interviewer
+        md-button file Upload
         span(flex)
         .menu(layout-align="center center")
             md-menu(cascade="true" direction="'down'")
