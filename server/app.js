@@ -23,6 +23,7 @@ var port = process.env.PORT || config.port;
 
 // require routes
 var index = require('./routes/index');
+var authenticate = require('./routes/Authenticate');
 
 // require APIs
 var api = require('./routes/api');
@@ -33,6 +34,7 @@ app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'jade');
 
 // serve favicon
+
 app.use(favicon(path.join(__dirname, '..', 'server/app/assets', 'favicon.png')));
 
 // log stuff
@@ -46,10 +48,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 
+app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 // use routes
 app.use('/', index);
+app.use('/authenticate', authenticate);
 
 // use APIs
 app.use('/api', api);
