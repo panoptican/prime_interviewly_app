@@ -22,7 +22,7 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
         console.log('hello');
         $mdDialog.show({
             controller: addStudent,
-            templateUrl: 'views/partials/studentDialogue.html',
+            templateUrl: 'views/partials/studentDialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -42,4 +42,28 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
         ]
     }
 
+}]);
+
+app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
+    $scope.openInterviewer = function(ev){
+        $mdDialog.show({
+            controller: addInterviewer,
+            templateUrl: 'views/partials/interviewerDialog.html',
+            parent: angular.element(document.body),
+            targerEvent: ev,
+            clickOutsideToClose: true
+        })
+    };
+    function addInterviewer($scope, $mdDialog){
+    $scope.cohorts = [
+        {name: 'Delta'},
+        {name: 'gamma'},
+        {name: 'Epsilon'}
+    ];
+    $scope.events = [
+        {name: 'mocks Delta'},
+        {name: 'career Delta'},
+        {name: 'mocks Epsilon'}
+    ]
+    }
 }]);

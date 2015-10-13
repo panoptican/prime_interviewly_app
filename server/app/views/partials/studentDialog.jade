@@ -1,0 +1,19 @@
+md-dialog.student(flex="40")
+        md-toolbar
+            p Add Students
+        form(name="studentForm" layout="row")
+        md-dialog-content(style:"min-width:500px;min-height:500px; ")
+            .inputs(layout="column")
+                md-input-container
+                    label Student Name
+                    input(ng-model="student.name" type="text")
+                md-input-container
+                    label Cohort
+                    input(ng-model="student.cohort" type="text")
+                md-input-container
+                    label Select Event
+                    md-select(ng-model="event")
+                        md-option(ng-repeat="event in events")
+                            p {{event.name}}
+            md-button Save
+            md-button Cancel
