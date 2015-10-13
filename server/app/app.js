@@ -16,3 +16,21 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             redirectTo: '/home'
         })
 }]);
+
+app.controller('student', ['$scope', '$mdDialog', function(){
+    $scope.openStudents = function(ev){
+
+    };
+
+
+    $scope.companies = [
+        { name: 'Prime' },
+        { name: 'Nerdery' },
+        { name: 'Digital People'}
+    ];
+    $scope.events = [
+        {name: 'mocks Delta'},
+        {name: 'career Delta'},
+        {name: 'mocks Epsilon'}
+    ]
+}]);
