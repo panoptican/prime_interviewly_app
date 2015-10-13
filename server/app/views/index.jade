@@ -3,16 +3,14 @@ block content
     md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3")
         md-button(href="/home") Interviewly
         span(flex)
-        .menu(layout-align="center center" ng-controller="menu")
-            md-menu
-                md-button(ng-click="ctrl.openMenu($mdOpenMenu, $event)") menu
-                md-menu-content
+        .menu(layout-align="center center")
+            md-menu(cascade="true" direction="'down'")
+                md-button(ng-click="$mdOpenMenu($event)") menu
+                md-menu-content(width="4")
                     md-menu-item
-                        md-button logout
+                        md-button ACCOUNT
                     md-menu-item
-                        md-button archived
+                        md-button ARCHIVED EVENTS
                     md-menu-item
-                        md-button account
+                        md-button LOGOUT
     .views(ng-view="")
-
-

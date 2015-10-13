@@ -16,11 +16,3 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             redirectTo: '/home'
         })
 }]);
-
-app.controller('menu', function($mdDialog){
-   var originatorEv;
-   this.openMenu = function($mdOpenMenu, ev){
-       originatorEv = ev;
-       $mdOpenMenu(ev);
-   }
-});
