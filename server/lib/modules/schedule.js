@@ -2,6 +2,20 @@ var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
 var scheduler = {
+    //returns true if count of all student interviews are equal
+    check: function(students, interviewTarget){
+        var counts = [];
+        students.forEach(function(student){
+            counts.push(student.scheduled.count.total);
+        });
+        console.log(counts);
+        for(var i = 0; i < counts.length; i++){
+            if(counts[i] !== interviewTarget){
+                return false;
+            }
+        }
+        return true;
+    },
     maxPossibleInterviews: function(interviewSlots, students, interviewers){
         var slotsUnavailable = 0;
         interviewers.forEach(function(interview){
@@ -9,15 +23,12 @@ var scheduler = {
         });
         return (interviewSlots * students.length) - slotsUnavailable;
     },
-    match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, callback){
+    match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax){
         var currentStudents = shuffle.get(students),
             interviewers = shuffle.get(interviewers),
             sortedCombinations = sort.high(combinations),
             schedule = [],
-            shifter = 0,
-            maxInterviewsPossible = scheduler.maxPossibleInterviews(interviewSlots, currentStudents, interviewers);
-            breaksNeeded = maxInterviewsPossible - (currentStudents.length * interviewMax);
-
+            shifter = 0;
 
         //iterate through interview slots
         for(var s = 1; s <= interviewSlots; s++){
@@ -39,6 +50,7 @@ var scheduler = {
 
                     //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
                     if(interview.interviewerID == interviewers[i].id && interview.student == student.name && interview.unavailable['slot' + s] == undefined && student.scheduled.count.total < interviewMax && student.scheduled.with[interview.interviewerID] == undefined && interview.company !== lastCompany){
+
                         var match = interview;
                         match.slot = s;
 
@@ -100,7 +112,9 @@ var scheduler = {
             });
             shifter++;
         }
-        var schedule = {schedule: schedule, students: students};
+        var check = scheduler.check(students, interviewMax);
+        console.log(check);
+        var schedule = {schedule: schedule, students: students, interviewer: interviewers};
         return schedule;
     }
 };
