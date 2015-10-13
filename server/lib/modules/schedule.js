@@ -2,6 +2,21 @@ var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
 var scheduler = {
+    //returns true if count of all student interviews are equal
+    check: function(students, interviewTarget){
+        var counts = [];
+        students.forEach(function(student){
+            counts.push(student.scheduled.count.total);
+        });
+        console.log(counts);
+        for(var i = 0; i < counts.length; i++){
+            if(counts[i] !== interviewTarget){
+                return false;
+            }
+        }
+        return true;
+    },
+    //calculates maximum possible interviews
     maxPossibleInterviews: function(interviewSlots, students, interviewers){
         var slotsUnavailable = 0;
         interviewers.forEach(function(interview){
@@ -9,15 +24,13 @@ var scheduler = {
         });
         return (interviewSlots * students.length) - slotsUnavailable;
     },
-    match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, callback){
+    //matches interviews
+    match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax){
         var currentStudents = shuffle.get(students),
             interviewers = shuffle.get(interviewers),
             sortedCombinations = sort.high(combinations),
             schedule = [],
-            shifter = 0,
-            maxInterviewsPossible = scheduler.maxPossibleInterviews(interviewSlots, currentStudents, interviewers);
-            breaksNeeded = maxInterviewsPossible - (currentStudents.length * interviewMax);
-
+            shifter = 0;
 
         //iterate through interview slots
         for(var s = 1; s <= interviewSlots; s++){
@@ -39,6 +52,7 @@ var scheduler = {
 
                     //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
                     if(interview.interviewerID == interviewers[i].id && interview.student == student.name && interview.unavailable['slot' + s] == undefined && student.scheduled.count.total < interviewMax && student.scheduled.with[interview.interviewerID] == undefined && interview.company !== lastCompany){
+
                         var match = interview;
                         match.slot = s;
 
@@ -47,7 +61,8 @@ var scheduler = {
                             currentStudents[cycler].scheduled.count.total = 1 + (student.scheduled.count.total || 0);
                             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
                             student.scheduled.with[match.interviewerID] = true;
-                            combinations.splice(k, 1);
+                            interviewer.scheduled['slot' + s] = student.name;
+                            sortedCombinations.splice(k, 1);
                             schedule.push(match);
                             return true;
                         }
@@ -56,7 +71,8 @@ var scheduler = {
                             currentStudents[cycler].scheduled.count.total = 1 + (student.scheduled.count.total || 0);
                             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
                             student.scheduled.with[match.interviewerID] = true;
-                            combinations.splice(k, 1);
+                            interviewer.scheduled['slot' + s] = student.name;
+                            sortedCombinations.splice(k, 1);
                             schedule.push(match);
                             return true;
                         }
@@ -70,6 +86,7 @@ var scheduler = {
                                 slot: s
                             };
                             student.scheduled.count.break = 1 + (student.scheduled.count.break || 0);
+                            interviewer.scheduled['slot' + s] = "Break";
                             interviewer.breaks += 1;
                             schedule.push(match);
                             return true;
@@ -79,7 +96,8 @@ var scheduler = {
                             currentStudents[cycler].scheduled.count.total = 1 + (student.scheduled.count.total || 0);
                             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
                             student.scheduled.with[match.interviewerID] = true;
-                            combinations.splice(k, 1);
+                            interviewer.scheduled['slot' + s] = student.name;
+                            sortedCombinations.splice(k, 1);
                             schedule.push(match);
                             return true;
                         }
@@ -100,8 +118,10 @@ var scheduler = {
             });
             shifter++;
         }
-        var schedule = {schedule: schedule, students: students};
-        return schedule;
+        //var check = scheduler.check(students, interviewMax);
+        //console.log(check);
+        var data = {schedule: schedule, students: students, interviewer: interviewers};
+        return data;
     }
 };
 
