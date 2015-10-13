@@ -1,11 +1,15 @@
 doctype html
-html(ng-app="app")
+html.no-js(ng-app="app")
     head
+        meta(charset="utf-8")
         title Interviewly
+        meta(name="description", content="width=device-width")
+        meta(name="viewport", content="initial-scale=1, maximum-scale=1")
+
         link(rel='stylesheet' href='assets/vendor/angular-material.min.css')
         link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic')
         base(href='/')
-        meta(name="viewport" content="width=device-width initial-scale=1.0")
+
         //Angular Material Dependencies
         script(src='assets/vendor/angular.min.js')
         script(src='assets/vendor/angular-route.min.js')
@@ -13,5 +17,7 @@ html(ng-app="app")
         script(src='assets/vendor/angular-aria.min.js')
         script(src='assets/vendor/angular-material.min.js')
         script(src='app.js')
+        script(src='views/partials/events/eventsCtrl.js')
+
     body(layout="column")
         block content
