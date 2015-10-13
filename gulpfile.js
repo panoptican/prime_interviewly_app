@@ -8,7 +8,8 @@ gulp.task('default', ['copy', 'jade'], function(){
 
 gulp.task('copy', function(){
     gulp.src(['node_modules/angular/angular.min.js','node_modules/angular-animate/angular-animate.min.js', 'node_modules/angular-aria/angular-aria.min.js',
-        'node_modules/angular-material/angular-material.min.js', 'node_modules/angular-material/angular-material.min.css', 'node_modules/angular-route/angular-route.min.js'])
+        'node_modules/angular-material/angular-material.min.js', 'node_modules/angular-material/angular-material.min.css', 'node_modules/angular-route/angular-route.min.js',
+    'node_modules/isteven-angular-multiselect/isteven-multi-select.js', 'node_modules/isteven-angular-multiselect/isteven-multi-select.css' ])
         .pipe(gulp.dest('server/app/assets/vendor'));
 });
 

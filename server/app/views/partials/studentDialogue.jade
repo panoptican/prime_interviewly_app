@@ -1,31 +1,23 @@
 .student
-    md-select
-        md-option(ng-repeat="event in events")
-    md-input-container
-        md-input(type="text")
-        md-input(type="text")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-select
-        md-option(ng-repeat="company in companies")
-    md-button Save to Event
-    p OR
-    md-input
-    md-button Upload
-    md-button Edit
-    md-button Cancel
-    md-button Save to Event
+    md-toolbar
+        p Add Students
+    md-content
+        form(name="studentForm")
+            md-input-container
+                label Student Name
+                input(ng-model="student.name" type="text")
+            md-input-container
+                label Cohort
+                input(ng-model="student.cohort" type="text")
+            md-input-container
+                label Select Event
+                md-select(ng-model="event")
+                    md-option(ng-repeat="event in events")
+                        p {{event.name}}
+            md-input-container
+                label Rankings
+                md-select(ng-model="comany")
+                        md-option(ng-repeat="company in companies")
+                            p {{company.name}}
+            md-button Save
+            md-button Cancel

@@ -22,26 +22,23 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog ){
         console.log('hello');
         $mdDialog.show({
             controller: addStudent,
-            templateUrl: './partials/studentDialogue.html',
+            templateUrl: 'views/partials/studentDialogue.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
         })
     };
+    function addStudent($scope, $mdDialog) {
+        $scope.companies = [
+            {name: 'Prime'},
+            {name: 'Nerdery'},
+            {name: 'Digital People'}
+        ];
+        $scope.events = [
+            {name: 'mocks Delta'},
+            {name: 'career Delta'},
+            {name: 'mocks Epsilon'}
+        ]
+    }
 
 }]);
-
-app.controller('addStudent', function(){
-
-
-    $scope.companies = [
-        { name: 'Prime' },
-        { name: 'Nerdery' },
-        { name: 'Digital People'}
-    ];
-    $scope.events = [
-        {name: 'mocks Delta'},
-        {name: 'career Delta'},
-        {name: 'mocks Epsilon'}
-    ]
-})
