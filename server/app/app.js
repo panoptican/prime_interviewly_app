@@ -17,10 +17,21 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         })
 }]);
 
-app.controller('student', ['$scope', '$mdDialog', function(){
+app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog ){
     $scope.openStudents = function(ev){
-
+        console.log('hello');
+        $mdDialog.show({
+            controller: addStudent,
+            templateUrl: './partials/studentDialogue.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        })
     };
+
+}]);
+
+app.controller('addStudent', function(){
 
 
     $scope.companies = [
@@ -33,4 +44,4 @@ app.controller('student', ['$scope', '$mdDialog', function(){
         {name: 'career Delta'},
         {name: 'mocks Epsilon'}
     ]
-}]);
+})
