@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute', 'isteven-multi-select']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
@@ -17,7 +17,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         })
 }]);
 
-app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog ){
+app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
         console.log('hello');
         $mdDialog.show({
@@ -34,6 +34,7 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog ){
             {name: 'Nerdery'},
             {name: 'Digital People'}
         ];
+        $scope.selections = [];
         $scope.events = [
             {name: 'mocks Delta'},
             {name: 'career Delta'},

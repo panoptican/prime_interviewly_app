@@ -1,7 +1,7 @@
 .student
     md-toolbar
         p Add Students
-    md-content
+    md-content(flex="33")
         form(name="studentForm")
             md-input-container
                 label Student Name
@@ -16,8 +16,11 @@
                         p {{event.name}}
             md-input-container
                 label Rankings
-                md-select(ng-model="comany")
-                        md-option(ng-repeat="company in companies")
-                            p {{company.name}}
+                isteven-multi-select(
+                input-model="companies"
+                output-model="selections"
+                button-label="name"
+                item-label="name"
+                tick-property="ticked")
             md-button Save
             md-button Cancel
