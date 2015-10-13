@@ -16,6 +16,7 @@ var scheduler = {
         }
         return true;
     },
+    //calculates maximum possible interviews
     maxPossibleInterviews: function(interviewSlots, students, interviewers){
         var slotsUnavailable = 0;
         interviewers.forEach(function(interview){
@@ -23,6 +24,7 @@ var scheduler = {
         });
         return (interviewSlots * students.length) - slotsUnavailable;
     },
+    //matches interviews
     match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax){
         var currentStudents = shuffle.get(students),
             interviewers = shuffle.get(interviewers),
@@ -59,7 +61,8 @@ var scheduler = {
                             currentStudents[cycler].scheduled.count.total = 1 + (student.scheduled.count.total || 0);
                             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
                             student.scheduled.with[match.interviewerID] = true;
-                            combinations.splice(k, 1);
+                            interviewer.scheduled['slot' + s] = student.name;
+                            sortedCombinations.splice(k, 1);
                             schedule.push(match);
                             return true;
                         }
@@ -68,7 +71,8 @@ var scheduler = {
                             currentStudents[cycler].scheduled.count.total = 1 + (student.scheduled.count.total || 0);
                             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
                             student.scheduled.with[match.interviewerID] = true;
-                            combinations.splice(k, 1);
+                            interviewer.scheduled['slot' + s] = student.name;
+                            sortedCombinations.splice(k, 1);
                             schedule.push(match);
                             return true;
                         }
@@ -82,6 +86,7 @@ var scheduler = {
                                 slot: s
                             };
                             student.scheduled.count.break = 1 + (student.scheduled.count.break || 0);
+                            interviewer.scheduled['slot' + s] = "Break";
                             interviewer.breaks += 1;
                             schedule.push(match);
                             return true;
@@ -91,7 +96,8 @@ var scheduler = {
                             currentStudents[cycler].scheduled.count.total = 1 + (student.scheduled.count.total || 0);
                             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
                             student.scheduled.with[match.interviewerID] = true;
-                            combinations.splice(k, 1);
+                            interviewer.scheduled['slot' + s] = student.name;
+                            sortedCombinations.splice(k, 1);
                             schedule.push(match);
                             return true;
                         }
@@ -112,10 +118,10 @@ var scheduler = {
             });
             shifter++;
         }
-        var check = scheduler.check(students, interviewMax);
-        console.log(check);
-        var schedule = {schedule: schedule, students: students, interviewer: interviewers};
-        return schedule;
+        //var check = scheduler.check(students, interviewMax);
+        //console.log(check);
+        var data = {schedule: schedule, students: students, interviewer: interviewers};
+        return data;
     }
 };
 
