@@ -1,9 +1,19 @@
 extends layout
 block content
-    md-toolbar.md-primary(layout="row" layout-align="center center" class="md-whiteframe-z3")
+    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3")
         md-button(href="/home") Interviewly
         md-button Student
         md-button Interviewer
         md-button file Upload
         span(flex)
-
+        .menu(layout-align="center center")
+            md-menu(cascade="true" direction="'down'")
+                md-button(ng-click="$mdOpenMenu($event)") menu
+                md-menu-content(width="4")
+                    md-menu-item
+                        md-button ACCOUNT
+                    md-menu-item
+                        md-button ARCHIVED EVENTS
+                    md-menu-item
+                        md-button LOGOUT
+    .views(ng-view="")
