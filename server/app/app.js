@@ -12,8 +12,29 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     when('/home', {
             templateUrl: 'views/partials/home.html'
         }).
+    when('/events', {
+        templateUrl: 'views/partials/events/events.html'
+    }).
+    when('/students', {
+            templateUrl: 'views/partials/students/students.html'
+    }).
+    when('/interviewers', {
+            templateUrl: 'views/partials/interviewers/interviewers.html'
+        }).
+
+    when('/archived-events', {
+            templateUrl: 'views/partials/archivedEvents/archivedEvents.html'
+        }).
+
+    when('/account', {
+            templateUrl: 'views/partials/account/account.html'
+        }).
+
+    when('/logout', {
+            templateUrl: 'views/partials/logout/logout.html'
+        }).
     otherwise({
-            redirectTo: '/home'
+            redirectTo: '/index'
         })
 }]);
 
