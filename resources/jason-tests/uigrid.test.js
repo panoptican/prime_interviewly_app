@@ -5,7 +5,6 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
     var gridDest = document.getElementById('grid-dest');
     var gridCols = [];
     var gridData = [];
-    var gridRows = [];
 
     $scope.gridOptions = {
         enableSorting: false,
@@ -21,19 +20,30 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
             .then(
                 function successCallback(response) {
                     console.log(response);
+                    gridCols = [];
+                    gridData = [];
                     response.data.interviewer.forEach(function(item, pos) {
-                        gridCols.push({name: item.company + ' / ' + item.name, field: item.company + '_' + pos});
-                        //item.scheduled.forEach(function(item, pos) {
-                        //  console.log(item);
-                        //})
+                        gridCols.push({name: item.company + ' / ' + item.name, field: item.company + '_' + pos, width:200, displayName: item.company});
                         var sched = item.scheduled;
                         var students = [];
-                        Object.getOwnPropertyNames(sched).forEach(function (item, pos, array) {
-                            students.push(sched[item]);
+                        Object.getOwnPropertyNames(sched).forEach(function (elem, index, array) {
+                            students.push({[item.company + '_' + pos]: sched[elem]});
                         });
-                        gridData.push({[item.company + '_' + pos]: students});
+                        gridData.push(students);
                     });
-                console.log(gridData);
+                gridData = _.unzip(gridData);
+                var gridArr = [];
+                gridData.forEach(function (item, pos) {
+                    var rowObj = {};
+                    item.forEach(function (elem, index) {
+                        _.extend(rowObj, elem);
+                    });
+                    gridArr.push(rowObj);
+                });
+                gridObj = {};
+                _.extend(gridObj, gridArr);
+                console.log(gridObj);
+                gridData = gridArr;
                 },
 
                 function errorCallback(response) {}
