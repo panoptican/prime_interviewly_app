@@ -1,16 +1,16 @@
 .formlay(layout="row" layout-margin="auto")
    span(flex="30")
    .md-whiteframe-z2(layout="column" flex="40" style="margin:50px 0; ")
-      form(name="login")
+      form(name="login" ng-controller="login")
          md-content(layout-padding)
             md-input-container
                label Name
-               input(ng-model="user.username" type="text")
+               input(ng-model="username" type="text")
             md-input-container
                label Password
-               input(ng-model="user.password" type="password")
+               input(ng-model="password" type="password")
             .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="submit()") Login
+               md-button.md-raised(ng-click="submit(username, password)") Login
                   span(flex)
                md-button.md-raised() Sign Up
    span(flex="30")
