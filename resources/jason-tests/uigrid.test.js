@@ -16,10 +16,6 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
                 gridCols.push(item.company);
             });
 
-            $scope.gridOptions = {
-                
-            }
-
         }, function errorCallback(response) {});
     }
 }]);
