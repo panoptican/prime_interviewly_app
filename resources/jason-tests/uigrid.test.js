@@ -31,7 +31,9 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
                         });
                         gridData.push(students);
                     });
+                console.log(gridData);
                 gridData = _.unzip(gridData);
+                console.log(gridData);
                 var gridArr = [];
                 gridData.forEach(function (item, pos) {
                     var rowObj = {};
@@ -42,7 +44,6 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
                 });
                 gridObj = {};
                 _.extend(gridObj, gridArr);
-                console.log(gridObj);
                 gridData = gridArr;
                 },
 
