@@ -93,12 +93,7 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
                 if(response.data.token){
                     $location.path('/home')
                 }else{
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content('Invalid Username or Password')
-                            .position(bottom)
-                            .hideDelay(3000)
-                    );
+                    $mdToast.showSimple(response.data.error)
                 }
 
             }
