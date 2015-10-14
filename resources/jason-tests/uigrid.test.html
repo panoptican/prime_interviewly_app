@@ -6,8 +6,8 @@
 <body>
     <div ng-controller="generateCtrl">
         <button ng-click="generate()">Generate</button>
-        <div class="grid-dest">
-            <div ui-grid="{data: gridOptions}" class="myGrid"></div>
+        <div id="grid-dest">
+            <div id="grid1" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
         </div>
     </div>
     <script src="bower_components/angular/angular.js" type="text/javascript"></script>
