@@ -12,6 +12,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     when('/home', {
             templateUrl: 'views/partials/home.html'
         }).
+    when('/forgot', {
+           templateUrl: 'views/partials/forgot.html'
+        }).
     otherwise({
             redirectTo: '/'
         })
@@ -85,6 +88,21 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 //
 //    }
 //}]);
+app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $http, $location){
+    $scope.send = function(email) {
+        $http.post('/forgot', {email: email}).then(function (response) {
+            if (response.status == 200) {
+                $location.path('/')
+            }
+        })
+    }
+}]);
+
+app.controller('forgot', ['$scope', '$location', function($scope, $location){
+    $scope.forgot = function(){
+        $location.path('/forgot');
+    }
+}]);
 
 app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($scope, $http, $location, $mdToast){
     $scope.submit = function(username, password){
