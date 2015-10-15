@@ -64,7 +64,7 @@
 }
 .ui-grid-contents-wrapper {
   position: relative;
-  height: 100%;
+  /*height: 100%;*/
   width: 100%;
 }
 .ui-grid-sr-only {
@@ -131,7 +131,7 @@
   position: relative;
   display: table;
   box-sizing: border-box;
-  height: 100%;
+  /*height: 100%;*/
 }
 .ui-grid-header-cell-row {
   display: table-row;
@@ -323,9 +323,9 @@ select.ui-grid-filter-select:hover {
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0px;
   -webkit-border-bottom-left-radius: 0px;
-  -webkit-border-top-left-radius: 0;
   -moz-border-radius-topright: 0;
-  -moz-border-radius-bottomright: 0px;
+    -webkit-border-top-left-radius: 0;
+    -moz-border-radius-bottomright: 0px;
   -moz-border-radius-bottomleft: 0px;
   -moz-border-radius-topleft: 0;
   border-top-right-radius: 0;
@@ -1964,6 +1964,6 @@ select[multiple].ui-grid-pager-row-count-picker select {
 /* '' */
 
 .schedGrid {
-    height: 90vh;
+    /*height: 90vh;*/
     width: 90vw;
 }
