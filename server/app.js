@@ -24,6 +24,7 @@ var port = process.env.PORT || config.port;
 // require routes
 var index = require('./routes/index');
 var authenticate = require('./routes/Authenticate');
+var test = require('./routes/test');
 
 // require APIs
 var api = require('./routes/api');
@@ -53,6 +54,7 @@ app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 // use routes
 app.use('/', index);
 app.use('/authenticate', authenticate);
+app.use('/test', test);
 
 // use APIs
 app.use('/api', api);

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit']);
+var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 
 app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
@@ -8,6 +8,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
     $scope.gridOptions = {
         enableSorting: false,
+        enableGridMenu: true,
         columnDefs: gridCols,
         data: gridData,
         onRegisterApi: function (gridApi) {
@@ -25,7 +26,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
             gridCols = [];
             gridData = [];
             response.data.interviewer.forEach(function(item, pos) {
-                gridCols.push({name: item.company + ' / ' + item.name, field: item.company + '_' + pos, width:150, displayName: item.company});
+                gridCols.push({name: item.company + ' / ' + item.name, field: item.company + '_' + pos, width:150, displayName: item.company + ' / ' + item.name});
                 var sched = item.scheduled;
                 var students = [];
                 Object.getOwnPropertyNames(sched).forEach(function (elem, index, array) {
@@ -33,7 +34,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
                 });
                 gridData.push(students);
             });
-            console.log(gridData);
+            console.log('Unsorted', gridData);
             gridData = _.unzip(gridData);
             console.log(gridData);
             var gridArr = [];
