@@ -24,6 +24,7 @@ var port = process.env.PORT || config.port;
 // require routes
 var index = require('./routes/index');
 var authenticate = require('./routes/Authenticate');
+var csvtojson = require('./routes/csvtojson');
 
 // require APIs
 var api = require('./routes/api');
@@ -48,11 +49,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-
 app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
+
 // use routes
 app.use('/', index);
 app.use('/authenticate', authenticate);
+app.use('/csvtojson', csvtojson);
+app.use('*', index);
 
 // use APIs
 app.use('/api', api);
