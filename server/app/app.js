@@ -2,8 +2,7 @@ var app = angular.module('app', ['ngMaterial', 'ngRoute']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
+        enabled: true
     });
     $routeProvider.
     when('/', {
@@ -15,7 +14,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     when('/forgot', {
            templateUrl: 'views/partials/forgot.html'
         }).
-    when('/reset', {
+    when('/:token', {
             templateUrl: 'views/partials/reset.html'
         }).
     otherwise({
@@ -111,6 +110,8 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
     $scope.submit = function(username, password){
         $http.post('/authenticate', {username: username, password: password}).then(function(response){
                 console.log(response);
+                localStorage.username = angular.toJson(response.data.user.username);
+                localStorage.token = angular.toJson(response.data.token);
                 if(response.data.token){
                     $location.path('/home')
                 }else{
@@ -123,6 +124,9 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
     }
 }]);
 
-app.controller('reset', ['$scope', '$http', function($scope, $http){
-
+app.controller('reset', ['$scope', '$routeParams', function($scope, $routeParams){
+    var self = this;
+    self.token = $routeParams.token;
+    console.log(self.token);
+    sessionStorage.userService = angular.toJson(self.token);
 }]);

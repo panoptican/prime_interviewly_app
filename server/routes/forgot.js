@@ -40,7 +40,7 @@ router.post('/', function(req, res, next){
                 to: {name: user.username, address: user.email},
                 from: 'Prime Digital Academy <nodemailertest123@gmail.com>',
                 subject: 'Password Reset',
-                text: 'http://'+req.headers.host+'/reset/'+token
+                text: 'http://'+req.headers.host+'/'+token
             };
             transporter.sendMail(mailOptions, function(err){
                 done(err, 'done')
