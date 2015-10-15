@@ -1,6 +1,27 @@
 var StudentModel = require('../models/student');
+var Converter = require('csvtojson').Converter;
+var converter = new Converter({});
+var fs = require('fs');
+var path = require('path');
 
 var Student = {
+    bulkImport: function(file, callback){
+        fs.createReadStream(file).pipe(converter);
+
+        converter.on("end_parsed", function(array){
+            array.forEach(function(student){
+                Student.add(student, function(err, student){
+                    if(err){
+                        console.log(err);
+                        next(err);
+                    } else {
+                        console.log('added ' + student.fName + " " + student.lName);
+                    }
+                });
+            });
+            callback(null, array);
+        });
+    },
     add: function(body, callback){
         var newStudent = new StudentModel(body);
         //save student in database
