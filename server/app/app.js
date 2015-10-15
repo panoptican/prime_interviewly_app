@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute', 'isteven-multi-select']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
@@ -32,6 +32,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 
     when('/logout', {
             templateUrl: 'views/partials/logout/logout.html'
+    when('/forgot', {
+           templateUrl: 'views/partials/forgot.html'
+        }).
+    when('/reset', {
+            templateUrl: 'views/partials/reset.html'
         }).
     otherwise({
             redirectTo: '/'
@@ -106,6 +111,21 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 //
 //    }
 //}]);
+app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $http, $location){
+    $scope.send = function(email) {
+        $http.post('/forgot', {email: email}).then(function (response) {
+            if (response.status == 200) {
+                $location.path('/')
+            }
+        })
+    }
+}]);
+
+app.controller('forgot', ['$scope', '$location', function($scope, $location){
+    $scope.forgot = function(){
+        $location.path('/forgot');
+    }
+}]);
 
 app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($scope, $http, $location, $mdToast){
     $scope.submit = function(username, password){
@@ -121,4 +141,8 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
 
         )
     }
+}]);
+
+app.controller('reset', ['$scope', '$http', function($scope, $http){
+
 }]);

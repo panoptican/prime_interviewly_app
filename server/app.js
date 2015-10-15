@@ -24,7 +24,12 @@ var port = process.env.PORT || config.port;
 // require routes
 var index = require('./routes/index');
 var authenticate = require('./routes/Authenticate');
+<<<<<<< HEAD
 var csvtojson = require('./routes/csvtojson');
+=======
+var forgot = require('./routes/forgot');
+//var reset = require('./routes/reset');
+>>>>>>> ce040de19665b6100a599b7ea007c09b6f968c81
 
 // require APIs
 var api = require('./routes/api');
@@ -55,6 +60,8 @@ app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 app.use('/', index);
 app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
+app.use('/forgot', forgot);
+//app.use('/reset', reset);
 app.use('*', index);
 
 // use APIs
