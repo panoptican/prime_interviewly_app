@@ -5,7 +5,7 @@ var express = require('express'),
     async = require('async'),
     User = require('../models/users');
 
-
+//need to add an exception for empty(required)
 router.post('/', function(req, res, next){
     async.waterfall([
         function(done){

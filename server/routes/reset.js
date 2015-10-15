@@ -9,9 +9,7 @@ router.get('/:token', function(req, res, next){
     if(!user){
         res.json({error: 'error'})
     }
-       res.render('reset', {
-           user: req.user
-       })
+       res.render('reset')
     })
 });
 

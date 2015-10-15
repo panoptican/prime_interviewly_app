@@ -32,7 +32,7 @@ var port = process.env.PORT || config.port;
 var index = require('./routes/index');
 var authenticate = require('./routes/Authenticate');
 var forgot = require('./routes/forgot');
-var reset = require('./routes/reset');
+//var reset = require('./routes/reset');
 
 // require APIs
 var api = require('./routes/api');
@@ -63,7 +63,8 @@ app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 app.use('/', index);
 app.use('/authenticate', authenticate);
 app.use('/forgot', forgot);
-app.use('/reset', reset);
+//app.use('/reset', reset);
+app.use('*', index);
 
 // use APIs
 app.use('/api', api);
