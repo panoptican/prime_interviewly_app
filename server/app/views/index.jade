@@ -5,6 +5,7 @@ block content
         md-button(href="/events") Events
         md-button(href="/students") Students
         md-button(href="/interviewers") Interviewers
+        md-button.md-raised(href="/new-event") Create New Event
         span(flex)
         .menu(layout-align="center center")
             md-menu(cascade="true" direction="'down'")
@@ -13,7 +14,7 @@ block content
                     md-menu-item
                         md-button(href="/archived-events") ARCHIVED EVENTS
                     md-menu-item
-                        md-button(href="/account") ACCOUNT
+                        md-button(href="/profile") PROFILE
                     md-menu-item
                         md-button(href="/logout") LOGOUT
     .views(ng-view)

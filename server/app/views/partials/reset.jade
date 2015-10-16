@@ -1,7 +1,4 @@
-extends layout
-
-block content
-   .forgot(layout="row" layout-margin="auto")
+.forgot(layout="row" layout-margin="auto")
    span(flex="30")
    .md-whiteframe-z2(layout="column" flex="40" style="margin:50px 0; ")
       form(method="POST" name="reset" ng-controller="reset")
@@ -14,3 +11,4 @@ block content
                input(type="password" required)
             .forgotBut(layout="row" layout-align="center center")
          md-button.md-raised(type='submit') Submit
+   span(flex="30")
