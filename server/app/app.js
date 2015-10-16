@@ -1,39 +1,41 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute', 'isteven-multi-select']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
+        enabled: true
     });
-    $routeProvider.
-    when('/', {
+    $routeProvider
+        .when('/', {
             templateUrl: 'views/partials/login.html'
-        }).
-    when('/home', {
+        })
+        .when('/home', {
             templateUrl: 'views/partials/home.html'
-        }).
-    when('/events', {
-        templateUrl: 'views/partials/events/events.html'
-    }).
-    when('/students', {
+        })
+        .when('/events', {
+            templateUrl: 'views/partials/events/events.html'
+        })
+        .when('/students', {
             templateUrl: 'views/partials/students/students.html'
-    }).
-    when('/interviewers', {
+        })
+        .when('/interviewers', {
             templateUrl: 'views/partials/interviewers/interviewers.html'
-        }).
-
-    when('/archived-events', {
+        })
+        .when('/archived-events', {
             templateUrl: 'views/partials/archivedEvents/archivedEvents.html'
-        }).
-
-    when('/account', {
+        })
+        .when('/account', {
             templateUrl: 'views/partials/account/account.html'
-        }).
-
-    when('/logout', {
+        })
+        .when('/logout', {
             templateUrl: 'views/partials/logout/logout.html'
-        }).
-    otherwise({
+        })
+        .when('/forgot', {
+            templateUrl: 'views/partials/forgot.html'
+        })
+        .when('/reset/:token', {
+            templateUrl: 'views/partials/reset.html'
+        })
+        .otherwise({
             redirectTo: '/'
         })
 }]);
@@ -106,6 +108,21 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 //
 //    }
 //}]);
+app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $http, $location){
+    $scope.send = function(email) {
+        $http.post('/forgot', {email: email}).then(function (response) {
+            if (response.status == 200) {
+                $location.path('/')
+            }
+        })
+    }
+}]);
+
+app.controller('forgot', ['$scope', '$location', function($scope, $location){
+    $scope.forgot = function(){
+        $location.path('/forgot');
+    }
+}]);
 
 app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($scope, $http, $location, $mdToast){
     $scope.submit = function(username, password){
@@ -121,4 +138,8 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
 
         )
     }
+}]);
+
+app.controller('reset', ['$scope', '$http', function($scope, $http){
+
 }]);

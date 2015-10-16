@@ -24,6 +24,9 @@ var port = process.env.PORT || config.port;
 // require routes
 var index = require('./routes/index');
 var authenticate = require('./routes/Authenticate');
+var csvtojson = require('./routes/csvtojson');
+var forgot = require('./routes/forgot');
+//var reset = require('./routes/reset');
 var test = require('./routes/test');
 
 // require APIs
@@ -49,15 +52,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-
 app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
+
 // use routes
 app.use('/', index);
-app.use('/authenticate', authenticate);
 app.use('/test', test);
+app.use('/authenticate', authenticate);
+app.use('/csvtojson', csvtojson);
+app.use('/forgot', forgot);
+//app.use('/reset', reset);
+app.use('/api', api);
+app.use('*', index);
+
 
 // use APIs
-app.use('/api', api);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

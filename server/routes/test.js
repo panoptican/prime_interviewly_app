@@ -36,14 +36,14 @@ router.get('/', function(req, res, next){
         {name: "Ashley", company: "Digital People", scheduled: {}, unavailable: {}, id: 10, breaks: 0, single: false},
         {name: "Katie", company: "Digital People", scheduled: {}, unavailable: {}, id: 11, breaks: 0, single: false},
         {name: "Erin", company: "Digital People", scheduled: {}, unavailable: {}, id: 12, breaks: 0, single: false},
-        {name: "Bryan", company: "Digital People", scheduled: {}, unavailable: {slot6: true, slot7: true, slot8: true, slot9: true}, id: 13, breaks: 0, single: false},
+        {name: "Bryan", company: "Digital People", scheduled: {}, unavailable: {}, id: 13, breaks: 0, single: false},
         {name: "Megan", company: "Experis", scheduled: {}, unavailable: {}, id: 14, breaks: 0, single: false},
         {name: "Dana", company: "Experis", scheduled: {}, unavailable: {}, id: 15, breaks: 0, single: false},
         {name: "name", company: "Azule Staffing", scheduled: {}, unavailable: {slot8: true, slot9: true}, id: 16, breaks: 0, single: true}
     ];
 
     Tools.combine(interviewers, students, function(combinations){
-        Tools.schedule(9, interviewers, students, combinations, 5, 3, function(schedule){
+        Tools.schedule(9, interviewers, students, combinations, 7, 2, function(schedule){
             res.json(schedule);
         })
     })
