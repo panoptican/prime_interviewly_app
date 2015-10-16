@@ -2,6 +2,15 @@ var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
 var scheduler = {
+    fillGaps: function(scheduled, interviewSlots){
+        while(interviewSlots){
+            if(!scheduled['slot' + interviewSlots]){
+                scheduled['slot' + interviewSlots] = 'Break';
+            }
+            interviewSlots--;
+        }
+        return scheduled;
+    },
     sortKeys: function(object){
             var temporary = object;
             var sorted = {};
@@ -86,23 +95,23 @@ var scheduler = {
                     //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
                 if( interview.interviewerID == interviewer.id &&
                     interview.student == student.name &&
-                    interview.unavailable['slot' + currentSlot] == undefined &&
+                    !interview.unavailable['slot' + currentSlot] &&
                     student.scheduled.count.total < interviewMax &&
-                    student.scheduled.with[interview.interviewerID] == undefined
-                    && interview.company !== lastCompany
+                    !student.scheduled.with[interview.interviewerID] &&
+                    interview.company !== lastCompany
                      ){
                         var match = interview;
                         match.slot = currentSlot;
 
                         //if student has no previous matches with this company, book interview
-                        if(student.scheduled.count[interview.company] == undefined){
+                        if(!student.scheduled.count[interview.company]){
                             book(student, interviewer, match);
                             sortedCombinations.splice(k, 1);
                             schedule.push(match);
                             return true;
                         }
                         //if student has no breaks AND interviewer has no breaks AND interviewer is not single
-                        else if(student.scheduled.count.break == undefined && interviewer.breaks < 1 && interviewer.single == false){
+                        else if(!student.scheduled.count.break && interviewer.breaks < 1 && interviewer.single == false){
                             var match = {
                                 name: interviewer.name,
                                 company: interviewer.company,
@@ -135,7 +144,7 @@ var scheduler = {
                             return true;
                         }
                     }
-                });
+                })
             })
             shifter++;
             slots.splice(0, 1);
@@ -143,6 +152,7 @@ var scheduler = {
 
         if(scheduler.check(students, interviewMax)){
             interviewers.forEach(function(interviewer){
+                interviewer.scheduled = scheduler.fillGaps(interviewer.scheduled, interviewSlots);
                 interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
             });
             return {schedule: schedule, students: students, interviewer: interviewers};
