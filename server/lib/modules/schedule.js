@@ -60,7 +60,8 @@ var scheduler = {
             sortedCombinations = sort.high(combinations),
             schedule = [],
             shifter = 0,
-            slots = scheduler.getSlots(interviewSlots);
+            slots = scheduler.getSlots(interviewSlots),
+            l = slots.length;
 
         //this function updates the student and interviewer objects to reflect the interviews scheduled
         var book = (student, interviewer, match) => {
@@ -77,7 +78,7 @@ var scheduler = {
         }
 
         //iterate through interview slots
-        while(slots.length){
+        while(l--){
             var currentSlot = slots[0];
             // for each interviewer, iterate through all possible combinations
             interviewers.forEach((interviewer, i) => {
@@ -151,11 +152,11 @@ var scheduler = {
         }
 
         if(scheduler.check(students, interviewMax)){
-            interviewers.forEach(function(interviewer){
+            interviewers.forEach((interviewer) => {
                 interviewer.scheduled = scheduler.fillGaps(interviewer.scheduled, interviewSlots);
                 interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
             });
-            return {schedule: schedule, students: students, interviewer: interviewers};
+            return {interviewer: interviewers};
         } else {
             initStudents.forEach((student) => {
                 student.scheduled.with = {};
