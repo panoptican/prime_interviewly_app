@@ -1,9 +1,13 @@
 var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
-var counter = 1;
-
 var scheduler = {
+    sortKeys: function(object){
+            var temporary = object;
+            var sorted = {};
+            Object.getOwnPropertyNames(temporary).sort().forEach((elem) => sorted[elem] = temporary[elem]);
+            return sorted;
+    },
     //this populates an array with the required interview slots and randomizes the order
     getSlots: function(interviewSlots){
         var array = [], i=1;
@@ -85,7 +89,7 @@ var scheduler = {
                     interview.unavailable['slot' + currentSlot] == undefined &&
                     student.scheduled.count.total < interviewMax &&
                     student.scheduled.with[interview.interviewerID] == undefined
-                    //&& interview.company !== lastCompany
+                    && interview.company !== lastCompany
                      ){
                         var match = interview;
                         match.slot = currentSlot;
@@ -132,17 +136,14 @@ var scheduler = {
                         }
                     }
                 });
-            });
+            })
             shifter++;
             slots.splice(0, 1);
         }
 
         if(scheduler.check(students, interviewMax)){
             interviewers.forEach(function(interviewer){
-                var temporary = interviewer.scheduled;
-                var sorted = {};
-                Object.getOwnPropertyNames(temporary).sort().forEach((elem) => sorted[elem] = temporary[elem]);
-                interviewer.scheduled = sorted;
+                interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
             });
             return {schedule: schedule, students: students, interviewer: interviewers};
         } else {
