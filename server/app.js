@@ -66,7 +66,7 @@ app.use('/forgot', forgot);
 //app.use('/reset', reset);
 // use APIs
 app.use('/api', api);
-app.use('*', index);
+//app.use('*', index);
 
 
 

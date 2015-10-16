@@ -16,4 +16,4 @@ md-dialog.student(flex="40")
                         md-option(ng-repeat="event in events")
                             p {{event.name}}
             md-button Save
-            md-button Cancel
+            md-button(ng-click="close()") Cancel

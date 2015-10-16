@@ -10,11 +10,8 @@
         .searchbut(layout="row" layout-align="center center")
             md-button.md-raised(ng-click="submit()") Go
                 span(flex)
-
     .addheader(layout="row" layout-margin="auto" flex="auto" layout-align="end center")
-        md-button.md-raised(ng-click="submit()") Add Interviewer
+        md-button.md-raised(ng-controller="interviewer" ng-click="openInterviewer($event)") Add Interviewer
             span(flex)
-        md-button.md-raised(ng-click="submit()") Upload File
-            span(flex)
-        md-button.md-raised.md-warn() Cancel
+        md-button.md-raised(ng-controller="uploads" ng-click="openUploads($event)") Upload File
             span(flex)

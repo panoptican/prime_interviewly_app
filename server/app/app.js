@@ -5,6 +5,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         enabled: true
     });
     $routeProvider.
+        when('/', {
+            templateUrl: 'views/partials/login.html'
+        }).
         when('/events', {
             templateUrl: 'views/partials/events/events.html'
         }).
@@ -32,78 +35,85 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         }).
 
         otherwise({
-            redirectTo: '/index'
+            redirectTo: '/'
     })
 }]);
 
-////Student Dialog Controller
-//app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
-//    $scope.openStudents = function(ev){
-//        console.log('hello');
-//        $mdDialog.show({
-//            controller: addStudent,
-//            templateUrl: 'views/partials/studentDialog.html',
-//            parent: angular.element(document.body),
-//            targetEvent: ev,
-//            clickOutsideToClose: true
-//        })
-//    };
-//    function addStudent($scope) {
-//        $scope.companies = [
-//            {name: 'Prime'},
-//            {name: 'Nerdery'},
-//            {name: 'Digital People'}
-//        ];
-//        $scope.selections = [];
-//        $scope.events = [
-//            {name: 'mocks Delta'},
-//            {name: 'career Delta'},
-//            {name: 'mocks Epsilon'}
-//        ]
-//    }
-//
-//}]);
-//
-////Interviewer Dialog Controller
-//app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
-//    $scope.openInterviewer = function(ev){
-//        $mdDialog.show({
-//            controller: addInterviewer,
-//            templateUrl: 'views/partials/interviewerDialog.html',
-//            parent: angular.element(document.body),
-//            targetEvent: ev,
-//            clickOutsideToClose: true
-//        })
-//    };
-//    function addInterviewer($scope){
-//    $scope.cohorts = [
-//        {name: 'Delta'},
-//        {name: 'gamma'},
-//        {name: 'Epsilon'}
-//    ];
-//    $scope.events = [
-//        {name: 'mocks Delta'},
-//        {name: 'career Delta'},
-//        {name: 'mocks Epsilon'}
-//    ]
-//    }
-//}]);
-//
-////Upload Dialog controller
-//app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
-//    $scope.openUploads = function(ev){
-//        $mdDialog.show({
-//            controller: uploadFile,
-//            templateUrl: 'views/partials/uploadDialog.html',
-//            parent: angular.element(document.body),
-//            targetEvent: ev,
-//            clickOutsideToClose: true
-//        })
-//    };
-//    function uploadFile(){
-//
-//    }
-//}]);
+//Student Dialog Controller
+app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
+    $scope.openStudents = function(ev){
+        console.log('hello');
+        $mdDialog.show({
+            controller: addStudent,
+            templateUrl: 'views/partials/studentDialog.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        })
+    };
+    function addStudent($scope) {
+        $scope.close = function () {
+            $mdDialog.hide();
+            $scope.companies = [
+                {name: 'Prime'},
+                {name: 'Nerdery'},
+                {name: 'Digital People'}
+            ];
+            $scope.events = [
+                {name: 'mocks Delta'},
+                {name: 'career Delta'},
+                {name: 'mocks Epsilon'}
+            ];
+        }
+    }
+
+}]);
+
+//Interviewer Dialog Controller
+app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
+    $scope.openInterviewer = function(ev){
+        $mdDialog.show({
+            controller: addInterviewer,
+            templateUrl: 'views/partials/interviewerDialog.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        })
+    };
+    function addInterviewer($scope, $mdDialog){
+    $scope.close = function(){
+        $mdDialog.hide();
+    };
+    $scope.cohorts = [
+        {name: 'Delta'},
+        {name: 'gamma'},
+        {name: 'Epsilon'}
+    ];
+    $scope.events = [
+        {name: 'mocks Delta'},
+        {name: 'career Delta'},
+        {name: 'mocks Epsilon'}
+    ]
+    }
+}]);
+
+//Upload Dialog controller
+app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
+    $scope.openUploads = function(ev){
+        $mdDialog.show({
+            controller: uploadFile,
+            templateUrl: 'views/partials/uploadDialog.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        })
+    };
+    function uploadFile($scope, $mdDialog){
+        $scope.close = function() {
+            $mdDialog.hide();
+        }
+    }
+}]);
 //controller for the registration also sends post to create a user
 app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope, $mdDialog){
     $scope.openRegister = function(ev){
@@ -158,7 +168,7 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
                 if(response.data.token){
                     sessionStorage.username = angular.toJson(response.data.user.username);
                     localStorage.token = angular.toJson(response.data.token);
-                    $location.path('/home')
+                    $location.path('/events')
                 }else{
                     $mdToast.showSimple(response.data.error)
                 }

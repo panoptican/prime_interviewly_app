@@ -36,4 +36,4 @@ md-dialog(flex="40" style="max-height:700px")
                      md-option(ng-repeat="cohort in cohorts")
                         p {{cohort.name}}
             md-button Save
-            md-button Cancel
+            md-button(ng-click="close()") Cancel
