@@ -5,6 +5,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         enabled: true
     });
     $routeProvider.
+        when('/home', {
+            templateUrl: 'views/partials/home.html'
+        }).
+
         when('/', {
             templateUrl: 'views/partials/login.html'
         }).
@@ -35,7 +39,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         }).
 
         otherwise({
-            redirectTo: '/'
+            redirectTo: '/views/partials/login.html'
     })
 }]);
 
