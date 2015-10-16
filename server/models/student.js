@@ -6,6 +6,10 @@ var Student = new Schema({
     lName: String,
     cohort: String,
     email: String,
+    scheduled: {
+        with: {},
+        count: {total: 0}
+    },
     preferences: Array
 });
 
