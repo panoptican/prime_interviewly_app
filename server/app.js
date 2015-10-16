@@ -56,12 +56,13 @@ app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 
 // use routes
 app.use('/', index);
+app.use('/test', test);
 app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
 //app.use('/reset', reset);
 app.use('*', index);
-app.use('/test', test);
+
 
 // use APIs
 app.use('/api', api);

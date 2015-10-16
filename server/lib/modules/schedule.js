@@ -4,6 +4,16 @@ var sort = require('./sortByNum');
 var counter = 1;
 
 var scheduler = {
+    //this populates an array with the required interview slots
+    getSlots: function(interviewSlots){
+        var array = [], i=1;
+        while(interviewSlots--){
+            array.push(i);
+            i++;
+        }
+        array = shuffle.get(array);
+        return array;
+    },
     //returns true if count of all student interviews are equal
     check: function(students, interviewTarget){
         var counts = [];
@@ -31,13 +41,13 @@ var scheduler = {
 
         var initCombinations = combinations.slice(),
             initInterviewers = interviewers.slice(),
-            initStudents = students.slice();
-
-        var currentStudents = shuffle.get(students),
+            initStudents = students.slice(),
+            currentStudents = shuffle.get(students),
             interviewers = shuffle.get(interviewers),
             sortedCombinations = sort.high(combinations),
             schedule = [],
-            shifter = 0;
+            shifter = 0,
+            slots = scheduler.getSlots(interviewSlots);
 
         //this function updates the student and interviewer objects to reflect the interviews scheduled
         var book = (student, interviewer, match) => {

@@ -2,6 +2,12 @@ var express = require('express');
 var router = express.Router();
 var Tools = require('../lib/tools');
 
+router.get('/array', function(req, res, next){
+   Tools.array(9, function(slots){
+       res.json(slots);
+   })
+});
+
 router.get('/', function(req, res, next){
     var students = [
         {name: "Allan", scheduled: {with:{}, count:{total: 0}}},
@@ -24,13 +30,13 @@ router.get('/', function(req, res, next){
     ];
 
     var interviewers = [
-        //{name: "name", company: "Versique", scheduled: {}, unavailable: {}, id: 0, breaks: 0, single: true},
+        {name: "name", company: "Versique", scheduled: {}, unavailable: {}, id: 0, breaks: 0, single: true},
         {name: "name", company: "TPS", scheduled: {}, unavailable: {}, id: 1, breaks: 0, single: true},
         {name: "Jacqui", company: "ICS", scheduled: {}, unavailable: {}, id: 2, breaks: 0, single: false},
         {name: "Nichole", company: "ICS", scheduled: {}, unavailable: {}, id: 3, breaks: 0, single: false},
         {name: "Sean", company: "ICS", scheduled: {}, unavailable: {}, id: 4, breaks: 0, single: false},
         {name: "name", company: "The Creative Group", scheduled: {}, unavailable: {}, id: 5, breaks: 0, single: true},
-        //{name: "name", company: "Horizontal Integration", scheduled: {}, unavailable: {}, id: 6, breaks: 0, single: true},
+        {name: "name", company: "Horizontal Integration", scheduled: {}, unavailable: {}, id: 6, breaks: 0, single: true},
         {name: "Joel", company: "BI", scheduled: {}, unavailable: {}, id: 7, breaks: 0, single: false},
         {name: "Terrie", company: "BI", scheduled: {}, unavailable: {}, id: 8, breaks: 0, single: false},
         {name: "Ashley", company: "Digital People", scheduled: {}, unavailable: {}, id: 10, breaks: 0, single: false},
@@ -43,7 +49,7 @@ router.get('/', function(req, res, next){
     ];
 
     Tools.combine(interviewers, students, function(combinations){
-        Tools.schedule(9, interviewers, students, combinations, 5, 3, function(schedule){
+        Tools.schedule(9, interviewers, students, combinations, 7, 2, function(schedule){
             res.json(schedule);
         })
     })
