@@ -6,9 +6,6 @@ var getCombinations = require('./modules/getCombinations');
 var scheduler = require('./modules/schedule');
 
 var Tools = {
-    array: function(interviewSlots, cb){
-      cb(scheduler.getSlots(interviewSlots));
-    },
     combine: function(interviewers, students, cb){
         cb(getCombinations.generate(interviewers,students));
     },

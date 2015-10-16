@@ -2,12 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Tools = require('../lib/tools');
 
-router.get('/array', function(req, res, next){
-   Tools.array(9, function(slots){
-       res.json(slots);
-   })
-});
-
 router.get('/', function(req, res, next){
     var students = [
         {name: "Allan", scheduled: {with:{}, count:{total: 0}}},
