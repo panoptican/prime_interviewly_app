@@ -19,11 +19,11 @@
                     h4.md-subhead(layout="column" layout-align="start center" layout-margin="auto" layout-padding="auto" flex="auto") {{tile.title}}
                         md-button.md-icon-button(ng-click="submit()")
                             md-icon.i.material-icons event
-                    md-grid-tile-footer(layout="row" layout-align="end center" flex="auto")
+                    md-grid-tile-footer(layout="row" layout-align="end center")
                         .buttonheader
-                            md-button.md-icon-button.md-primary(ng-click="submit()")
+                            md-button.md-icon-button.md-raised.md-primary(ng-click="showConfirm($event)")
                                 md-icon.i.material-icons done
-                            md-button.md-icon-button.md-warn(ng-click="submit()")
+                            md-button.md-icon-button.md-raised.md-warn(ng-click="showConfirm($event)")
                                 md-icon.i.material-icons delete
 
 
