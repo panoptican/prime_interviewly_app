@@ -126,3 +126,10 @@ sftp-config.json
 
 ### User Customizations ###
 .env
+# Created by https://www.gitignore.io/api/code
+
+### Code ###
+# Visual Studio Code - https://code.visualstudio.com/
+.settings/
+.vscode/
+
