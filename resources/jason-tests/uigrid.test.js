@@ -1,6 +1,13 @@
 var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 
-app.controller('generateCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {
+app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
+
+    // time experiments
+    var startTime = moment('1:00 PM', 'h:mm A').format('HH:mm');
+    var endTime = moment('4:00 PM', 'h:mm A').format('HH:mm');
+    var eventLength = moment(endTime, 'HH:mm').diff(moment(startTime, 'HH:mm'), 'minutes');
+    var slotLength = moment.duration((eventLength / 9), 'minutes').asMinutes();
+    console.log(moment(startTime, 'HH:mm').add((slotLength * 8), 'minutes').format('h:mm A'));
 
     // Initialize UI Grid variables
     var gridCols = [];
@@ -91,6 +98,14 @@ app.controller('generateCtrl', ['$scope', '$http', 'uiGridConstants', function($
 
             // initiate an empty object for storing the entire schedule
             gridObj = {};
+
+            // create time slots column
+            var timeSlots = [];
+            var slotsSize = gridArr.length;
+            while(slotsSize--) {
+                timeSlots.push({time: 'Slot ' + ((gridArr.length) - slotsSize)});
+            }
+            console.log(timeSlots);
 
             // using Underscore extend again, "push" the array of objects into the master object
             _.extend(gridObj, gridArr);
