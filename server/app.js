@@ -61,11 +61,12 @@ app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
 //app.use('/reset', reset);
+app.use('/api', api);
 app.use('*', index);
 
 
 // use APIs
-app.use('/api', api);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
