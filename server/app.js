@@ -64,10 +64,11 @@ app.use('/', index);
 app.use('/authenticate', authenticate);
 app.use('/forgot', forgot);
 //app.use('/reset', reset);
-app.use('*', index);
-
 // use APIs
 app.use('/api', api);
+app.use('*', index);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

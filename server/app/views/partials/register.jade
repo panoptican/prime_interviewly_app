@@ -1,0 +1,20 @@
+md-dialog
+   md-toolbar
+      p(style="text-align: center") Registration
+   form
+   md-dialog-content
+      .inputs
+         md-input-container
+            label Username
+            input(ng-model="username" type="text" name="username" required)
+         md-input-container
+            label Email
+            input(ng-model="email" type="text" name="email" required)
+         md-input-container
+            label Password
+            input(ng-model="password" type="password" name="password" required)
+         md-input-container
+            label Confirm Password
+            input(ng-model="confirm" type="password" name="confirm" required compare-to="password")
+         md-button(ng-click="register(username, email, password)") Submit
+         md-button(ng-click="close()") Cancel
