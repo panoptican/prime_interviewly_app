@@ -5,18 +5,14 @@ angular.module('app').controller('eventsCtrl', function($scope) {
         });
         function buildGridModel(tileTmpl){
             var it, results = [ ];
-            for (var j=0; j<9; j++) {
                 it = angular.extend({},tileTmpl);
                 it.title = it.title;
                 it.span  = { row : 1, col : 1 };
-                switch(j+1) {
-                    case 1:
-                        it.background = "red";
-                        it.span.row = it.span.col = 2;
-                        break;
-                }
+                it.background = "gray";
+                it.span.row = it.span.col = 1;
+
                 results.push(it);
-            }
+
             return results;
         }
     });

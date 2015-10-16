@@ -26,13 +26,18 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             templateUrl: 'views/partials/archivedEvents/archivedEvents.html'
         }).
 
-    when('/account', {
-            templateUrl: 'views/partials/account/account.html'
+    when('/profile', {
+            templateUrl: 'views/partials/profile/profile.html'
         }).
 
     when('/logout', {
             templateUrl: 'views/partials/logout/logout.html'
         }).
+
+    when('/new-event', {
+            templateUrl: 'views/partials/new-event/new-event.html'
+        }).
+
     otherwise({
             redirectTo: '/index'
         })

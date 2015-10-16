@@ -60,6 +60,7 @@ app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
 // use routes
 app.use('/', index);
 app.use('/authenticate', authenticate);
+app.use('*', index);
 
 // use APIs
 app.use('/api', api);

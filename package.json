@@ -62,6 +62,7 @@
     "gulp-util": "^3.0.6",
     "jade": "~1.11.0",
     "jsonwebtoken": "^5.4.0",
+    "material-design-icons": "^2.0.0",
     "mongoose": "^4.1.10",
     "morgan": "~1.6.1",
     "rx": "^4.0.1",
