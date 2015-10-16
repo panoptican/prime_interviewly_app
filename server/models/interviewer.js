@@ -7,8 +7,11 @@ var Interviewer = new Schema({
     lName: String,
     email: String,
     company: String,
-    unavailable: Array
-});
+    scheduled: {type: Schema.Types.Mixed, default: {}},
+    unavailable: {type: Schema.Types.Mixed, default: {}},
+    breaks: {type: Number, default: 0},
+    single: {type: Boolean, default: true}
+}, { minimize: false });
 
 var interviewerSchema = mongoose.model('interviewer', Interviewer);
 
