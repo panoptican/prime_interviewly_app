@@ -6,7 +6,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     });
     $routeProvider.
         when('/', {
-            templateUrl: 'views/partials/login.html'
+            templateUrl: 'views/partials/login/login.html'
+        }).
+        when('/forgot', {
+            templateUrl: 'views/partials/forgot/forgot.html'
         }).
         when('/events', {
             templateUrl: 'views/partials/events/events.html'
@@ -42,10 +45,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 //Student Dialog Controller
 app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
-        console.log('hello');
         $mdDialog.show({
             controller: addStudent,
-            templateUrl: 'views/partials/studentDialog.html',
+            templateUrl: 'views/partials/Dialogs/studentDialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -74,7 +76,7 @@ app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog
     $scope.openInterviewer = function(ev){
         $mdDialog.show({
             controller: addInterviewer,
-            templateUrl: 'views/partials/interviewerDialog.html',
+            templateUrl: 'views/partials/Dialogs/interviewerDialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -102,7 +104,7 @@ app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openUploads = function(ev){
         $mdDialog.show({
             controller: uploadFile,
-            templateUrl: 'views/partials/uploadDialog.html',
+            templateUrl: 'views/partials/Dialogs/uploadDialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -119,7 +121,7 @@ app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope,
     $scope.openRegister = function(ev){
         $mdDialog.show({
             controller: register,
-            templateUrl: 'views/partials/register.html',
+            templateUrl: 'views/partials/Dialogs/register.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -154,13 +156,6 @@ app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $h
         })
     }
 }]);
-//controller to redirect to forgot password page from landing page button
-app.controller('forgot', ['$scope', '$location', function($scope, $location){
-    $scope.forgot = function(){
-        $location.path('/forgot');
-    }
-}]);
-
 //controller to send password to authentication and login to website on confirmation
 app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($scope, $http, $location, $mdToast){
     $scope.submit = function(username, password){
