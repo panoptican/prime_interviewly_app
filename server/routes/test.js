@@ -24,13 +24,13 @@ router.get('/', function(req, res, next){
     ];
 
     var interviewers = [
-        //{name: "name", company: "Versique", scheduled: {}, unavailable: {}, id: 0, breaks: 0, single: true},
+        {name: "name", company: "Versique", scheduled: {}, unavailable: {}, id: 0, breaks: 0, single: true},
         {name: "name", company: "TPS", scheduled: {}, unavailable: {}, id: 1, breaks: 0, single: true},
         {name: "Jacqui", company: "ICS", scheduled: {}, unavailable: {}, id: 2, breaks: 0, single: false},
         {name: "Nichole", company: "ICS", scheduled: {}, unavailable: {}, id: 3, breaks: 0, single: false},
         {name: "Sean", company: "ICS", scheduled: {}, unavailable: {}, id: 4, breaks: 0, single: false},
         {name: "name", company: "The Creative Group", scheduled: {}, unavailable: {}, id: 5, breaks: 0, single: true},
-        //{name: "name", company: "Horizontal Integration", scheduled: {}, unavailable: {}, id: 6, breaks: 0, single: true},
+        {name: "name", company: "Horizontal Integration", scheduled: {}, unavailable: {}, id: 6, breaks: 0, single: true},
         {name: "Joel", company: "BI", scheduled: {}, unavailable: {}, id: 7, breaks: 0, single: false},
         {name: "Terrie", company: "BI", scheduled: {}, unavailable: {}, id: 8, breaks: 0, single: false},
         {name: "Ashley", company: "Digital People", scheduled: {}, unavailable: {}, id: 10, breaks: 0, single: false},

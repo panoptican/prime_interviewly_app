@@ -16,8 +16,10 @@ app.controller('generateCtrl', ['$scope', '$http', 'uiGridConstants', function($
         }
     };
 
-    // UI Grid generate function called on click "Generate" button
+    // "Generate" button click function
     $scope.generate = function() {
+
+        // request matches from server given event settings
         $http({
             method: 'GET',
             url: 'http://localhost:3000/test'
@@ -90,7 +92,7 @@ app.controller('generateCtrl', ['$scope', '$http', 'uiGridConstants', function($
             // initiate an empty object for storing the entire schedule
             gridObj = {};
 
-            // using Underscore extend again, push the array of objects into the master object
+            // using Underscore extend again, "push" the array of objects into the master object
             _.extend(gridObj, gridArr);
 
             // update the gridData variable
@@ -103,11 +105,6 @@ app.controller('generateCtrl', ['$scope', '$http', 'uiGridConstants', function($
             $scope.gridOptions.data = gridData;
 
         // after updating UI Grid options, force grid refresh
-        }).then(function() {
-        console.log('Updated?', gridCols);
-        console.log('Updated?', gridData);
-        $scope.gridApi.grid.notifyDataChange(uiGridConstants.dataChange.ALL);
-        $scope.gridApi.grid.refresh();
         })
     }
 }])
