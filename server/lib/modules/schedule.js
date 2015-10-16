@@ -138,6 +138,12 @@ var scheduler = {
         }
 
         if(scheduler.check(students, interviewMax)){
+            interviewers.forEach(function(interviewer){
+                var temporary = interviewer.scheduled;
+                var sorted = {};
+                Object.getOwnPropertyNames(temporary).sort().forEach((elem) => sorted[elem] = temporary[elem]);
+                interviewer.scheduled = sorted;
+            });
             return {schedule: schedule, students: students, interviewer: interviewers};
         } else {
             initStudents.forEach((student) => {
