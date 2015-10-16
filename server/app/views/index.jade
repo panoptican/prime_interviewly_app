@@ -2,15 +2,18 @@ extends layout
 block content
     md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3")
         md-button(enabled="false") Interviewly
+        md-button(href="/events") Events
+        md-button(href="/students") Students
+        md-button(href="/interviewers") Interviewers
         span(flex)
         .menu(layout-align="center center")
             md-menu(cascade="true" direction="'down'")
                 md-button(ng-click="$mdOpenMenu($event)") menu
                 md-menu-content(width="4")
                     md-menu-item
-                        md-button ACCOUNT
+                        md-button(href="/archived-events") ARCHIVED EVENTS
                     md-menu-item
-                        md-button ARCHIVED EVENTS
+                        md-button(href="/profile") PROFILE
                     md-menu-item
-                        md-button LOGOUT
+                        md-button(href="/logout") LOGOUT
     .views(ng-view="")

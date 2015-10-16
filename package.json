@@ -66,6 +66,7 @@
     "isteven-angular-multiselect": "^4.0.0",
     "jade": "~1.11.0",
     "jsonwebtoken": "^5.4.0",
+    "material-design-icons": "^2.0.0",
     "mongoose": "^4.1.10",
     "morgan": "~1.6.1",
     "nodemailer": "^1.8.0",

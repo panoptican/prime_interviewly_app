@@ -5,21 +5,35 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         enabled: true
     });
     $routeProvider.
-    when('/', {
-            templateUrl: 'views/partials/login.html'
+        when('/events', {
+            templateUrl: 'views/partials/events/events.html'
         }).
-    when('/home', {
-            templateUrl: 'views/partials/home.html'
+        when('/students', {
+            templateUrl: 'views/partials/students/students.html'
         }).
-    when('/forgot', {
-           templateUrl: 'views/partials/forgot.html'
+        when('/interviewers', {
+            templateUrl: 'views/partials/interviewers/interviewers.html'
         }).
-    when('/reset/:token', {
-            templateUrl: 'views/partials/reset.html'
+
+        when('/archived-events', {
+            templateUrl: 'views/partials/archivedEvents/archivedEvents.html'
         }).
-    otherwise({
-            redirectTo: '/'
-        })
+
+        when('/profile', {
+            templateUrl: 'views/partials/profile/profile.html'
+        }).
+
+        when('/logout', {
+            templateUrl: 'views/partials/logout/logout.html'
+        }).
+
+        when('/new-event', {
+            templateUrl: 'views/partials/new-event/new-event.html'
+        }).
+
+        otherwise({
+            redirectTo: '/index'
+    })
 }]);
 
 ////Student Dialog Controller

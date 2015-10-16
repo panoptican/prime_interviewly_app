@@ -53,6 +53,9 @@ router.get('/test', function(req, res, next){
       res.json(schedule);
     })
   })
+
 });
+
+router.get('/*');
 
 module.exports = router;
