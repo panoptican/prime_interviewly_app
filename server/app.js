@@ -24,13 +24,10 @@ var port = process.env.PORT || config.port;
 // require routes
 var index = require('./routes/index');
 var authenticate = require('./routes/Authenticate');
-<<<<<<< HEAD
 var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
 //var reset = require('./routes/reset');
-=======
 var test = require('./routes/test');
->>>>>>> 540425cafe37b5e2f88380c6d75dce3bf3b53ef6
 
 // require APIs
 var api = require('./routes/api');
