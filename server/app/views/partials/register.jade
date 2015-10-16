@@ -16,5 +16,5 @@ md-dialog
          md-input-container
             label Confirm Password
             input(ng-model="confirm" type="password" name="confirm" required compare-to="password")
-         md-button(ng-click="register(username, email, password)") Submit
-         md-button(ng-click="close()") Cancel
+         md-button.md-raised(ng-click="register(username, email, password)") Submit
+         md-button.md-raised.md-warn(ng-click="close()") Cancel

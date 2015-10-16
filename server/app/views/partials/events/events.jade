@@ -4,13 +4,13 @@
         md-content(layout-margin="auto")
             md-button.md-raised(href="/new-event") Create New Event
 
-    .searchheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
-        md-content(layout-margin="auto")
-        md-checkbox(aria-label="Last Updated") Last Updated
-        md-checkbox(aria-label="Last Updated") Event Date
-        md-datepicker(ng-model="myDate" md-placeholder="Start Date")
-        md-datepicker(ng-model="myDate" md-placeholder="End Date")
-        md-button.md-raised() Go
+        .searchheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+            md-content(layout-margin="auto")
+            md-checkbox(aria-label="Last Updated") Last Updated
+            md-checkbox(aria-label="Last Updated") Event Date
+            md-datepicker(ng-model="myDate" md-placeholder="Start Date")
+            md-datepicker(ng-model="myDate" md-placeholder="End Date")
+            md-button.md-raised() Go
 
     .gridheader(layout="row" layout-align="center center" layout-margin="auto" layout-padding="auto" flex="auto")
         div(ng-controller="eventsCtrl as vm", flex="auto", ng-cloak="" class="eventsCtrl" ng-app="app")

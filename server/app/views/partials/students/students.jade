@@ -2,14 +2,15 @@
     .studentssheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
         h1.md-display-1 Students
 
-    .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
-        md-content(layout-margin="auto")
-            md-input-container
-                label Search Students
-                input(ng-model="search" type="text")
-        .searchbut(layout="row" layout-align="center center")
-            md-button.md-raised(ng-click="submit()") Go
-                span(flex)
+        .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+            md-content(layout-margin="auto")
+                md-input-container
+                    label Search Students
+                    input(ng-model="search" type="text")
+            .searchbut(layout="row" layout-align="center center")
+                md-button.md-raised(ng-click="submit()") Go
+                    span(flex)
+
     .addheader(layout="row" layout-margin="auto" flex="auto" layout-align="end center")
         md-button.md-raised(ng-controller="student" ng-click="openStudents($event)") Add Student
             span(flex)
