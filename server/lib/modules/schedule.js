@@ -1,9 +1,6 @@
 var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
-var counter = 0,
-    limiter = 3;
-
 var scheduler = {
     fillGaps: function(scheduled, interviewSlots){
         while(interviewSlots){
@@ -59,6 +56,7 @@ var scheduler = {
             shifter = 0,
             slots = scheduler.getSlots(interviewSlots),
             l = slots.length,
+            lng = l,
             m = interviewers.length;
 
         //this function updates the student and interviewer objects to reflect the interviews scheduled
@@ -149,7 +147,6 @@ var scheduler = {
             }
             return {interviewer: interviewers};
         } else {
-
             var l = initStudents.length, m = initInterviewers.length, lng = l, lng2 = m;
             while(l){
                 var student = students[lng-l--];
@@ -160,13 +157,6 @@ var scheduler = {
                 var interviewer = interviewers[lng2-m--];
                 interviewer.scheduled = {};
                 interviewer.breaks = 0;
-            }
-
-            counter++;
-            if(counter > limiter){
-                interviewMax--;
-                limiter++;
-                counter = 0;
             }
             return this.match(interviewSlots, initInterviewers, initStudents, initCombinations, interviewMax, companyMax);
         }
