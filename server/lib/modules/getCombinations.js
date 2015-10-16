@@ -2,18 +2,22 @@ var random = require('./getRandomInt');
 
 var combinations = {
     generate: function(interviewers, students){
-        var combinations = [];
-        for(var i = 0; i < students.length; i++){
-            interviewers.forEach(function(interviewer){
+        var combinations = [],
+            l = students.length,
+            lng = l;
+        while(l){
+            var student = students[lng-l--], i = interviewers.length, ing = i;
+            while(i){
+                var interviewer = interviewers[ing-i--];
                 combinations.push({
-                    name: interviewer.name,
+                    name: interviewer.fName,
                     company: interviewer.company,
-                    student: students[i].name,
+                    student: student.fName,
                     weight: random.between(-2, 2),
                     unavailable: interviewer.unavailable,
                     interviewerID: interviewer.id
                 })
-            })
+            }
         }
         return combinations;
     }
