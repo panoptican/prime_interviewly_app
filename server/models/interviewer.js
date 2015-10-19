@@ -10,7 +10,8 @@ var Interviewer = new Schema({
     scheduled: {type: Schema.Types.Mixed, default: {}},
     unavailable: {type: Schema.Types.Mixed, default: {}},
     breaks: {type: Number, default: 0},
-    single: {type: Boolean, default: true}
+    single: {type: Boolean, default: true},
+    weight: {type: Schema.Types.Mixed, default:{}}
 }, { minimize: false });
 
 var interviewerSchema = mongoose.model('interviewer', Interviewer);

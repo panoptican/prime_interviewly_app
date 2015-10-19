@@ -12,7 +12,7 @@ var Student = new Schema({
             total: 0
         }}
     },
-    preferences: Array
+    weight: {type: Schema.Types.Mixed, default:{}}
 }, { minimize: false });
 
 var studentSchema = mongoose.model('student', Student);
