@@ -25,7 +25,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         }).
 
         when('/archived-events', {
-            templateUrl: 'views/partials/archivedEvents/archivedEvents.html'
+            templateUrl: 'views/partials/archived-events/archived-events.html'
         }).
 
         when('/profile', {
@@ -52,7 +52,7 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
         $mdDialog.show({
             controller: addStudent,
-            templateUrl: 'views/partials/Dialogs/studentDialog.html',
+            templateUrl: 'views/partials/dialogs/student.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -80,7 +80,7 @@ app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog
     $scope.openInterviewer = function(ev){
         $mdDialog.show({
             controller: addInterviewer,
-            templateUrl: 'views/partials/Dialogs/interviewerDialog.html',
+            templateUrl: 'views/partials/dialogs/interviewer.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -107,7 +107,7 @@ app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openUploads = function(ev){
         $mdDialog.show({
             controller: uploadFile,
-            templateUrl: 'views/partials/Dialogs/uploadDialog.html',
+            templateUrl: 'views/partials/dialogs/upload.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -124,7 +124,7 @@ app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope,
     $scope.openRegister = function(ev){
         $mdDialog.show({
             controller: register,
-            templateUrl: 'views/partials/Dialogs/register.html',
+            templateUrl: 'views/partials/dialogs/register.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
