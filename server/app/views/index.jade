@@ -2,13 +2,13 @@ extends layout
 block content
     md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3" ng-controller="toolbar")
         md-button(enabled="false") Interviewly
-        md-button(href="/events" ng-hide="!paths") Events
-        md-button(href="/students" ng-hide="!$window.sessionStorage") Students
-        md-button(href="/interviewers" ng-hide="!$window.sessionStorage") Interviewers
+        md-button(href="/events" ng-hide="paths") Events
+        md-button(href="/students" ng-hide="paths") Students
+        md-button(href="/interviewers" ng-hide="paths") Interviewers
         span(flex)
-        p(ng-hide="!$window.sessionStorage") WELCOME {{user.username}}
+        p(ng-hide="paths") WELCOME {{user.username}}
         .menu(layout-align="center center")
-            md-menu(cascade="true" direction="'down'")
+            md-menu(cascade="true" direction="'down'" ng-hide="paths")
                 md-button(ng-click="$mdOpenMenu($event)") menu
                 md-menu-content(width="4")
                     md-menu-item

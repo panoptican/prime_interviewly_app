@@ -35,7 +35,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         when('/new-event', {
             templateUrl: 'views/partials/new-event/new-event.html'
         }).
-
+        when('/:token', {
+            templateUrl: 'views/partials/reset/reset.html',
+            controller: 'reset'
+        }).
         otherwise({
             redirectTo: '/'
     })
@@ -152,7 +155,7 @@ app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $h
     }
 }]);
 //controller to send password to authentication and login to website on confirmation
-app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($scope, $http, $location, $mdToast){
+app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast', function($rootScope, $scope, $http, $location, $mdToast){
     $scope.submit = function(username, password){
         $http.post('/authenticate', {username: username, password: password}).then(function(response){
                 if(response.data.token){
@@ -160,6 +163,7 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
                     sessionStorage.email = angular.toJson(response.data.user.email);
                     sessionStorage.token = angular.toJson(response.data.token);
                     $location.path('/events');
+                    $rootScope.$broadcast('logged In')
                 }else{
                     $mdToast.showSimple(response.data.error)
                 }
@@ -170,24 +174,40 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
     }
 }]);
 //controller for main toolbar
-app.controller('toolbar', ['$scope', '$window', function($scope, $window){
+app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope, $scope, $window){
     $scope.user = $window.sessionStorage;
-    $scope.paths = false;
-    if($window.sessionStorage.token){
-        $scope.paths = true
-    } else {
-        $scope.paths = false
-    }
-
+    $scope.paths = true;
+    $rootScope.$on('logged In', function(){
+        if($window.sessionStorage.token == undefined){
+            $scope.paths = true;
+        }else{
+            $scope.paths = false;
+        }
+    })
 
 }]);
+app.controller('reset',['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
+    $scope.changePass = function(password, confirm){
+        console.log(password);
+        var token = $routeParams.token;
+        if(password === confirm){
+            $http.post('/reset', {password: password, token: token}).then(function(response){
+                console.log(response);
+                if(response.status === 200){
+                    $location.path('/');
+                }
+            })
+        }
+    }
+}]);
 //controller for the logout functionality
-app.controller('logout', ['$scope','$location', '$interval', function($scope, $location, $interval){
+app.controller('logout', ['$rootScope', '$scope','$location', '$interval', function($rootScope, $scope, $location, $interval){
     $scope.logout = function(){
         $location.path('/logout');
         sessionStorage.clear();
+        $rootScope.$broadcast('logged In');
         $interval(function() {
-            $location.path('/login')
+            $location.path('/')
         }, 3000, 1)
     };
 }]);
