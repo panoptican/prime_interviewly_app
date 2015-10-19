@@ -7,8 +7,9 @@ block content
         md-button(href="/interviewers") Interviewers
         md-button.md-raised(href="/new-event") Create New Event
         span(flex)
+        p(ng-hide="paths") WELCOME {{user.username}}
         .menu(layout-align="center center")
-            md-menu(cascade="true" direction="'down'")
+            md-menu(cascade="true" direction="'down'" ng-hide="paths")
                 md-button(ng-click="$mdOpenMenu($event)") menu
                 md-menu-content(width="4")
                     md-menu-item
@@ -16,5 +17,5 @@ block content
                     md-menu-item
                         md-button(href="/profile") PROFILE
                     md-menu-item
-                        md-button(href="/logout") LOGOUT
-    .views(ng-view)
+                        md-button(ng-controller="logout" ng-click="logout()") LOGOUT
+    .views(ng-view="")
