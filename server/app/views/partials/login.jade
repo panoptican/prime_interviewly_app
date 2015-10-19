@@ -4,14 +4,14 @@
       form(name="login" ng-controller="login")
          md-content(layout-padding)
             md-input-container
-               label Name
-               input(ng-model="username" type="text")
+               label Username
+               input(ng-model="username" type="text" required)
             md-input-container
                label Password
-               input(ng-model="password" type="password")
+               input(ng-model="password" type="password" required)
       .loginbut(layout="row" layout-align="center center")
          md-button.md-raised(ng-click="submit(username, password)") Login
          md-button.md-raised(ng-controller="registerOpen" ng-click="openRegister($event)") Sign Up
-         md-button.md-raised.md-warn(ng-controller="forgot" ng-click="forgot()") Forgot Password
+         md-button.md-raised.md-warn(ng-controller="forgot" ng-click="forgot()") Forgot Password?
    span(flex="30")
 

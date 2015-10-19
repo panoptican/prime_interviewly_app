@@ -5,6 +5,18 @@
          h2.md-display-1(layout="row" layout-margin="auto") Create New Event
          md-content(layout-margin="auto")
 
+         md-input-container
+            md-select(name="eventType", placeholder="Event Type", ng-model="eventType", required="")
+               md-option(value="1") Mock Interviews
+               md-option(value="2") Career Day
+            .errors(ng-messages="eventType.myModel.$error", ng-if="eventType.$dirty")
+               div(ng-message="required") Required
+
+
+         md-input-container
+               label Event Date
+               input(type="date", ng-model="user.submissionDate" required)
+
             md-input-container
                label Event Title
                input(ng-model="title" type="text" required)
@@ -14,44 +26,30 @@
                input(ng-model="location" type="text" required)
 
             md-input-container
-               label Event Organizer
-               input(ng-model="organizer" type="text" optional)
-
-            md-input-container
-               label Event Description
-               input(ng-model="organizer" type="text" optional)
-
-            md-datepicker(ng-model="myDate", md-placeholder="Enter date")
-
-            md-input-container
                label Event Start Time
-               input(ng-model="description" type="text")
+               input(type="time" required)
 
             md-input-container
                label Event End Time
-               input(ng-model="description" type="text")
+               input(type="time" required)
 
             md-input-container
-               label Interview Time Duration
-               input(ng-model="description" type="text")
-
-
-            md-input-container
-               label Type of Event
-               input(ng-model="description" type="text")
-
+               label Interview Time Slot Duration
+               input(type="number" required)
 
             md-input-container
-               label Add Students to Event
-               input(ng-model="description" type="text")
+               label Event Location
+               input(ng-model="location" type="text")
 
             md-input-container
-               label Add Interviewers to Event
-               input(ng-model="description" type="text" optional)
+               label Event Description
+               input(ng-model="description" type="text")
 
-            .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="submit()") Create Event
-                  span(flex)
-               md-button.md-raised.md-warn() Cancel
-   span(flex="20")
+               md-input-container
+                  label Event Organizer
+                  input(ng-model="organzier" type="text")
+
+         .loginbut(layout="row" layout-align="center center")
+                     md-button.md-raised(ng-click="submit()") Save New Event
+
 

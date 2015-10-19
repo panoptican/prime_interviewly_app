@@ -1,6 +1,6 @@
-md-dialog
+md-dialog.student(flex="40")
    md-toolbar
-      p(style="text-align: center") Registration
+      h2.md-display-1(layout="row" layout-margin="auto") Registration
    form
    md-dialog-content
       .inputs
@@ -16,5 +16,6 @@ md-dialog
          md-input-container
             label Confirm Password
             input(ng-model="confirm" type="password" name="confirm" required compare-to="password")
-         md-button.md-raised(ng-click="register(username, email, password)") Submit
-         md-button.md-raised.md-warn(ng-click="close()") Cancel
+         .regbut(layout="row" layout-align="center center")
+            md-button.md-raised(ng-click="register(username, email, password)") Submit
+            md-button.md-raised.md-warn(ng-click="close()") Cancel
