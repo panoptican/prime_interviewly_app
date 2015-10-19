@@ -1,11 +1,12 @@
 extends layout
 block content
-    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3")
+    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3" ng-controller="toolbar")
         md-button(enabled="false") Interviewly
-        md-button(href="/events") Events
-        md-button(href="/students") Students
-        md-button(href="/interviewers") Interviewers
+        md-button(href="/events" ng-hide="!paths") Events
+        md-button(href="/students" ng-hide="!$window.sessionStorage") Students
+        md-button(href="/interviewers" ng-hide="!$window.sessionStorage") Interviewers
         span(flex)
+        p(ng-hide="!$window.sessionStorage") WELCOME {{user.username}}
         .menu(layout-align="center center")
             md-menu(cascade="true" direction="'down'")
                 md-button(ng-click="$mdOpenMenu($event)") menu
@@ -15,5 +16,5 @@ block content
                     md-menu-item
                         md-button(href="/profile") PROFILE
                     md-menu-item
-                        md-button(href="/logout") LOGOUT
+                        md-button(ng-controller="logout" ng-click="logout()") LOGOUT
     .views(ng-view="")

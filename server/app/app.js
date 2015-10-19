@@ -1,5 +1,4 @@
 var app = angular.module('app', ['ngMaterial', 'ngRoute']);
-
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
         enabled: true
@@ -41,7 +40,6 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             redirectTo: '/'
     })
 }]);
-
 //Student Dialog Controller
 app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
@@ -70,7 +68,6 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     }
 
 }]);
-
 //Interviewer Dialog Controller
 app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openInterviewer = function(ev){
@@ -98,7 +95,6 @@ app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog
     ]
     }
 }]);
-
 //Upload Dialog controller
 app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openUploads = function(ev){
@@ -145,7 +141,6 @@ app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope,
         };
     }
 }]);
-
 //controller to send reset email
 app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $http, $location){
     $scope.send = function(email) {
@@ -162,8 +157,9 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
         $http.post('/authenticate', {username: username, password: password}).then(function(response){
                 if(response.data.token){
                     sessionStorage.username = angular.toJson(response.data.user.username);
-                    localStorage.token = angular.toJson(response.data.token);
-                    $location.path('/events')
+                    sessionStorage.email = angular.toJson(response.data.user.email);
+                    sessionStorage.token = angular.toJson(response.data.token);
+                    $location.path('/events');
                 }else{
                     $mdToast.showSimple(response.data.error)
                 }
@@ -172,6 +168,28 @@ app.controller('login', ['$scope', '$http', '$location', '$mdToast', function($s
 
         )
     }
+}]);
+//controller for main toolbar
+app.controller('toolbar', ['$scope', '$window', function($scope, $window){
+    $scope.user = $window.sessionStorage;
+    $scope.paths = false;
+    if($window.sessionStorage.token){
+        $scope.paths = true
+    } else {
+        $scope.paths = false
+    }
+
+
+}]);
+//controller for the logout functionality
+app.controller('logout', ['$scope','$location', '$interval', function($scope, $location, $interval){
+    $scope.logout = function(){
+        $location.path('/logout');
+        sessionStorage.clear();
+        $interval(function() {
+            $location.path('/login')
+        }, 3000, 1)
+    };
 }]);
 //directive to check the passwords are the same
 app.directive('verifySame', function(){
