@@ -32,7 +32,7 @@ router.get('/db', function(req, res, next){
         },
         function(interviewers, students, combinations, callback){
             //schedule interviews
-            Tools.schedule(9, interviewers, students, combinations, 6, 2, function(schedule){
+            Tools.schedule(9, interviewers, students, combinations, 7, 2, function(schedule){
                 callback(null, schedule);
             })
         },

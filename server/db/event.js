@@ -42,7 +42,7 @@ var Event = {
         })
     },
     addSchedule: function(query, body, callback){
-        EventModel.findOneAndUpdate(query, {$push: {schedule: body}}, function(err, doc){
+        EventModel.findOneAndUpdate(query, {$push: {schedule: body._id}}, function(err, doc){
             if(err){
                 console.log(err);
                 next(err);
