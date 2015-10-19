@@ -9,7 +9,7 @@ router.get('/db', function(req, res, next){
     Interviewers.find({}, function(err, interviewers){
        Students.find({cohort: 'Delta'}, function(err, students){
            Tools.combine(interviewers, students, function(combinations){
-               Tools.schedule(9, interviewers, students, combinations, 7, 2, function(schedule){
+               Tools.schedule(9, interviewers, students, combinations, 6, 2, function(schedule){
                    res.json(schedule);
                })
            })

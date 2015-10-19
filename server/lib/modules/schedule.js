@@ -14,7 +14,9 @@ var scheduler = {
     sortKeys: function(object){
             var temporary = object,
                 sorted = {};
-            Object.getOwnPropertyNames(temporary).sort().forEach((elem) => sorted[elem] = temporary[elem]);
+        Object.getOwnPropertyNames(temporary)
+            .sort((a,b) => a < b ? 1 : a > b ? -1 : 0)
+            .forEach((elem) => sorted[elem] = temporary[elem]);
             return sorted;
     },
     //this populates an array with the required interview slots and randomizes the order
