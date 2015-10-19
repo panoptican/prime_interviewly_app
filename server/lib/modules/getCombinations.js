@@ -13,7 +13,7 @@ var combinations = {
                     student: student.fName,
                     weight: random.between(-2, 2),
                     unavailable: interviewer.unavailable,
-                    interviewerID: interviewer.id
+                    interviewerID: interviewer._id
                 })
             }
         }
