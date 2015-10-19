@@ -4,6 +4,7 @@ var Tools = require('../lib/tools');
 var Students = require('../db/student');
 var Interviewers = require('../db/interviewer');
 var Event = require('../db/event');
+var Schedule = require('../db/schedule');
 
 router.get('/db', function(req, res, next){
 
@@ -11,14 +12,16 @@ router.get('/db', function(req, res, next){
        Students.find({cohort: 'Delta'}, function(err, students){
            Tools.combine(interviewers, students, function(combinations){
                Tools.schedule(9, interviewers, students, combinations, 6, 2, function(schedule){
-                   Event.addSchedule({name: 'Delta Mock Interviews'}, schedule, function(err, update){
-                       res.json(update);
+                   Schedule.add(schedule, function(err, schedule){
+                       res.json(schedule);
                    })
                })
            })
        })
     });
 });
+
+
 
 router.get('/', function(req, res, next){
     var students = [
