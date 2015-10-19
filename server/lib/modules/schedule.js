@@ -2,6 +2,7 @@ var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
 var scheduler = {
+    //this fills in 'break' where there were no possible scheduled interviews
     fillGaps: function(scheduled, interviewSlots){
         while(interviewSlots){
             if(!scheduled['slot' + interviewSlots]){
@@ -11,9 +12,9 @@ var scheduler = {
         }
         return scheduled;
     },
+    //this sorts the slot times in numerical order
     sortKeys: function(object){
-            var temporary = object,
-                sorted = {};
+            var temporary = object, sorted = {};
         Object.getOwnPropertyNames(temporary)
             .sort((a,b) => a < b ? 1 : a > b ? -1 : 0)
             .forEach((elem) => sorted[elem] = temporary[elem]);

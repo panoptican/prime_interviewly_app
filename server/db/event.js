@@ -40,6 +40,16 @@ var Event = {
                 callback(null, doc);
             }
         })
+    },
+    addSchedule: function(query, body, callback){
+        EventModel.findOneAndUpdate(query, {$push: {schedule: body}}, function(err, doc){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                callback(null, doc);
+            }
+        })
     }
 };
 

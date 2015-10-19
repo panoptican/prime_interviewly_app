@@ -3,6 +3,7 @@ var router = express.Router();
 var Tools = require('../lib/tools');
 var Students = require('../db/student');
 var Interviewers = require('../db/interviewer');
+var Event = require('../db/event');
 
 router.get('/db', function(req, res, next){
 
@@ -10,7 +11,9 @@ router.get('/db', function(req, res, next){
        Students.find({cohort: 'Delta'}, function(err, students){
            Tools.combine(interviewers, students, function(combinations){
                Tools.schedule(9, interviewers, students, combinations, 6, 2, function(schedule){
-                   res.json(schedule);
+                   Event.addSchedule({name: 'Delta Mock Interviews'}, schedule, function(err, update){
+                       res.json(update);
+                   })
                })
            })
        })
