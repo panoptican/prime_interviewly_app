@@ -33,13 +33,12 @@ var test = require('./routes/test');
 var api = require('./routes/api');
 
 // view engine setup
-// TODO update gulpfile to compile Jade files
-app.set('views', path.join(__dirname, 'app/views'));
+app.set('views', path.join(__dirname, './app/views'));
 app.set('view engine', 'jade');
 
 // serve favicon
 
-app.use(favicon(path.join(__dirname, '..', 'server/app/assets', 'favicon.png')));
+app.use(favicon(path.join(__dirname, '..', 'client/app/assets/img', 'favicon.png')));
 
 // log stuff
 app.use(logger('dev'));
@@ -52,7 +51,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // serve assets
-app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'app')));
 
 // use routes
 app.use('/', index);
