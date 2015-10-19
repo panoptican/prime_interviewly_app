@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
         enabled: true
@@ -79,7 +79,7 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
 app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openInterviewer = function(ev){
         $mdDialog.show({
-            controller: addInterviewer,
+            controller: 'addInterviewer',
             templateUrl: 'views/partials/dialogs/interviewer.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,

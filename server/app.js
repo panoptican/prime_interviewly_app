@@ -8,18 +8,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+// MongoDB connection
 var mongoose = require('mongoose');
-var expressJwt = require('express-jwt');
-
-// Node environment variables and configration
-//var dotenv = require('dotenv').load();
-var config = require('./config/env/development');
-
-//MongoDB connection
 mongoose.connect('mongodb://localhost:27017/interviewly_dev');
-
-// server configration
-var port = process.env.PORT || config.port;
 
 // require routes
 var index = require('./routes/index');
@@ -37,7 +29,6 @@ app.set('views', path.join(__dirname, './app/views'));
 app.set('view engine', 'jade');
 
 // serve favicon
-
 app.use(favicon(path.join(__dirname, '..', 'client/app/assets/img', 'favicon.png')));
 
 // log stuff
@@ -50,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse cookies
 app.use(cookieParser());
 
-// serve assets
+// serve client
 app.use(express.static(path.join(__dirname, '..', 'client', 'app')));
 
 // use routes
