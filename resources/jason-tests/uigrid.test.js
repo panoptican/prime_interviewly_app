@@ -47,7 +47,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
                 // push the company and interviewer name into the column names array
                 // this will be the column header for a particular interviewer
-                gridCols.push({name: item.company + ' / ' + item.name, field: item.company + '_' + item.name, width:150, displayName: item.company + ' / ' + item.name});
+                gridCols.push({name: item.company + ' / ' + item.fName, field: item.company + '_' + item.name, width:150, displayName: item.company + ' / ' + item.fName});
 
                 // set the scheduled object to a variable
                 // this object contains the entire schedule for an interviewer
@@ -62,7 +62,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
                     // create an array of objects that contains each scheduled item
                     // this array will contain the formatted schedule for an interviewer
-                    students.push({[item.company + '_' + item.name]: sched[elem]});
+                    students.push({[item.company + '_' + item.fname]: sched[elem]});
                 });
 
                 // push the updated schedule array into the master gridData array

@@ -2,6 +2,7 @@ var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
 var scheduler = {
+    //this fills in 'break' where there were no possible scheduled interviews
     fillGaps: function(scheduled, interviewSlots){
         while(interviewSlots){
             if(!scheduled['slot' + interviewSlots]){
@@ -11,10 +12,12 @@ var scheduler = {
         }
         return scheduled;
     },
+    //this sorts the slot times in numerical order
     sortKeys: function(object){
-            var temporary = object,
-                sorted = {};
-            Object.getOwnPropertyNames(temporary).sort().forEach((elem) => sorted[elem] = temporary[elem]);
+            var temporary = object, sorted = {};
+        Object.getOwnPropertyNames(temporary)
+            .sort((a,b) => a < b ? 1 : a > b ? -1 : 0)
+            .forEach((elem) => sorted[elem] = temporary[elem]);
             return sorted;
     },
     //this populates an array with the required interview slots and randomizes the order
@@ -64,7 +67,7 @@ var scheduler = {
             student.scheduled.count.total = 1 + (student.scheduled.count.total || 0);
             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
             student.scheduled.with[match.interviewerID] = true;
-            interviewer.scheduled['slot' + currentSlot] = student.name;
+            interviewer.scheduled['slot' + currentSlot] = student.fName;
         }
         //this function updates the student and interviewer objects to schedule a break
         var scheduleBreak = (student, interviewer, currentSlot) => {
@@ -82,8 +85,8 @@ var scheduler = {
                     var student = currentStudents[(i + shifter) % students.length];
 
                     //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
-                if( interview.interviewerID == interviewer.id &&
-                    interview.student == student.name &&
+                if( interview.interviewerID == interviewer._id &&
+                    interview.student == student.fName &&
                     !interview.unavailable['slot' + currentSlot] &&
                     student.scheduled.count.total < interviewMax &&
                     !student.scheduled.with[interview.interviewerID]
@@ -101,7 +104,7 @@ var scheduler = {
                         //if student has no breaks AND interviewer has no breaks AND interviewer is not single
                         else if(!student.scheduled.count.break && interviewer.breaks < 1 && !interviewer.single){
                             var match = {
-                                name: interviewer.name,
+                                name: interviewer.fName,
                                 company: interviewer.company,
                                 student: "Break",
                                 interviewerID: interviewer.id,
@@ -121,7 +124,7 @@ var scheduler = {
                         }
                         else {
                             var match = {
-                                name: interviewer.name,
+                                name: interviewer.fName,
                                 company: interviewer.company,
                                 student: "Break - No Match",
                                 interviewerID: interviewer.id,
@@ -138,6 +141,7 @@ var scheduler = {
             slots.splice(0, 1);
         }
 
+        //check to see if each student has interviewMax, if so, then sort slots and return, if not run scheduler.match again
         if(scheduler.check(students, interviewMax)){
             var lng = m;
             while(m){
