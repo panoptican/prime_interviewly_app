@@ -1,20 +1,22 @@
 md-dialog.student(flex="40")
-        md-toolbar
-            h2.md-display-1(layout="row" layout-margin="auto") Add Student
-        form(name="studentForm" layout="row")
-        md-dialog-content()
-            .inputs(layout="column")
-                md-input-container
-                    label Student Name
-                    input(ng-model="student.name" type="text")
-                md-input-container
-                    label Cohort
-                    input(ng-model="student.cohort" type="text")
-                md-input-container
-                    label Select Event
-                    md-select(ng-model="event")
-                        md-option(ng-repeat="event in events")
-                            p.md-body-1 {{event.name}}
-            .loginbut(layout="row" layout-align="center center")
-                md-button.md-raised() Save
-                md-button.md-raised.md-warn(ng-click="close()") Cancel
+    md-toolbar
+        h2.md-display-1(layout="row" layout-margin="auto") Add Student
+    form(name="studentForm" layout="row")
+    md-dialog-content()
+        .inputs(layout="column")
+            md-input-container
+                label Student Name
+                input(ng-model="student.name" type="text")
+            md-input-container
+                label Select Cohort
+                md-select(ng-model="cohort")
+                    md-option(ng-repeat="cohort in cohorts")
+                        p.md-body-1  {{cohort.name}}
+            md-input-container
+                label Select Event
+                md-select(ng-model="event")
+                    md-option(ng-repeat="event in events")
+                        p.md-body-1  {{event.name}}
+        .loginbut(layout="row" layout-align="center center")
+            md-button.md-raised() Save
+            md-button.md-raised.md-warn(ng-click="close()") Cancel
