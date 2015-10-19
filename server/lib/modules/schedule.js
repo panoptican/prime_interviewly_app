@@ -101,7 +101,7 @@ var scheduler = {
                         //if student has no breaks AND interviewer has no breaks AND interviewer is not single
                         else if(!student.scheduled.count.break && interviewer.breaks < 1 && !interviewer.single){
                             var match = {
-                                name: interviewer.name,
+                                name: interviewer.fName,
                                 company: interviewer.company,
                                 student: "Break",
                                 interviewerID: interviewer.id,
@@ -121,7 +121,7 @@ var scheduler = {
                         }
                         else {
                             var match = {
-                                name: interviewer.name,
+                                name: interviewer.fName,
                                 company: interviewer.company,
                                 student: "Break - No Match",
                                 interviewerID: interviewer.id,
@@ -138,6 +138,7 @@ var scheduler = {
             slots.splice(0, 1);
         }
 
+        //check to see if each student has interviewMax, if so, then sort slots and return, if not run scheduler.match again
         if(scheduler.check(students, interviewMax)){
             var lng = m;
             while(m){
