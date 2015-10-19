@@ -1,14 +1,15 @@
 .welcome
-   .archivedeventsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+   .interviewersheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
       h1.md-display-1 Archived Events
 
-      .searchheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+      .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
          md-content(layout-margin="auto")
-         md-checkbox(aria-label="Last Updated") Last Updated
-         md-checkbox(aria-label="Last Updated") Event Date
-         md-datepicker(ng-model="myDate" md-placeholder="Start Date")
-         md-datepicker(ng-model="myDate" md-placeholder="End Date")
-         md-button.md-raised() Go
+            md-input-container
+               label Search Archived Events
+               input(ng-model="search" type="text")
+         .searchbut(layout="row" layout-align="center center")
+            md-button.md-raised(ng-click="submit()") Go
+               span(flex)
 
    .gridheader(layout="row" layout-align="center center" layout-margin="auto" layout-padding="auto" flex="auto")
       div(ng-controller="eventsCtrl as vm", flex="auto", ng-cloak="" class="eventsCtrl" ng-app="app")
