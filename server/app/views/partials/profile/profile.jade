@@ -10,10 +10,10 @@
                label Email: {{email}}
             md-input-container
                label Password
-               input(ng-model="password" type="text" required)
+               input(ng-model="password" type="password" required)
             md-input-container
                label Confirm Password
-               input(ng-model="confirm" type="text" required)
+               input(ng-model="confirm" type="password" required)
             .savebut(layout="row" layout-align="center center")
                md-button.md-raised(ng-click="save(password)") Save
                   span(flex)

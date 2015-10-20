@@ -8,15 +8,16 @@ router.post('/', function(req, res, next){
                email: req.body.email
            }, function(err, user){
                if(!user){
-                   res.json({error: error})
+                   res.json({error: 'error'})
                }
                user.password = req.body.password;
                user.save(function(err){
                    if(err){
-                       console.log(err);
-                   }
+                       res.json({error: 'error'})
+                   } else
+                       res.json({password: 'changed'})
                });
-               res.json({password: 'changed'})
+
            })
 });
 

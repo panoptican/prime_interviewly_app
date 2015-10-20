@@ -213,14 +213,16 @@ app.controller('logout', ['$rootScope', '$scope','$location', '$interval', funct
         }, 3000, 1)
     };
 }]);
-app.controller('profile', ['$scope', '$http', '$window', function($scope, $http, $window){
+app.controller('profile', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location){
     $scope.username = $window.sessionStorage.username.replace(/^"(.*)"$/, '$1');
     $scope.email = $window.sessionStorage.email.replace(/^"(.*)"$/, '$1');
     $scope.save = function(password){
         var username = $scope.username;
         var email = $scope.email;
         $http.post('/change', {username: username, email: email, password: password}).then(function(response){
-
+            if(response.status === 200){
+                $location.path('/events')
+            }
         });
 
     }
