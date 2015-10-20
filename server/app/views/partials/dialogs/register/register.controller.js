@@ -2,7 +2,7 @@ app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope,
     $scope.openRegister = function(ev){
         $mdDialog.show({
             controller: register,
-            templateUrl: 'views/partials/dialogs/register.dialog.html',
+            templateUrl: 'views/partials/dialogs/register.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true

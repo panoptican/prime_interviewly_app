@@ -2,7 +2,7 @@ app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog
     $scope.openInterviewer = function(ev){
         $mdDialog.show({
             controller: 'addInterviewer',
-            templateUrl: 'views/partials/dialogs/interviewer.dialog.html',
+            templateUrl: 'views/partials/dialogs/interviewer.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true

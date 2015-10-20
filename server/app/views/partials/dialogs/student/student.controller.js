@@ -2,7 +2,7 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
         $mdDialog.show({
             controller: addStudent,
-            templateUrl: 'views/partials/dialogs/student.dialog.html',
+            templateUrl: 'views/partials/dialogs/student.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
