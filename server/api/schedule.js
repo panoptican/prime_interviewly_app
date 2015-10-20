@@ -63,23 +63,4 @@ router.put('/schedule', function(req, res, next){
     }
 });
 
-//
-/* USERS */
-//
-
-/* POST USER CREATE*/
-router.post('/users', function(req, res, next) {
-    console.log(req.body);
-    if (req.body.username.length > 0 && req.body.email.length > 0 && req.body.password.length > 0) {
-        console.log('hello');
-        var user = new User(req.body);
-        user.save(function (err) {
-            if (err) {
-                console.log(err)
-            }
-            res.sendStatus(200);
-        })
-    }
-});
-
 module.exports = router;
