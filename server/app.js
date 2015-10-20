@@ -59,7 +59,7 @@ app.use(cookieParser());
 
 // serve assets
 
-app.use(express.static(path.join(__dirname, '..', 'server', 'app')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'app')));
 // use routes
 app.use('/', index);
 app.use('/authenticate', authenticate);
