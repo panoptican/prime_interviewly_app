@@ -8,7 +8,7 @@ angular.module('app').controller('modalCtrl', function($scope, $mdDialog) {
       $mdDialog.alert()
         .parent(angular.element(document.body))
         .title('You are about to Archive this Event!')
-        .content('Click to confirm. You can access this Event in Archived Events.')
+        .content('Click to confirm. You can access this Event at any time in Archived Events.')
         .ariaLabel('Alert Dialog Demo')
         .ok('Got it!')
         .targetEvent(ev)
@@ -19,14 +19,14 @@ angular.module('app').controller('modalCtrl', function($scope, $mdDialog) {
     var confirm = $mdDialog.confirm()
       .title('Would you like to delete this Event?')
       .content('This will permanently delete this Event.')
-      .ariaLabel('delete')
+      .ariaLabel('Confirm Dialog Demo')
       .ok('Yes, delete this Event!')
-      .cancel('Phew, that was close!')
+      .cancel('No way, that was close!')
       .targetEvent(ev);
     $mdDialog.show(confirm).then(function() {
-      $scope.alert = 'You deleted.';
+      $scope.alert = 'You deleted this event.';
     }, function() {
-      $scope.alert = 'You did not delete';
+      $scope.alert = 'You did not delete this event.';
     });
   };
 });
