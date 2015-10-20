@@ -1,0 +1,22 @@
+.formlay(layout="row" layout-margin="auto")
+   span(flex="20")
+   .md-whiteframe-z2(layout="column" flex="60" style="margin-top:50px")
+      form(name="new-event" ng-controller="profile")
+         h2.md-display-1(layout="row" layout-margin="auto") Profile
+         md-content(layout-margin="auto")
+            md-input-container
+               label Username: {{username}}
+            md-input-container
+               label Email: {{email}}
+            md-input-container
+               label Password
+               input(ng-model="password" type="password" required)
+            md-input-container
+               label Confirm Password
+               input(ng-model="confirm" type="password" required)
+            .savebut(layout="row" layout-align="center center")
+               md-button.md-raised(ng-click="save(password)") Save
+                  span(flex)
+               md-button.md-raised.md-warn(ng-click="close()") Cancel
+   span(flex="20")
+

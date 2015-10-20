@@ -1,0 +1,56 @@
+.formlay(layout="row" layout-margin="auto")
+   span(flex="20")
+   .md-whiteframe-z2(layout="column" flex="60" style="margin-top:50px")
+      form(name="new-event")
+         h2.md-display-1(layout="row" layout-margin="auto") Create New Event
+         md-content(layout-margin="auto")
+
+            md-input-container
+               md-select(name="eventType", placeholder="Event Type", ng-model="eventType", required="")
+                  md-option(value="1") Mock Interviews
+                  md-option(value="2") Career Day
+               .errors(ng-messages="eventType.myModel.$error", ng-if="eventType.$dirty")
+                  div(ng-message="required") Required
+
+
+            md-input-container
+                  label Event Date
+                  input(type="date", ng-model="user.submissionDate" required)
+
+               md-input-container
+                  label Event Title
+                  input(ng-model="title" type="text" required)
+
+               md-input-container
+                  label Event Location
+                  input(ng-model="location" type="text" required)
+
+               md-input-container
+                  label Event Start Time
+                  input(type="time" required)
+
+               md-input-container
+                  label Event End Time
+                  input(type="time" required)
+
+               md-input-container
+                  label Interview Time Slot Duration
+                  input(type="number" required)
+
+               md-input-container
+                  label Event Location
+                  input(ng-model="location" type="text")
+
+               md-input-container
+                  label Event Description
+                  input(ng-model="description" type="text")
+
+                  md-input-container
+                     label Event Organizer
+                     input(ng-model="organzier" type="text")
+
+            .loginbut(layout="row" layout-align="center center")
+               md-button.md-raised(ng-click="submit()") Save New Event
+                  span(flex)
+               md-button.md-raised.md-warn(ng-click="close()") Cancel
+   span(flex="20")

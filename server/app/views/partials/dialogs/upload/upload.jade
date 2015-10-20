@@ -1,0 +1,13 @@
+md-dialog.student(flex="40")
+   md-toolbar
+      h2.md-display-1(layout="row" layout-margin="auto") CSV File Upload
+   form(name="CSVForm" layout="row")
+   md-dialog-content()
+      .inputs(layout="column")
+      form
+         md-input-container
+            label CSV File
+            input(type="text")
+         .loginbut(layout="row" layout-align="center center")
+            md-button.md-raised() Save
+            md-button.md-raised.md-warn(ng-click="close()") Cancel
