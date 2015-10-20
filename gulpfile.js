@@ -33,7 +33,9 @@ gulp.task('copy-libraries', function() {
         'node_modules/angular-route/angular-route.min.js',
         'node_modules/angular-messages/angular-messages.min.js',
         'node_modules/angular-ui-grid/ui-grid.min.js',
-        'node_modules/angular-ui-grid/ui-grid.min.css'])
+        'node_modules/angular-ui-grid/ui-grid.min.css',
+        'node_modules/angular-ui-grid/ui-grid.woff',
+        'node_modules/angular-ui-grid/ui-grid.ttf'])
         .pipe(gulp.dest('client/app/assets/vendor'));
 });
 
