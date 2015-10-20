@@ -7,7 +7,9 @@ var express = require('express'),
 router.get('/:token', function(req, res, next) {
     User.findOne({resetPasswordToken: req.params.token}, function (err, user) {
         if (!user) {
-            res.json({error: 'error'});
+            res.redirect('/#/')
+        } else {
+            res.redirect('/#/reset/'+req.params.token);
         }
     });
 });

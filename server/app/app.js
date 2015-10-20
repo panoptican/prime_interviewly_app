@@ -39,7 +39,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         when('/event', {
             templateUrl: 'views/partials/event/event.html'
         }).
-        when('/:token', {
+        when('/reset/:token', {
             templateUrl: 'views/partials/reset/reset.html',
             controller: 'reset'
         }).
@@ -57,7 +57,7 @@ app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope
         }else{
             $scope.paths = false;
             $scope.user = {
-                username: $window.sessionStorage.username.replace(/^"(.*)"$/, '$1'),
+                username: $window.sessionStorage.username.replace(/^"(.*)"$/, '$1')
             };
         }
     })

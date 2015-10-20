@@ -23,6 +23,7 @@ var reset = require('./routes/reset');
 var change = require('./routes/change')
 
 // require APIs
+var users = require('./api/user');
 var interviewer = require('./api/interviewer');
 var student = require('./api/student');
 var event = require('./api/event');
@@ -62,6 +63,7 @@ app.use('/api/interviewer', interviewer);
 app.use('/api/student', student);
 app.use('/api/event', event);
 app.use('/api/schedule', schedule);
+app.use('/api/users', users);
 app.use('*', index);
 
 // catch 404 and forward to error handler
