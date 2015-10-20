@@ -11,8 +11,9 @@ router.delete('/', function(req, res, next){
         type: req.body.type
     };
     var interviewer = {
-        id: req.body.interviewerID
+        id: req.body.id
     };
+
     Event.removeInterviewer(event, interviewer, function(err, update){
         if(err){
             console.log(err);
