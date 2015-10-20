@@ -59,7 +59,9 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
                 Object.getOwnPropertyNames(sched).forEach(function (elem, index, array) {
                     // create an array of objects that contains each scheduled item
                     // this array will contain the formatted schedule for an interviewer
-                    students.push({[item.company + '_' + item.fname]: sched[elem]});
+                    titleObj = {};
+                    titleObj[item.company + '_' + item.fname] = sched[elem];
+                    students.push(titleObj);
             });
 
             // push the updated schedule array into the master gridData array
