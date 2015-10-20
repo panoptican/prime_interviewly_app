@@ -21,18 +21,7 @@ User.pre('save', function(next){
     userSchema.findOne({ $or: [{username: this.username}, {email: this.email}]}, function(err, results){
         if(err) {
             next(err);
-        }
-        //} else if (results) {
-        //    console.warn('results', results);
-        //    user.invalidate('username', 'username must be unique');
-        //    user.invalidate('email', 'email must be unique');
-        //    if(results.username === user.username) {
-        //        next(new Error('username must be unique'));
-        //    } else{
-        //        next(new Error('email must be unique'));
-        //    }
-        //}else {
-            else if(!user.isModified('password')) return next();
+        } else if(!user.isModified('password')) return next();
             bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
                 if(err) return (err);
                 bcrypt.hash(user.password, salt, function(err, hash){

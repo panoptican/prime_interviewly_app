@@ -421,10 +421,10 @@ select.ui-grid-filter-select:hover {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  white-space: nowrap;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
+  /*white-space: nowrap;*/
+  /*-ms-text-overflow: ellipsis;*/
+  /*-o-text-overflow: ellipsis;*/
+  /*text-overflow: ellipsis;*/
   overflow: hidden;
   height: 100%;
 }

@@ -126,10 +126,17 @@ sftp-config.json
 
 ### User Customizations ###
 .env
-# Created by https://www.gitignore.io/api/code
+client/
 
 ### Code ###
-# Visual Studio Code - https://code.visualstudio.com/
 .settings/
 .vscode/
+
+### Bower ###
+bower_components/
+.bower-cache
+.bower-registry
+.bower-tmp
+
+
 

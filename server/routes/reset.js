@@ -4,22 +4,22 @@ var express = require('express'),
     async = require('async'),
     User = require('../models/users');
 
-router.get('/:token', function(req, res, next){
-   User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}}, function(err, user){
-    if(!user){
-        res.json({error: 'error'})
-    }
-       res.render('reset')
-    })
+router.get('/:token', function(req, res, next) {
+    User.findOne({resetPasswordToken: req.params.token}, function (err, user) {
+        if (!user) {
+            res.json({error: 'error'});
+        }
+    });
 });
 
-router.post('/:token', function(req, res, next){
+router.post('/', function(req, res, next){
     async.waterfall([
         function(done) {
             User.findOne({
-                resetPasswordToken: req.params.token,
+                resetPasswordToken: req.body.token,
                 resetPasswordExpires: {$gt: Date.now()}
             }, function (err, user) {
+                console.log(user);
                 if (!user) {
                     res.json({error: 'error'})
                 }
@@ -51,9 +51,8 @@ router.post('/:token', function(req, res, next){
         });
     }
     ], function(err) {
-    res.redirect('/');
-    }
-)
+    res.json({password: 'changed'});
+    })
 });
 
 module.exports = router;
