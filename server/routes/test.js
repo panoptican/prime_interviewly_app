@@ -49,15 +49,22 @@ router.get('/db', function(req, res, next){
 });
 
 
-router.get('/addStudents', function(req, res, next){
+router.get('/removeStudent', function(req, res, next){
 
-    Event.addStudentsBulk({cohort: req.query.cohort}, {name: req.query.event}, function(err, students){
+    Event.removeStudent({name: req.query.name}, {student: req.query.student}, function(err, doc){
         if(err){
             console.log(err);
         } else {
-            res.json(students);
+            res.json(doc);
         }
     })
+
+});
+
+router.get('/findStudents', function(req, res, next){
+   Event.find({name: req.query.name}, function(err, event){
+       res.json(event.students);
+   })
 });
 
 

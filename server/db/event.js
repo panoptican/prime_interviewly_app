@@ -14,7 +14,7 @@ var Event = {
         callback(null, newEvent);
     },
     find: function(query, callback){
-        EventModel.find(query, function(err, doc){
+        EventModel.findOne(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
@@ -81,6 +81,23 @@ var Event = {
                 console.log(err);
             } else {
                 callback(null, doc);
+            }
+        })
+    },
+    removeStudent: function(eventQuery, studentQuery, callback){
+        EventModel.findOne(eventQuery, function(err, event){
+            if(Object.keys(studentQuery).length > 0){
+                var students = event.students;
+                students.some(function(student, index){
+                    if(studentQuery._id == student._id){
+                        students.splice(index, 1);
+                        return true;
+                    }
+                });
+                EventModel.update({_id: event.id}, {$set : { students: students }}, {new: true}, function(err, doc){
+                    if(err){console.log(err)}
+                    callback(null, doc);
+                })
             }
         })
     }
