@@ -20,6 +20,6 @@
                      img(src="assets/images/logo@0.5x.png" alt="" width="75" height="75" layout-margin="auto")
                md-grid-tile-footer(layout="row" layout-align="end center" flex="auto")
                   .buttonheader
-                     md-button.md-icon-button.md-warn(ng-click="showConfirm($event)")
+                     md-button.md-icon-button.md-warn(ng-controller="alertCtrl" ng-click="showActionToast()")
                         md-icon.i.material-icons delete
 

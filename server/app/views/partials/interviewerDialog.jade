@@ -19,22 +19,6 @@ md-dialog.interviewer(flex="40")
                md-input-container
                   label Company Description
                   input(type="text")
-               md-input-container
-                   label Select Cohort
-                   md-select(ng-model="cohort")
-                       md-option(ng-repeat="cohort in cohorts")
-                           p.md-body-1  {{cohort.name}}
-               md-input-container
-                          label Select Event
-                          md-select(ng-model="event")
-                             md-option(ng-repeat="event in events")
-                                p.md-body-1  {{event.name}}
-               md-input-container
-                  label Availability Start Time
-                  input(type="time")
-               md-input-container
-                  label Availability End Time
-                  input(type="time")
 
             .loginbut(layout="row" layout-align="center center")
                md-button.md-raised() Save
