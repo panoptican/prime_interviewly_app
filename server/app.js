@@ -15,14 +15,17 @@ mongoose.connect('mongodb://localhost:27017/interviewly_dev');
 
 // require routes
 var index = require('./routes/index');
-var authenticate = require('./routes/Authenticate');
+var authenticate = require('./routes/authenticate');
 var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
 var test = require('./routes/test');
 var reset = require('./routes/reset');
 
 // require APIs
-var api = require('./routes/api');
+var interviewer = require('./api/interviewer');
+var student = require('./api/student');
+var event = require('./api/event');
+var schedule = require('./api/schedule');
 
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
@@ -53,7 +56,10 @@ app.use('/forgot', forgot);
 app.use('/reset', reset);
 
 // use APIs
-app.use('/api', api);
+app.use('/api/interviewer', interviewer);
+app.use('/api/student', student);
+app.use('/api/event', event);
+app.use('/api/schedule', schedule);
 app.use('*', index);
 
 // catch 404 and forward to error handler
