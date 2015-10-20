@@ -16,5 +16,8 @@ app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast'
             }
 
         )
+    };
+    $scope.forgot = function(){
+        $location.path('/forgot');
     }
 }]);

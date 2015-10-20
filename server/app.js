@@ -20,7 +20,7 @@ var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
 var test = require('./routes/test');
 var reset = require('./routes/reset');
-var change = require('./routes/change')
+var change = require('./routes/change');
 
 // require APIs
 var users = require('./api/user');
