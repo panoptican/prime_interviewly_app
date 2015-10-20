@@ -1,5 +1,3 @@
-var app = angular.module('app', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
-
 app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
     // time experiments
@@ -24,7 +22,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
     };
 
     // "Generate" button click function
-    $scope.generate = function() {
+    $scope.generate = function () {
 
         // request matches from server given event settings
         $http({
@@ -59,14 +57,15 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
                 // iterate over the scheduled object using the getOwnPropertyNames method
                 Object.getOwnPropertyNames(sched).forEach(function (elem, index, array) {
-
                     // create an array of objects that contains each scheduled item
                     // this array will contain the formatted schedule for an interviewer
-                    students.push({[item.company + '_' + item.fname]: sched[elem]});
-                });
+                    titleObj = {};
+                    titleObj[item.company + '_' + item.fname] = sched[elem];
+                    students.push(titleObj);
+            });
 
-                // push the updated schedule array into the master gridData array
-                gridData.push(students);
+            // push the updated schedule array into the master gridData array
+            gridData.push(students);
             });
 
             // gridData is still not correctly formatted
@@ -87,7 +86,6 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
                 // iterate over the schedule row
                 // each item in the row array represents a single cell in the grid
                 item.forEach(function (elem, index) {
-
                     // use Underscore extend method to "push" each item into row object
                     _.extend(rowObj, elem);
                 });
@@ -105,6 +103,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
             while(slotsSize--) {
                 timeSlots.push({time: 'Slot ' + ((gridArr.length) - slotsSize)});
             }
+
             console.log(timeSlots);
 
             // using Underscore extend again, "push" the array of objects into the master object
@@ -112,14 +111,11 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
             // update the gridData variable
             gridData = gridArr;
-            }
+        }).then(function() {
 
-        // after capturing and formatting the data, update UI Grid options
-        ).then(function() {
+            // after capturing and formatting the data, update UI Grid options
             $scope.gridOptions.columnDefs = gridCols;
             $scope.gridOptions.data = gridData;
-
-        // after updating UI Grid options, force grid refresh
         })
-    }
-}])
+    };
+}]);

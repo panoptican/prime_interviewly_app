@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
         enabled: true
@@ -7,7 +7,6 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         when('/home', {
             templateUrl: 'views/partials/home.html'
         }).
-
         when('/', {
             templateUrl: 'views/partials/login/login.html'
         }).
@@ -23,21 +22,20 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         when('/interviewers', {
             templateUrl: 'views/partials/interviewers/interviewers.html'
         }).
-
         when('/archived-events', {
-            templateUrl: 'views/partials/archivedEvents/archivedEvents.html'
+            templateUrl: 'views/partials/archived-events/archived-events.html'
         }).
-
         when('/profile', {
             templateUrl: 'views/partials/profile/profile.html'
         }).
-
         when('/logout', {
             templateUrl: 'views/partials/logout/logout.html'
         }).
-
         when('/new-event', {
             templateUrl: 'views/partials/new-event/new-event.html'
+        }).
+        when('/event', {
+            templateUrl: 'views/partials/event/event.html'
         }).
         when('/:token', {
             templateUrl: 'views/partials/reset/reset.html',
@@ -47,12 +45,13 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             redirectTo: '/views/partials/login.html'
     })
 }]);
+
 //Student Dialog Controller
 app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
         $mdDialog.show({
             controller: addStudent,
-            templateUrl: 'views/partials/Dialogs/studentDialog.html',
+            templateUrl: 'views/partials/dialogs/student.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -75,12 +74,13 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     }
 
 }]);
+
 //Interviewer Dialog Controller
 app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openInterviewer = function(ev){
         $mdDialog.show({
-            controller: addInterviewer,
-            templateUrl: 'views/partials/Dialogs/interviewerDialog.html',
+            controller: 'addInterviewer',
+            templateUrl: 'views/partials/dialogs/interviewer.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -102,12 +102,13 @@ app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog
     ]
     }
 }]);
+
 //Upload Dialog controller
 app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openUploads = function(ev){
         $mdDialog.show({
             controller: uploadFile,
-            templateUrl: 'views/partials/Dialogs/uploadDialog.html',
+            templateUrl: 'views/partials/dialogs/upload.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -119,12 +120,13 @@ app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
         }
     }
 }]);
+
 //controller for the registration also sends post to create a user
 app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope, $mdDialog){
     $scope.openRegister = function(ev){
         $mdDialog.show({
             controller: register,
-            templateUrl: 'views/partials/Dialogs/register.html',
+            templateUrl: 'views/partials/dialogs/register.dialog.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: true
@@ -148,6 +150,7 @@ app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope,
         };
     }
 }]);
+
 //controller to send reset email
 app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $http, $location){
     $scope.send = function(email) {
@@ -158,6 +161,7 @@ app.controller('sendEmail', ['$scope', '$http', '$location', function($scope, $h
         })
     }
 }]);
+
 //controller to send password to authentication and login to website on confirmation
 app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast', function($rootScope, $scope, $http, $location, $mdToast){
     $scope.submit = function(username, password){
@@ -177,6 +181,7 @@ app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast'
         )
     }
 }]);
+
 //controller for main toolbar
 app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope, $scope, $window){
     $scope.user = $window.sessionStorage;
@@ -190,6 +195,7 @@ app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope
     })
 
 }]);
+
 app.controller('reset',['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
     $scope.changePass = function(password, confirm){
         console.log(password);
@@ -204,6 +210,7 @@ app.controller('reset',['$scope', '$http', '$routeParams', '$location', function
         }
     }
 }]);
+
 //controller for the logout functionality
 app.controller('logout', ['$rootScope', '$scope','$location', '$interval', function($rootScope, $scope, $location, $interval){
     $scope.logout = function(){
@@ -215,6 +222,7 @@ app.controller('logout', ['$rootScope', '$scope','$location', '$interval', funct
         }, 3000, 1)
     };
 }]);
+
 //directive to check the passwords are the same
 app.directive('verifySame', function(){
        return {
