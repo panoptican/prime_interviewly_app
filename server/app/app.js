@@ -49,7 +49,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 }]);
 
 // Toolbar controller
-app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope, $scope, $window){
+app.controller('toolbar', ['$rootScope','$location','$scope', '$window', function($rootScope, $location, $scope, $window){
     $scope.paths = true;
     $rootScope.$on('logged In', function(){
         if($window.sessionStorage.token == undefined){
@@ -61,6 +61,9 @@ app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope
             };
         }
     })
+    $scope.goHome = function(){
+        $location.path('/');
+    }
 }]);
 
 // Directive to check the passwords are the same
