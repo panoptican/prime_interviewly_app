@@ -1,3 +1,5 @@
+
+// Reset controller
 app.controller('reset',['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
     $scope.changePass = function(password, confirm){
         console.log(password);

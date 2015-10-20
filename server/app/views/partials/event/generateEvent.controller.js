@@ -1,3 +1,5 @@
+
+// Generate event controller
 app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
     // time experiments

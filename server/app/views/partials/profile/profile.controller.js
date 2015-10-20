@@ -1,3 +1,5 @@
+
+// Profile controller
 app.controller('profile', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location){
     $scope.username = $window.sessionStorage.username.replace(/^"(.*)"$/, '$1');
     $scope.email = $window.sessionStorage.email.replace(/^"(.*)"$/, '$1');

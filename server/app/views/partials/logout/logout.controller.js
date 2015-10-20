@@ -1,3 +1,5 @@
+
+// Logout controller
 app.controller('logout', ['$rootScope', '$scope','$location', '$interval', function($rootScope, $scope, $location, $interval){
     $scope.logout = function(){
         $location.path('/logout');

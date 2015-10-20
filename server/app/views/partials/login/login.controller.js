@@ -1,3 +1,5 @@
+
+// Login controller
 app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast', function($rootScope, $scope, $http, $location, $mdToast){
     $scope.submit = function(username, password){
         $http.post('/authenticate', {username: username, password: password}).then(function(response){
