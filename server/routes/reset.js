@@ -19,7 +19,6 @@ router.post('/', function(req, res, next){
                 resetPasswordToken: req.body.token,
                 resetPasswordExpires: {$gt: Date.now()}
             }, function (err, user) {
-                console.log(user);
                 if (!user) {
                     res.json({error: 'error'})
                 }

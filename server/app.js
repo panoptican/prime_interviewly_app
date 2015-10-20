@@ -33,6 +33,7 @@ var index = require('./routes/index');
 var authenticate = require('./routes/Authenticate');
 var forgot = require('./routes/forgot');
 var reset = require('./routes/reset');
+var change = require('./routes/change')
 
 // require APIs
 var api = require('./routes/api');
@@ -64,6 +65,7 @@ app.use('/', index);
 app.use('/authenticate', authenticate);
 app.use('/forgot', forgot);
 app.use('/reset', reset);
+app.use('/change', change);
 // use APIs
 app.use('/api', api);
 app.use('*', index);

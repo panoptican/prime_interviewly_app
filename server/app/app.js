@@ -175,13 +175,15 @@ app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast'
 }]);
 //controller for main toolbar
 app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope, $scope, $window){
-    $scope.user = $window.sessionStorage;
     $scope.paths = true;
     $rootScope.$on('logged In', function(){
         if($window.sessionStorage.token == undefined){
             $scope.paths = true;
         }else{
             $scope.paths = false;
+            $scope.user = {
+                username: $window.sessionStorage.username.replace(/^"(.*)"$/, '$1'),
+            };
         }
     })
 
@@ -211,6 +213,18 @@ app.controller('logout', ['$rootScope', '$scope','$location', '$interval', funct
         }, 3000, 1)
     };
 }]);
+app.controller('profile', ['$scope', '$http', '$window', function($scope, $http, $window){
+    $scope.username = $window.sessionStorage.username.replace(/^"(.*)"$/, '$1');
+    $scope.email = $window.sessionStorage.email.replace(/^"(.*)"$/, '$1');
+    $scope.save = function(password){
+        var username = $scope.username;
+        var email = $scope.email;
+        $http.post('/change', {username: username, email: email, password: password}).then(function(response){
+
+        });
+
+    }
+}]);
 //directive to check the passwords are the same
 app.directive('verifySame', function(){
        return {
@@ -219,11 +233,9 @@ app.directive('verifySame', function(){
                otherModelValue: "=compareTo"
            },
            link: function(scope, element, attributes, ngModel) {
-
                ngModel.$validators.compareTo = function(modelValue) {
                    return modelValue == scope.otherModelValue;
                };
-
                scope.$watch("password", function() {
                    ngModel.$validate();
                });
