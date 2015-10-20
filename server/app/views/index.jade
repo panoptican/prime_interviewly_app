@@ -12,9 +12,10 @@ block content
         md-button.md-primary.md-raised.md-hue-1(href="/new-event") Create New Event
         span(flex)
         .menu(layout-align="center center")
-            md-menu(cascade="true" direction="'down'")
-                md-button(ng-click="$mdOpenMenu($event)") menu
-                md-menu-content(width="4")
+            md-menu(cascade="true" direction="'down'" md-offset="60,0")
+                md-button(ng-click="$mdOpenMenu($event)")
+                    md-icon.i.material-icons menu
+                md-menu-content(width="2")
                     md-menu-item
                         md-button(href="/archived-events") ARCHIVED EVENTS
                     md-menu-item
