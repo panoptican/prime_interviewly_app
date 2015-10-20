@@ -186,8 +186,8 @@ app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope
             };
         }
     })
-
 }]);
+//controller for the reset form
 app.controller('reset',['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
     $scope.changePass = function(password, confirm){
         console.log(password);
@@ -213,6 +213,7 @@ app.controller('logout', ['$rootScope', '$scope','$location', '$interval', funct
         }, 3000, 1)
     };
 }]);
+//Controller for the profile form
 app.controller('profile', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location){
     $scope.username = $window.sessionStorage.username.replace(/^"(.*)"$/, '$1');
     $scope.email = $window.sessionStorage.email.replace(/^"(.*)"$/, '$1');
@@ -224,7 +225,6 @@ app.controller('profile', ['$scope', '$http', '$window', '$location', function($
                 $location.path('/events')
             }
         });
-
     }
 }]);
 //directive to check the passwords are the same
