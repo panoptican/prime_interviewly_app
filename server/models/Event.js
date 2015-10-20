@@ -12,7 +12,8 @@ var Event = new Schema({
     interviewDuration: {type: Number, required: true},
     students: Array,
     interviewers: Array,
-    schedule: Array
+    schedule: Array,
+    isArchived: { type: Boolean, default: false }
 });
 
 var eventSchema = mongoose.model('event', Event);

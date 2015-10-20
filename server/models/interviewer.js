@@ -2,13 +2,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Interviewer = new Schema({
-    title:{type: String, required: true},
-    fName:{type: String, required:true},
-    lName:{type: String, required: true},
-    email:{type: String, required: true, unique: true},
-    company: {type: String, required: true},
-    unavailable: {type: Array}
-});
+    title: String,
+    fName: String,
+    lName: String,
+    email: String,
+    company: String,
+    scheduled: {type: Schema.Types.Mixed, default: {}},
+    unavailable: {type: Schema.Types.Mixed, default: {}},
+    breaks: {type: Number, default: 0},
+    single: {type: Boolean, default: true},
+    weight: {type: Schema.Types.Mixed, default:{}}
+}, { minimize: false });
 
 var interviewerSchema = mongoose.model('interviewer', Interviewer);
 

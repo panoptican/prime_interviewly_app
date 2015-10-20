@@ -126,3 +126,17 @@ sftp-config.json
 
 ### User Customizations ###
 .env
+client/
+
+### Code ###
+.settings/
+.vscode/
+
+### Bower ###
+bower_components/
+.bower-cache
+.bower-registry
+.bower-tmp
+
+
+

@@ -1,6 +1,26 @@
 var InterviewerModel = require('../models/interviewer');
+var Converter = require('csvtojson').Converter;
+var converter = new Converter({});
+var fs = require('fs');
 
 var Interviewer = {
+    bulkImport: function(file, callback){
+        fs.createReadStream(file).pipe(converter);
+
+        converter.on("end_parsed", function(array){
+            array.forEach(function(interviewer){
+                Interviewer.add(interviewer, function(err, interviewer){
+                    if(err){
+                        console.log(err);
+                        next(err);
+                    } else {
+                        console.log('added ' + interviewer.fName + " " + interviewer.lName);
+                    }
+                });
+            });
+            callback(null, array);
+        });
+    },
     add: function(body, callback){
         var newInterviewer = new InterviewerModel(body);
         //save interviewer in database

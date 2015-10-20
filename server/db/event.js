@@ -1,4 +1,6 @@
 var EventModel = require('../models/Event');
+var Interviewers = require('../db/interviewer');
+var Students = require('../db/student')
 
 var Event = {
     add: function(body, callback){
@@ -25,7 +27,6 @@ var Event = {
         EventModel.findOneAndRemove(conditions, function(err, doc){
             if(err){
                 console.log(err);
-                next(err);
             } else {
                 callback(null, doc);
             }
@@ -35,7 +36,49 @@ var Event = {
         EventModel.findOneAndUpdate(query, body, {new: true}, function(err, doc){
             if(err){
                 console.log(err);
-                next(err);
+            } else {
+                callback(null, doc);
+            }
+        })
+    },
+    addSchedule: function(query, schedule, callback){
+        EventModel.findOneAndUpdate(query, {$push: {schedule: schedule}}, {new: true}, function(err, doc){
+            if(err){
+                console.log(err);
+            } else {
+                callback(null, doc);
+            }
+        })
+    },
+    addInterviewer: function(interviewerQuery, eventQuery, interviewer, callback){
+        Interviewers.findOne(interviewerQuery, function(err, interviewer){
+            EventModel.findOneAndUpdate(query, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
+                if(err){
+                    console.log(err);
+                } else {
+                    callback(null, doc);
+                }
+            })
+        });
+    },
+    addStudentsBulk: function(cohortQuery, eventQuery, callback){
+        EventModel.findOne(eventQuery, function(err, event){
+            if(event.students.length == 0){
+                Students.find(cohortQuery, function(err, students){
+                    students.forEach(function(student){
+                        Event.addStudentToEvent(student, eventQuery, function(err, doc){
+                            if (err) {console.log(err)}
+                        })
+                    });
+                    callback(null, students);
+                });
+            }
+        });
+    },
+    addStudentToEvent: function(student, event, callback){
+        EventModel.findOneAndUpdate(event, {$push: {students: student._id}}, {new: true}, function(err, doc){
+            if(err){
+                console.log(err);
             } else {
                 callback(null, doc);
             }

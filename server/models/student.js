@@ -2,12 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Student = new Schema({
-    fName: {type: String, required: true},
-    lName: {type: String, required: true},
-    cohort: {type: String, required: true},
-    email: {type: String},
-    preferences: {type: Array}
-});
+    fName: String,
+    lName: String,
+    cohort: String,
+    email: String,
+    scheduled: {
+        with: {type: Schema.Types.Mixed, default: {}},
+        count: {type: Schema.Types.Mixed, default: {
+            total: 0
+        }}
+    },
+    weight: {type: Schema.Types.Mixed, default:{}}
+}, { minimize: false });
 
 var studentSchema = mongoose.model('student', Student);
 
