@@ -44,7 +44,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             controller: 'reset'
         }).
         otherwise({
-            redirectTo: '/views/partials/login.html'
+            redirectTo: '/'
     })
 }]);
 
