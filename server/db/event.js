@@ -1,6 +1,6 @@
 var EventModel = require('../models/Event');
-var Interviewers = require('../db/interviewer');
-var Students = require('../db/student')
+var Interviewers = require('./interviewer');
+var Students = require('./student');
 
 var Event = {
     add: function(body, callback){
@@ -14,7 +14,7 @@ var Event = {
         callback(null, newEvent);
     },
     find: function(query, callback){
-        EventModel.find(query, function(err, doc){
+        EventModel.findOne(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
@@ -50,16 +50,44 @@ var Event = {
             }
         })
     },
-    addInterviewer: function(interviewerQuery, eventQuery, interviewer, callback){
-        Interviewers.findOne(interviewerQuery, function(err, interviewer){
-            EventModel.findOneAndUpdate(query, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
-                if(err){
-                    console.log(err);
+    addInterviewerToEvent: function(event, interviewer, callback){
+        Interviewers.find({_id: interviewer.id}, function(err, interviewer){
+            if(err){
+                console.log(err);
+            } else {
+                if(interviewer){
+                    EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type}, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            callback(null, doc);
+                        }
+                    })
                 } else {
-                    callback(null, doc);
+                    callback(null, 'No interviewer found with that ID.');
                 }
-            })
+            }
         });
+    },
+    removeInterviewer: function(event, interviewerQuery, callback){
+        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
+            if(Object.keys(interviewerQuery).length > 0 && event){
+                event.interviewers.some(function(interviewer, index){
+                    if(interviewerQuery.id == interviewer){
+                        event.interviewers.splice(index, 1);
+                        return true;
+                    }
+                });
+                EventModel.update({_id: event._id}, {$set : { interviewers: event.interviewers }}, function(err, update){
+                    if(err){console.log(err)}
+                    else if (update.nModified == 1){
+                        callback(null, 'Removed interviewer ' + interviewerQuery.id);
+                    } else {
+                        callback(null, 'No interviewer found with that ID.');
+                    }
+                })
+            }
+        })
     },
     addStudentsBulk: function(cohortQuery, eventQuery, callback){
         EventModel.findOne(eventQuery, function(err, event){
@@ -76,11 +104,32 @@ var Event = {
         });
     },
     addStudentToEvent: function(student, event, callback){
-        EventModel.findOneAndUpdate(event, {$push: {students: student._id}}, {new: true}, function(err, doc){
+        EventModel.findOneAndUpdate(event, {$push: {students: student.id}}, {new: true}, function(err, doc){
             if(err){
                 console.log(err);
             } else {
                 callback(null, doc);
+            }
+        })
+    },
+    removeStudent: function(eventQuery, studentQuery, callback){
+        EventModel.findOne({cohort: eventQuery.cohort, type: eventQuery.type}, function(err, event){
+            console.log(event);
+            if(Object.keys(studentQuery).length > 0 && event){
+                event.students.some(function(student, index){
+                    if(studentQuery.id == student){
+                        event.students.splice(index, 1);
+                        return true;
+                    }
+                });
+                EventModel.update({_id: event._id}, {$set : { students: event.students }}, function(err, update){
+                    if(err){console.log(err)}
+                    else if (update.nModified == 1){
+                        callback(null, 'Removed student ' + studentQuery.id);
+                    } else {
+                        callback(null, 'No student found with that ID.');
+                    }
+                })
             }
         })
     }

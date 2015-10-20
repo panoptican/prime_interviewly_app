@@ -26,8 +26,13 @@ var change = require('./routes/change');
 var users = require('./api/user');
 var interviewer = require('./api/interviewer');
 var student = require('./api/student');
-var event = require('./api/event');
+var event = require('./api/event/event');
 var schedule = require('./api/schedule');
+var addInterviewerToEvent = require('./api/event/addInterviewer');
+var addStudentToEvent = require('./api/event/addStudent');
+var getSchedule = require('./api/event/getSchedule');
+var removeStudentFromEvent = require('./api/event/removeStudent');
+var removeInterviewerFromEvent = require('./api/event/removeInterviewer');
 
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
@@ -65,6 +70,11 @@ app.use('/api/event', event);
 app.use('/api/schedule', schedule);
 app.use('/api/users', users);
 app.use('*', index);
+app.use('/api/event/addInterviewer', addInterviewerToEvent);
+app.use('/api/event/addStudent', addStudentToEvent);
+app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
+app.use('/api/event/removeStudent', removeStudentFromEvent);
+app.use('*/reset/*', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

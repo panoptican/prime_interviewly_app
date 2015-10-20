@@ -32,7 +32,7 @@ var Interviewer = {
         callback(null, newInterviewer);
     },
     find: function(query, callback){
-        InterviewerModel.find(query, function(err, doc){
+        InterviewerModel.findOne(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {

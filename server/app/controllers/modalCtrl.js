@@ -19,7 +19,7 @@ angular.module('app').controller('modalCtrl', function($scope, $mdDialog) {
         .ariaLabel('Confirm Dialog Demo')
         .targetEvent(ev)
         .ok('Yes, delete this Event!')
-        .cancel('No way, that was close!')
+        .cancel('No way, that was close!');
 
     $mdDialog.show(confirm).then(function () {
       $scope.status = 'You deleted this event.';
