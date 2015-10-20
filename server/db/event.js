@@ -55,16 +55,39 @@ var Event = {
             if(err){
                 console.log(err);
             } else {
-                console.log(interviewer);
-                EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type}, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
-                    if(err){
-                        console.log(err);
+                if(interviewer){
+                    EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type}, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            callback(null, doc);
+                        }
+                    })
+                } else {
+                    callback(null, 'No interviewer found with that ID.');
+                }
+            }
+        });
+    },
+    removeInterviewer: function(event, interviewerQuery, callback){
+        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
+            if(Object.keys(interviewerQuery).length > 0 && event){
+                event.interviewers.some(function(interviewer, index){
+                    if(interviewerQuery.id == interviewer){
+                        event.interviewers.splice(index, 1);
+                        return true;
+                    }
+                });
+                EventModel.update({_id: event._id}, {$set : { interviewers: event.interviewers }}, function(err, update){
+                    if(err){console.log(err)}
+                    else if (update.nModified == 1){
+                        callback(null, 'Removed interviewer ' + interviewerQuery.id);
                     } else {
-                        callback(null, doc);
+                        callback(null, 'No interviewer found with that ID.');
                     }
                 })
             }
-        });
+        })
     },
     addStudentsBulk: function(cohortQuery, eventQuery, callback){
         EventModel.findOne(eventQuery, function(err, event){
