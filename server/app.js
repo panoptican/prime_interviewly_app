@@ -20,6 +20,7 @@ var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
 var test = require('./routes/test');
 var reset = require('./routes/reset');
+var change = require('./routes/change')
 
 // require APIs
 var interviewer = require('./api/interviewer');
@@ -54,6 +55,7 @@ app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
 app.use('/reset', reset);
+app.use('/change', change);
 
 // use APIs
 app.use('/api/interviewer', interviewer);

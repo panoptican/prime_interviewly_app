@@ -184,18 +184,20 @@ app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast'
 
 //controller for main toolbar
 app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope, $scope, $window){
-    $scope.user = $window.sessionStorage;
     $scope.paths = true;
     $rootScope.$on('logged In', function(){
         if($window.sessionStorage.token == undefined){
             $scope.paths = true;
         }else{
             $scope.paths = false;
+            $scope.user = {
+                username: $window.sessionStorage.username.replace(/^"(.*)"$/, '$1'),
+            };
         }
     })
-
 }]);
 
+//controller for the reset form
 app.controller('reset',['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
     $scope.changePass = function(password, confirm){
         console.log(password);
@@ -223,6 +225,21 @@ app.controller('logout', ['$rootScope', '$scope','$location', '$interval', funct
     };
 }]);
 
+//Controller for the profile form
+app.controller('profile', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location){
+    $scope.username = $window.sessionStorage.username.replace(/^"(.*)"$/, '$1');
+    $scope.email = $window.sessionStorage.email.replace(/^"(.*)"$/, '$1');
+    $scope.save = function(password){
+        var username = $scope.username;
+        var email = $scope.email;
+        $http.post('/change', {username: username, email: email, password: password}).then(function(response){
+            if(response.status === 200){
+                $location.path('/events')
+            }
+        });
+    }
+}]);
+
 //directive to check the passwords are the same
 app.directive('verifySame', function(){
        return {
@@ -231,11 +248,9 @@ app.directive('verifySame', function(){
                otherModelValue: "=compareTo"
            },
            link: function(scope, element, attributes, ngModel) {
-
                ngModel.$validators.compareTo = function(modelValue) {
                    return modelValue == scope.otherModelValue;
                };
-
                scope.$watch("password", function() {
                    ngModel.$validate();
                });
