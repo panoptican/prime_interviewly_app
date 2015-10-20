@@ -24,8 +24,13 @@ var reset = require('./routes/reset');
 // require APIs
 var interviewer = require('./api/interviewer');
 var student = require('./api/student');
-var event = require('./api/event');
+var event = require('./api/event/event');
 var schedule = require('./api/schedule');
+var addInterviewerToEvent = require('./api/event/addInterviewer');
+var addStudentToEvent = require('./api/event/addStudent');
+var getSchedule = require('./api/event/getSchedule');
+var removeStudentFromEvent = require('./api/event/removeStudent');
+var removeInterviewerFromEvent = require('./api/event/removeInterviewer');
 
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
@@ -53,14 +58,18 @@ app.use('/test', test);
 app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
-app.use('/reset', reset);
+//app.use('/reset', reset);
 
 // use APIs
 app.use('/api/interviewer', interviewer);
 app.use('/api/student', student);
 app.use('/api/event', event);
 app.use('/api/schedule', schedule);
-app.use('*', index);
+app.use('/api/event/addInterviewer', addInterviewerToEvent);
+app.use('api/event/addStudent', addStudentToEvent);
+app.use('api/event/removeInterviewer', removeInterviewerFromEvent);
+app.use('api/event/removeStudent', removeStudentFromEvent);
+app.use('*/reset/*', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

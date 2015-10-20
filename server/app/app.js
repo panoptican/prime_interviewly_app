@@ -37,12 +37,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         when('/event', {
             templateUrl: 'views/partials/event/event.html'
         }).
-        when('/:token', {
-            templateUrl: 'views/partials/reset/reset.html',
-            controller: 'reset'
+        when('/reset/:token', {
+            controller: 'reset',
+            templateUrl: 'views/partials/reset/reset.html'
         }).
         otherwise({
-            redirectTo: '/views/partials/login.html'
+            redirectTo: '/'
     })
 }]);
 
@@ -197,6 +197,7 @@ app.controller('toolbar', ['$rootScope','$scope', '$window', function($rootScope
 }]);
 
 app.controller('reset',['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location){
+    console.log($routeParams.token);
     $scope.changePass = function(password, confirm){
         console.log(password);
         var token = $routeParams.token;

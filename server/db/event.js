@@ -1,6 +1,6 @@
 var EventModel = require('../models/Event');
-var Interviewers = require('../db/interviewer');
-var Students = require('../db/student')
+var Interviewers = require('./interviewer');
+var Students = require('./student');
 
 var Event = {
     add: function(body, callback){
@@ -50,15 +50,20 @@ var Event = {
             }
         })
     },
-    addInterviewer: function(interviewerQuery, eventQuery, interviewer, callback){
-        Interviewers.findOne(interviewerQuery, function(err, interviewer){
-            EventModel.findOneAndUpdate(query, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
-                if(err){
-                    console.log(err);
-                } else {
-                    callback(null, doc);
-                }
-            })
+    addInterviewer: function(event, interviewer, callback){
+        Interviewers.find({_id: interviewer.id}, function(err, interviewer){
+            if(err){
+                console.log(err);
+            } else {
+                console.log(interviewer);
+                EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type}, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        callback(null, doc);
+                    }
+                })
+            }
         });
     },
     addStudentsBulk: function(cohortQuery, eventQuery, callback){
