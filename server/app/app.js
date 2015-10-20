@@ -35,7 +35,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
         when('/new-event', {
             templateUrl: 'views/partials/new-event/new-event.html'
         }).
-        when('/:token', {
+        when('/reset/:token', {
             templateUrl: 'views/partials/reset/reset.html',
             controller: 'reset'
         }).
