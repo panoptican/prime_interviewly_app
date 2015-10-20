@@ -5,9 +5,13 @@
          md-content(layout-padding)
             md-input-container
                label Username
-               input(ng-model="username" type="text")
+               input(ng-model="username" type="text" name="username")
+               .messageuser(ng-messages="login.username.$error" role="alert")
+                  .messageuser1(ng-message="required") Please enter username
             md-input-container
                label Password
+               .messagepass(ng-messages="login.password.$error" role="alert")
+                  .messagepass1(ng-message="required") Please enter password
                input(ng-model="password" type="password")
          .loginbut(layout="row" layout-align="center center")
             md-button.md-raised(ng-click="submit(username, password)") Login
