@@ -2,11 +2,9 @@ var express = require('express');
 var router = express.Router();
 var Event = require('../../db/event');
 
-router.get('/', function(req, res, next){
-   res.sendStatus(200);
-});
 
 /* DELETE remove interviewer from event */
+
 router.delete('/', function(req, res, next){
     var event = {
         cohort: req.body.cohort,

@@ -50,7 +50,7 @@ var Event = {
             }
         })
     },
-    addInterviewer: function(event, interviewer, callback){
+    addInterviewerToEvent: function(event, interviewer, callback){
         Interviewers.find({_id: interviewer.id}, function(err, interviewer){
             if(err){
                 console.log(err);
@@ -104,7 +104,7 @@ var Event = {
         });
     },
     addStudentToEvent: function(student, event, callback){
-        EventModel.findOneAndUpdate(event, {$push: {students: student._id}}, {new: true}, function(err, doc){
+        EventModel.findOneAndUpdate(event, {$push: {students: student.id}}, {new: true}, function(err, doc){
             if(err){
                 console.log(err);
             } else {
@@ -113,18 +113,21 @@ var Event = {
         })
     },
     removeStudent: function(eventQuery, studentQuery, callback){
-        EventModel.findOne(eventQuery, function(err, event){
-            if(Object.keys(studentQuery).length > 0){
-                var students = event.students;
-                students.some(function(student, index){
-                    if(studentQuery._id == student._id){
-                        students.splice(index, 1);
+        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
+            if(Object.keys(interviewerQuery).length > 0 && event){
+                event.interviewers.some(function(interviewer, index){
+                    if(interviewerQuery.id == interviewer){
+                        event.interviewers.splice(index, 1);
                         return true;
                     }
                 });
-                EventModel.update({_id: event.id}, {$set : { students: students }}, {new: true}, function(err, doc){
+                EventModel.update({_id: event._id}, {$set : { interviewers: event.interviewers }}, function(err, update){
                     if(err){console.log(err)}
-                    callback(null, doc);
+                    else if (update.nModified == 1){
+                        callback(null, 'Removed interviewer ' + interviewerQuery.id);
+                    } else {
+                        callback(null, 'No interviewer found with that ID.');
+                    }
                 })
             }
         })

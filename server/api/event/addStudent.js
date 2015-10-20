@@ -11,7 +11,7 @@ router.post('/', function(req, res, next){
             type: req.body.type
         };
         var student = {
-            id: req.student.interviewerID
+            id: req.body.id
         };
         Event.addStudentToEvent(student, event, function(err, student){
             if(err){

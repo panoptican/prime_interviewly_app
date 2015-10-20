@@ -11,9 +11,9 @@ router.post('/', function(req, res, next){
             type: req.body.type
         };
         var interviewer = {
-          id: req.body.interviewerID
+          id: req.body.id
         };
-        Event.addInterviewer(event, interviewer, function(err, interviewer){
+        Event.addInterviewerToEvent(event, interviewer, function(err, interviewer){
             if(err){
                 console.log(err);
                 next(err);
