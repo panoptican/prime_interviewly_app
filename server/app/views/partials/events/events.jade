@@ -21,9 +21,10 @@
 
                     md-grid-tile-footer(layout="row" layout-align="end center")
                         .buttonheader
-                            md-button.md-icon-button.md-primary(ng-controller="alertCtrl" ng-click="showSimpleToast()")
+                            md-button.md-icon-button.md-primary(ng-controller="modalCtrl" ng-click="showAlert($event)")
                                 md-icon.i.material-icons archive
-                            md-button.md-icon-button.md-warn(ng-controller="alertCtrl" ng-click="showActionToast()")
+                            md-button.md-icon-button.md-warn(ng-controller="modalCtrl" ng-click="showConfirm($event)")
                                 md-icon.i.material-icons delete
-
-
+                            br
+                            b(layout="row", layout-align="center center", layout-margin="")
+                                | {{alert}}
