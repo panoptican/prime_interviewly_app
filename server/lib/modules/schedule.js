@@ -1,6 +1,8 @@
 var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
 
+var counter = 0;
+
 var scheduler = {
     //this fills in 'break' where there were no possible scheduled interviews
     fillGaps: function(scheduled, interviewSlots){
@@ -149,6 +151,7 @@ var scheduler = {
                 interviewer.scheduled = scheduler.fillGaps(interviewer.scheduled, interviewSlots);
                 interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
             }
+            counter = 0;
             return {interviewer: interviewers};
         } else {
             var l = initStudents.length, m = initInterviewers.length, lng = l, lng2 = m;
@@ -162,6 +165,13 @@ var scheduler = {
                 interviewer.scheduled = {};
                 interviewer.breaks = 0;
             }
+            counter++;
+            //if no matches can be found after 4 tries, decrement interviewMax
+            if(counter > 4){
+                counter = 0;
+                interviewMax--;
+            }
+
             return this.match(interviewSlots, initInterviewers, initStudents, initCombinations, interviewMax, companyMax);
         }
     }
