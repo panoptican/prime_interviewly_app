@@ -11,5 +11,16 @@ app.controller('profile', ['$scope', '$http', '$window', '$location', function($
                 $location.path('/events')
             }
         });
+    };
+    $scope.switch = function(){
+        var off = disabled;
+        var on = enabled;
+
+        if($scope.enabled = off){
+            $scope.enabled = on
+        } else {
+            $scope.enabled = off;
+        }
+        console.log($scope.enabled)
     }
 }]);

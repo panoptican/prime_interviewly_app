@@ -21,9 +21,10 @@ md-dialog.student(flex="40")
                   .messageuser1(ng-message="required") *Required
             md-input-container
                label Confirm Password
-               input(ng-model="confirm" type="password" name="confirm" required)
+               input(ng-model="confirm" type="password" name="confirm" required data-password-verify="password")
                .messageuser(ng-messages="regForm.confirm.$error")
-                  .messageuser1(ng-message="required") *Required
+                  .div(ng-message="required") *Required
+                  .div(ng-message="passwordVerify") Password doesn't match
             .regbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="register(username, email, password)") Submit
+               md-button.md-raised(ng-disabled="regForm.$invalid" ng-click="register(username, email, password)") Submit
                md-button.md-raised.md-warn(ng-click="close()") Cancel

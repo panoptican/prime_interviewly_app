@@ -35,5 +35,5 @@ md-dialog.interviewer(flex="40")
                .messagedesc(ng-messages="interviewerForm.description.$error")
                   .messagedesc1(ng-message="required") *Required
             .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="submit(fname, lname, title, company, link, description)") Save
+               md-button.md-raised(ng-disabled="interviewerForm.$invalid" ng-click="submit(fname, lname, title, company, link, description)") Save
                md-button.md-raised.md-warn(ng-click="close()") Cancel

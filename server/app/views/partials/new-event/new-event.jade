@@ -46,6 +46,6 @@
                label Event Organizer
                input(ng-model="organizer" name="organizer" type="text")
             .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="submit(eventType, date, title, location, sTime, eTime, slotDur, description, organizer)") Save New Event
+               md-button.md-raised(ng-disabled="newEvent.$invalid" ng-click="submit(eventType, date, title, location, sTime, eTime, slotDur, description, organizer)") Save New Event
                   span(flex)
    span(flex="20")
