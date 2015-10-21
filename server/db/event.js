@@ -50,8 +50,8 @@ var Event = {
             }
         })
     },
-    addInterviewerToEvent: function(event, interviewer, callback){
-        Interviewers.find({_id: interviewer.id}, function(err, interviewer){
+    addInterviewerToEvent: function(event, interviewerQuery, callback){
+        Interviewers.find({fName: interviewerQuery.fName, company: interviewerQuery.company}, function(err, interviewer){
             if(err){
                 console.log(err);
             } else {
