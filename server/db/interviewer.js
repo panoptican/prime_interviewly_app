@@ -78,6 +78,26 @@ var Interviewer = {
                 callback(null, doc);
             }
         })
+    },
+    addWeight: function(query, weight, callback){
+        InterviewerModel.findOneAndUpdate(query, weight, {new: true}, function(err, doc){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                callback(null, doc);
+            }
+        })
+    },
+    editUnavail: function(query, slots, callback){
+        InterviewerModel.findOneAndUpdate(query, {unavailable: slots}, {new: true}, function(err, doc){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                callback(null, doc);
+            }
+        })
     }
 };
 

@@ -34,6 +34,9 @@ var addBulkStudentsToEvent = require('./api/event/addBulkStudents');
 var getSchedule = require('./api/event/getSchedule');
 var removeStudentFromEvent = require('./api/event/removeStudent');
 var removeInterviewerFromEvent = require('./api/event/removeInterviewer');
+var interviewerAddWeight = require('./api/interviewer/addWeight');
+var studentAddWeight = require('./api/student/addWeight');
+var interviewerUnavail = require('./api/interviewer/unavail');
 
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
@@ -69,7 +72,6 @@ app.use('/api/student', student);
 app.use('/api/event', event);
 app.use('/api/schedule', schedule);
 app.use('/api/users', users);
-app.use('*', index);
 app.use('/api/event/addInterviewer', addInterviewerToEvent);
 app.use('/api/event/addStudent', addStudentToEvent);
 app.use('/api/event/addBulkStudents', addBulkStudentsToEvent);
@@ -77,7 +79,10 @@ app.use('/api/event/addBulkInterviewers', addBulkInterviewersToEvent);
 app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
 app.use('/api/event/removeStudent', removeStudentFromEvent);
 app.use('/api/event/getSchedule', getSchedule);
-app.use('*/reset/*', index);
+app.use('/api/interviewer/addWeight', interviewerAddWeight);
+app.use('/api/student/addWeight', studentAddWeight);
+app.use('/api/interviewer/unavail', interviewerUnavail);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
