@@ -1,4 +1,4 @@
-.formlay(layout="row" layout-margin="auto")
+.formlay(layout="row" layout-margin="auto" ng-controller="newEventCtrl")
    span(flex="20")
    .md-whiteframe-z2(layout="column" flex="60" style="margin-top:50px")
       h2.md-display-1(layout="row" layout-margin="auto") Create New Event
@@ -44,8 +44,8 @@
                input(ng-model="description" name="description" type="text")
             md-input-container
                label Event Organizer
-               input(ng-model="organzier" name="organizer" type="text")
+               input(ng-model="organizer" name="organizer" type="text")
             .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="submit()") Save New Event
+               md-button.md-raised(ng-click="submit(eventType, date, title, location, sTime, eTime, slotDur, description, organizer)") Save New Event
                   span(flex)
    span(flex="20")
