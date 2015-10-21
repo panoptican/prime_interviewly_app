@@ -3,7 +3,7 @@ var router = express.Router();
 var Student = require('../../db/student');
 
 /* GET students */
-router.get('/students', function(req, res, next) {
+router.get('/', function(req, res, next) {
     var query = req.query || {};
     Student.find(query, function(err, data){
         if(err){
@@ -16,7 +16,7 @@ router.get('/students', function(req, res, next) {
 });
 
 /* POST add new student */
-router.post('/students', function(req, res, next){
+router.post('/', function(req, res, next){
     if(Object.keys(req.body).length > 0){
         Student.add(req.body, function(err, data){
             if(err){
@@ -32,7 +32,7 @@ router.post('/students', function(req, res, next){
 });
 
 /* DELETE student */
-router.delete('/students', function(req, res, next){
+router.delete('/', function(req, res, next){
     if(Object.keys(req.query).length > 0){
         Student.delete(req.query, function(err, data){
             if(err){
@@ -48,7 +48,7 @@ router.delete('/students', function(req, res, next){
 });
 
 /* PUT update student */
-router.put('/students', function(req, res, next){
+router.put('/', function(req, res, next){
     if(Object.keys(req.query).length > 0){
         Student.update(req.query, req.body, function(err, data){
             if(err){
