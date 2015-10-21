@@ -11,6 +11,13 @@ app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
         })
     };
     function uploadFile($scope, $mdDialog){
+
+        $scope.submit = function(file){
+            var mine = {
+                file: file
+            };
+        console.log(mine);
+        };
         $scope.close = function() {
             $mdDialog.hide();
         }
