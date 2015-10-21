@@ -69,7 +69,6 @@ app.use('/api/student', student);
 app.use('/api/event', event);
 app.use('/api/schedule', schedule);
 app.use('/api/users', users);
-app.use('*', index);
 app.use('/api/event/addInterviewer', addInterviewerToEvent);
 app.use('/api/event/addStudent', addStudentToEvent);
 app.use('/api/event/addBulkStudents', addBulkStudentsToEvent);
@@ -77,7 +76,6 @@ app.use('/api/event/addBulkInterviewers', addBulkInterviewersToEvent);
 app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
 app.use('/api/event/removeStudent', removeStudentFromEvent);
 app.use('/api/event/getSchedule', getSchedule);
-app.use('*/reset/*', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

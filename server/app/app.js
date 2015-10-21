@@ -9,7 +9,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     });
     $routeProvider.
         when('/home', {
-            templateUrl: 'views/partials/home.html'
+            templateUrl: 'views/partials/home/home.html'
         }).
         when('/', {
             templateUrl: 'views/partials/login/login.html'
