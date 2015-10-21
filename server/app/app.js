@@ -1,7 +1,13 @@
 var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 
 // Angular routing
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function($routeProvider, $locationProvider, $mdThemingProvider){
+
+
+    $mdThemingProvider.theme('default')
+        .primaryPalette('blue-grey')
+        .accentPalette('orange');
+
     $locationProvider.html5Mode({
         enabled: true
     });
