@@ -41,8 +41,8 @@ var Student = {
             }
         });
     },
-    findCohort: function(query, callback){
-      StudentModel.find(query, function(err, doc){
+    findCohort: function(query, conditions, callback){
+      StudentModel.find(query, conditions, function(err, doc){
           if(err){
               console.log(err);
           } else {
@@ -73,6 +73,16 @@ var Student = {
     update: function(query, body, callback) {
         StudentModel.findOneAndUpdate(query, body, {new: true}, function (err, doc) {
             if (err) {
+                console.log(err);
+                next(err);
+            } else {
+                callback(null, doc);
+            }
+        })
+    },
+    addWeight: function(query, weight, callback){
+        StudentModel.findOneAndUpdate(query, weight, {new: true}, function(err, doc){
+            if(err){
                 console.log(err);
                 next(err);
             } else {

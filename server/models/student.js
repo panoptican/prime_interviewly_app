@@ -12,7 +12,7 @@ var Student = new Schema({
             total: 0
         }}
     },
-    weight: {type: Schema.Types.Mixed, default:{}},
+    weights: Array,
     isArchived: {type: Boolean, default: false}
 }, { minimize: false });
 
