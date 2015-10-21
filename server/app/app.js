@@ -1,6 +1,8 @@
 var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 
-// Angular routing
+/*
+ Angular routing
+  */
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $locationProvider.html5Mode({
         enabled: true
@@ -48,7 +50,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     })
 }]);
 
-// Toolbar controller
+/*
+Toolbar controller
+ */
 app.controller('toolbar', ['$rootScope','$location','$scope', '$window', function($rootScope, $location, $scope, $window){
     $scope.paths = true;
     $rootScope.$on('logged In', function(){
@@ -66,7 +70,9 @@ app.controller('toolbar', ['$rootScope','$location','$scope', '$window', functio
     }
 }]);
 
-// Directive to check the passwords are the same
+/*
+Directive to check the passwords are the same
+ */
 app.directive('verifySame', function(){
        return {
            require: "ngModel",
