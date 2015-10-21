@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Event = require('../../db/event');
 
-
 /* DELETE remove interviewer from event */
 
 router.delete('/', function(req, res, next){

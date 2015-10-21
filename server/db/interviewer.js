@@ -40,6 +40,15 @@ var Interviewer = {
             }
         });
     },
+    findMany: function(array, callback){
+        InterviewerModel.find({_id: {$in: array}}, function(err, docs){
+            if(err){
+                console.log(err);
+            } else {
+                callback(null, docs);
+            }
+        })
+    },
     delete: function(query, callback){
         var conditions = query || {};
         InterviewerModel.findOneAndRemove(conditions, function(err, doc){

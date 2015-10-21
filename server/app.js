@@ -74,6 +74,7 @@ app.use('/api/event/addInterviewer', addInterviewerToEvent);
 app.use('/api/event/addStudent', addStudentToEvent);
 app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
 app.use('/api/event/removeStudent', removeStudentFromEvent);
+app.use('/api/event/getSchedule', getSchedule)
 app.use('*/reset/*', index);
 
 // catch 404 and forward to error handler
