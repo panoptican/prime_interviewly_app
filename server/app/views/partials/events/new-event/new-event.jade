@@ -7,19 +7,19 @@
             md-input-container
                label Event Type
                md-select(name="eventType" ng-model="eventType" required)
-                  md-option(value="1") Mock Interviews
-                  md-option(value="2") Career Day
+                  md-option(value="Mock Interviews") Mock Interviews
+                  md-option(value="Career Day") Career Day
                div(ng-messages="newEvent.eventType.$error")
                   div(ng-message="required") *Required
             md-input-container
+               label Cohort
+               input(ng-model="cohort" name="cohort" type="text" required)
+               div(ng-messages="newEvent.cohort.$error")
+                  div(ng-message="required") *Required
+             md-input-container
                label Event Date
                input(type="date" name="date" ng-model="date" required)
                div(ng-messages="newEvent.date.$error")
-                  div(ng-message="required") *Required
-            md-input-container
-               label Event Title
-               input(ng-model="title" name="title" type="text" required)
-               div(ng-messages="newEvent.title.$error")
                   div(ng-message="required") *Required
             md-input-container
                label Event Location
@@ -39,9 +39,6 @@
                input(type="number" ng-model="slotDur" name="slotDur" required)
                div(ng-messages="newEvent.slotDur.$error")
                   div(ng-message="required") *Required
-            md-input-container
-               label Event Description
-               input(ng-model="description" name="description" type="text")
             md-input-container
                label Event Organizer
                input(ng-model="organizer" name="organizer" type="text")
