@@ -89,12 +89,12 @@ var Event = {
             }
         })
     },
-    addStudentsBulk: function(cohortQuery, eventQuery, callback){
-        EventModel.findOne(eventQuery, function(err, event){
+    addStudentsBulk: function(event, callback){
+        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
             if(event.students.length == 0){
-                Students.find(cohortQuery, function(err, students){
+                Students.findCohort({cohort: event.cohort}, function(err, students){
                     students.forEach(function(student){
-                        Event.addStudentToEvent(student, eventQuery, function(err, doc){
+                        Event.addStudentToEvent(student, {_id: event._id}, function(err, doc){
                             if (err) {console.log(err)}
                         })
                     });

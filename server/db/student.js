@@ -41,6 +41,15 @@ var Student = {
             }
         });
     },
+    findCohort: function(query, callback){
+      StudentModel.find(query, function(err, doc){
+          if(err){
+              console.log(err);
+          } else {
+              callback(null, doc);
+          }
+      })
+    },
     findMany: function(array, callback){
       StudentModel.find({_id: {$in: array}}, function(err, docs){
           if(err){
