@@ -69,24 +69,14 @@ var Event = {
             }
         });
     },
-    removeInterviewer: function(event, interviewerQuery, callback){
-        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
-            if(Object.keys(interviewerQuery).length > 0 && event){
-                event.interviewers.some(function(interviewer, index){
-                    if(interviewerQuery.id == interviewer){
-                        event.interviewers.splice(index, 1);
-                        return true;
-                    }
-                });
-                EventModel.update({_id: event._id}, {$set : { interviewers: event.interviewers }}, function(err, update){
-                    if(err){console.log(err)}
-                    else if (update.nModified == 1){
-                        callback(null, 'Removed interviewer ' + interviewerQuery.id);
-                    } else {
-                        callback(null, 'No interviewer found with that ID.');
-                    }
-                })
-            }
+    removeInterviewer: function(event, interviewer, callback){
+        EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
+            { $pull: {interviewers: {fName: interviewer.fName, company: interviewer.company}}}, {new: true}, function(err, event){
+                if(err){
+                    console.log(err);
+                } else {
+                    callback(null, event);
+                }
         })
     },
     addBulkStudents: function(event, callback){
@@ -118,26 +108,15 @@ var Event = {
             }
         })
     },
-    removeStudent: function(eventQuery, studentQuery, callback){
-        EventModel.findOne({cohort: eventQuery.cohort, type: eventQuery.type}, function(err, event){
-            console.log(event);
-            if(Object.keys(studentQuery).length > 0 && event){
-                event.students.some(function(student, index){
-                    if(studentQuery.id == student){
-                        event.students.splice(index, 1);
-                        return true;
-                    }
-                });
-                EventModel.update({_id: event._id}, {$set : { students: event.students }}, function(err, update){
-                    if(err){console.log(err)}
-                    else if (update.nModified == 1){
-                        callback(null, 'Removed student ' + studentQuery.id);
-                    } else {
-                        callback(null, 'No student found with that ID.');
-                    }
-                })
-            }
-        })
+    removeStudent: function(event, student, callback){
+        EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
+            { $pull: {students: {fName: student.fName, lName: student.lName}}}, {new: true}, function(err, event){
+                if(err){
+                    console.log(err);
+                } else {
+                    callback(null, event);
+                }
+            })
     }
 };
 

@@ -5,23 +5,17 @@ var Event = require('../../db/event');
 /* DELETE remove a student from an event */
 
 router.delete('/', function(req, res, next){
-    var event = {
-        cohort: req.body.cohort,
-        type: req.body.type
-    };
-    var student = {
-        id: req.body.id
-    };
+    var event = req.query,
+        student = req.body;
 
-    Event.removeStudent(event, student, function(err, response){
+    Event.removeStudent(event, student, function(err, update){
         if(err){
             console.log(err);
             next(err);
         } else {
-            res.json(response);
+            res.json(update);
         }
     })
-
 });
 
 module.exports = router;

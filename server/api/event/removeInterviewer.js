@@ -5,13 +5,8 @@ var Event = require('../../db/event');
 /* DELETE remove interviewer from event */
 
 router.delete('/', function(req, res, next){
-    var event = {
-        cohort: req.body.cohort,
-        type: req.body.type
-    };
-    var interviewer = {
-        id: req.body.id
-    };
+    var event = req.query,
+        interviewer = req.body;
 
     Event.removeInterviewer(event, interviewer, function(err, update){
         if(err){
