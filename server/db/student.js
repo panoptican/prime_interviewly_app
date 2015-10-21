@@ -33,7 +33,7 @@ var Student = {
         callback(null, newStudent);
     },
     find: function(query, callback){
-        StudentModel.findOne(query, function(err, doc){
+        StudentModel.find(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
