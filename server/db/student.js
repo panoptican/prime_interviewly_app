@@ -50,7 +50,7 @@ var Student = {
           }
       })
     },
-    findMany: function(array, callback){
+    findManyById: function(array, callback){
       StudentModel.find({_id: {$in: array}}, function(err, docs){
           if(err){
               console.log(err);
