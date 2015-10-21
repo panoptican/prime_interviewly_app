@@ -1,5 +1,7 @@
 
-// Interviewer dialog controller
+/*
+Interviewer dialog controller
+ */
 app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openInterviewer = function(ev){
         $mdDialog.show({

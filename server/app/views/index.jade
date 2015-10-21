@@ -2,17 +2,17 @@ extends layout
 block content
     md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3" ng-controller="toolbar")
         md-button(href="/home") Interviewly for
-        img(src="assets/img/prime-logo.png" alt="" width="48" height="48" layout-margin="auto")
+        img(ng-click="goHome()" src="assets/img/prime-logo.png" alt="prime-logo" width="48" height="48" layout-margin="auto")
         md-button(href="/events" ng-hide="paths") Events
         md-button(href="/students" ng-hide="paths") Students
         md-button(href="/interviewers" ng-hide="paths") Interviewers
         md-button.md-primary.md-raised.md-hue-1(href="/new-event" ng-hide="paths") Create New Event
         span(flex)
-        .menu(layout-align="center center")
 
+        .menu(layout-align="center center")
             md-menu(cascade="true" direction="'down'" ng-hide="paths" md-offset="60,0")
-                md-button(ng-click="$mdOpenMenu($event)") WELCOME {{user.username}}
-                    md-icon.i.material-icons expand_more
+                md-button(ng-click="$mdOpenMenu($event)") WELCOME {{user.username}}!
+                    md-icon.i.material-icons(layout-margin="auto") menu
 
                 md-menu-content(width="2")
 

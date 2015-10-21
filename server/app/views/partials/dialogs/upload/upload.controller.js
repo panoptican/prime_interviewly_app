@@ -1,5 +1,7 @@
 
-// Student dialog controller
+/*
+Student dialog controller
+ */
 app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openUploads = function(ev){
         $mdDialog.show({

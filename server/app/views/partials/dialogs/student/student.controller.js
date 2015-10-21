@@ -1,5 +1,7 @@
 
-// Student dialog controller
+/*
+Student dialog controller
+ */
 app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
         $mdDialog.show({

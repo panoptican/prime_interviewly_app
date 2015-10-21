@@ -1,4 +1,5 @@
 var InterviewerModel = require('../models/interviewer');
+var Student = require('./student');
 var Converter = require('csvtojson').Converter;
 var converter = new Converter({});
 var fs = require('fs');
@@ -31,14 +32,32 @@ var Interviewer = {
         });
         callback(null, newInterviewer);
     },
-    find: function(query, callback){
-        InterviewerModel.findOne(query, function(err, doc){
+    find: function(query, projection, callback){
+        InterviewerModel.findOne(query, projection, function(err, doc){
             if(err){
                 console.log(err);
             } else {
                 callback(null, doc);
             }
         });
+    },
+    findMany: function(query, projection, callback){
+      InterviewerModel.find(query, projection, function(err, docs){
+          if(err){
+              console.log(err);
+          } else {
+              callback(null, docs);
+          }
+      })
+    },
+    findManyById: function(array, callback){
+        InterviewerModel.find({_id: {$in: array}}, function(err, docs){
+            if(err){
+                console.log(err);
+            } else {
+                callback(null, docs);
+            }
+        })
     },
     delete: function(query, callback){
         var conditions = query || {};
@@ -53,6 +72,28 @@ var Interviewer = {
     },
     update: function(query, body, callback){
         InterviewerModel.findOneAndUpdate(query, body, {new: true}, function(err, doc){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                callback(null, doc);
+            }
+        })
+    },
+    addWeight: function(query, weight, callback){
+        Student.find({fName: query.studentFirst, lName: query.studentLast}, function(err, student){
+            InterviewerModel.findOneAndUpdate({fName: query.fName, company: query.company}, {weight: weight}, {new: true}, function(err, doc){
+                if(err){
+                    console.log(err);
+                    next(err);
+                } else {
+                    callback(null, doc);
+                }
+            })
+        });
+    },
+    editUnavail: function(query, slots, callback){
+        InterviewerModel.findOneAndUpdate(query, {unavailable: slots}, {new: true}, function(err, doc){
             if(err){
                 console.log(err);
                 next(err);

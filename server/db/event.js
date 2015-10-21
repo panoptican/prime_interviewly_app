@@ -51,12 +51,12 @@ var Event = {
         })
     },
     addInterviewerToEvent: function(event, interviewer, callback){
-        Interviewers.find({_id: interviewer.id}, function(err, interviewer){
+        Interviewers.find({fName: interviewer.fName, company: interviewer.company}, '_id fName lName company', function(err, interviewer){
             if(err){
                 console.log(err);
             } else {
                 if(interviewer){
-                    EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type}, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
+                    EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type}, {$addToSet: {interviewers: interviewer}}, {new: true}, function(err, doc){
                         if(err){
                             console.log(err);
                         } else {
@@ -89,22 +89,28 @@ var Event = {
             }
         })
     },
-    addStudentsBulk: function(cohortQuery, eventQuery, callback){
-        EventModel.findOne(eventQuery, function(err, event){
-            if(event.students.length == 0){
-                Students.find(cohortQuery, function(err, students){
-                    students.forEach(function(student){
-                        Event.addStudentToEvent(student, eventQuery, function(err, doc){
-                            if (err) {console.log(err)}
-                        })
-                    });
-                    callback(null, students);
+    addBulkStudents: function(event, callback){
+        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
+            Students.findCohort({cohort: event.cohort}, '_id fName lName', function(err, students){
+                EventModel.findOneAndUpdate({_id: event._id}, {$addToSet: {students: {$each: students}}}, {new: true}, function(err, doc){
+                    if(err){console.log(err)}
+                    callback(null, doc);
                 });
-            }
+            });
         });
     },
+    addBulkInterviewers: function(event, callback){
+        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
+            Interviewers.findMany({}, '_id fName lName company', function(err, interviewers){
+                EventModel.findOneAndUpdate({_id: event._id}, {$addToSet: {interviewers: {$each: interviewers}}}, {new: true}, function(err, doc){
+                    if(err){console.log(err)}
+                    callback(null, doc);
+                });
+            })
+        })
+    },
     addStudentToEvent: function(student, event, callback){
-        EventModel.findOneAndUpdate(event, {$push: {students: student.id}}, {new: true}, function(err, doc){
+        EventModel.findOneAndUpdate(event, {$addToSet: {students: student}}, {new: true}, function(err, doc){
             if(err){
                 console.log(err);
             } else {
