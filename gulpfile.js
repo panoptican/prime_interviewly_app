@@ -41,10 +41,10 @@ gulp.task('copy-libraries', function() {
 
 // Copies and uglifies app.js and all associated controllers from server to client
 gulp.task('build-app', function() {
-    return gulp.src(['./server/app/app.js', './server/app/views/partials/**/*.js'])
+    return gulp.src(['./server/app/app.js', './server/app/views/partials/**/*.js', './server/app/views/partials/dialogs/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('app.min.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./client/app/assets/js'))
 });

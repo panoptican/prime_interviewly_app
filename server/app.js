@@ -19,10 +19,12 @@ var authenticate = require('./routes/authenticate');
 var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
 var reset = require('./routes/reset');
+var change = require('./routes/change');
 
 // require APIs
 var interviewer = require('./api/interviewer/interviewer');
 var student = require('./api/student/student');
+var users = require('./api/user');
 var event = require('./api/event/event');
 var schedule = require('./api/schedule/schedule');
 var addInterviewerToEvent = require('./api/event/addInterviewer');
@@ -56,13 +58,16 @@ app.use('/', index);
 app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
-//app.use('/reset', reset);
+app.use('/reset', reset);
+app.use('/change', change);
 
 // use APIs
 app.use('/api/interviewer', interviewer);
 app.use('/api/student', student);
 app.use('/api/event', event);
 app.use('/api/schedule', schedule);
+app.use('/api/users', users);
+app.use('*', index);
 app.use('/api/event/addInterviewer', addInterviewerToEvent);
 app.use('/api/event/addStudent', addStudentToEvent);
 app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);

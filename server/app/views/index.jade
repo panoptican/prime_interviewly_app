@@ -1,26 +1,21 @@
 extends layout
 block content
-    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3")
-
-        // Navbar title
+    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3" ng-controller="toolbar")
         md-button(href="/home") Interviewly for
-        img(src="assets/img/prime-logo.png" alt="" width="48" height="48" layout-margin="auto")
-
-        // Navbar links
-        md-button(href="/events") Events
-        md-button(href="/students") Students
-        md-button(href="/interviewers") Interviewers
-        md-button.md-raised(href="/new-event") Create New Event
+        img(ng-click="goHome()" src="assets/img/prime-logo.png" alt="prime-logo" width="48" height="48" layout-margin="auto")
+        md-button(href="/events" ng-hide="paths") Events
+        md-button(href="/students" ng-hide="paths") Students
+        md-button(href="/interviewers" ng-hide="paths") Interviewers
+        md-button.md-primary.md-raised.md-hue-1(href="/new-event" ng-hide="paths") Create New Event
         span(flex)
-
-        // Navbar user
-        p(ng-hide="paths") WELCOME {{user.username}}
-
-        // Navbar dropdown menu
         .menu(layout-align="center center")
-            md-menu(cascade="true" direction="'down'" ng-hide="paths")
-                md-button(ng-click="$mdOpenMenu($event)") menu
-                md-menu-content(width="4")
+
+            md-menu(cascade="true" direction="'down'" ng-hide="paths" md-offset="60,0")
+                md-button(ng-click="$mdOpenMenu($event)") WELCOME {{user.username}}
+                    md-icon.i.material-icons expand_more
+
+                md-menu-content(width="2")
+
                     md-menu-item
                         md-button(href="/archived-events") ARCHIVED EVENTS
                     md-menu-item

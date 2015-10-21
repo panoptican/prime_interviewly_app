@@ -1,21 +1,24 @@
 .formlay(layout="row" layout-margin="auto")
-   span(flex="20")
-   .md-whiteframe-z2(layout="column" flex="60" style="margin-top:50px")
-      form(name="new-event")
-         h2.md-display-1(layout="row" layout-margin="auto") Profile
-         md-content(layout-margin="auto")
-            md-input-container
-               label Username
-               input(ng-model="location" type="text" required)
-            md-input-container
-               label Email
-               input(ng-model="organizer" type="text" optional)
-            md-input-container
-               label Password
-               input(ng-model="organizer" type="text" optional)
-            .savebut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="save()") Save
-                  span(flex)
-               md-button.md-raised.md-warn(ng-click="close()") Cancel
-   span(flex="20")
+
+    span(flex="20")
+    .md-whiteframe-z2(layout="column" flex="60" style="margin-top:50px")
+        form(name="new-event" ng-controller="profile")
+            h2.md-display-1(layout="row" layout-margin="auto") Profile
+            p.md-body-1(layout="row" layout-margin="auto") Update your Profile details below
+            md-content(layout-margin="auto")
+                md-input-container
+                    label Username: {{username}}
+                md-input-container
+                    label Email: {{email}}
+                md-input-container
+                    label Password
+                    input(ng-model="password" type="password" required)
+                md-input-container
+                    label Confirm Password
+                    input(ng-model="confirm" type="password" required)
+                .savebut(layout="row" layout-align="center center")
+                    md-button.md-raised(ng-click="save(password)") Save
+                        span(flex)
+                    md-button.md-raised.md-warn(href="/events") Cancel
+    span(flex="20")
 

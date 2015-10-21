@@ -1,55 +1,51 @@
-.formlay(layout="row" layout-margin="auto")
+.formlay(layout="row" layout-margin="auto" ng-controller="newEventCtrl")
    span(flex="20")
    .md-whiteframe-z2(layout="column" flex="60" style="margin-top:50px")
-      form(name="new-event")
-         h2.md-display-1(layout="row" layout-margin="auto") Create New Event
-         md-content(layout-margin="auto")
-
-         md-input-container
-            md-select(name="eventType", placeholder="Event Type", ng-model="eventType", required="")
-               md-option(value="1") Mock Interviews
-               md-option(value="2") Career Day
-            .errors(ng-messages="eventType.myModel.$error", ng-if="eventType.$dirty")
-               div(ng-message="required") Required
-
-
-         md-input-container
+      h2.md-display-1(layout="row" layout-margin="auto") Create New Event
+      md-content(layout-margin="auto")
+         form(name="newEvent" novalidate)
+            md-input-container
+               label Event Type
+               md-select(name="eventType" ng-model="eventType" required)
+                  md-option(value="1") Mock Interviews
+                  md-option(value="2") Career Day
+               div(ng-messages="newEvent.eventType.$error")
+                  div(ng-message="required") *Required
+            md-input-container
                label Event Date
-               input(type="date", ng-model="user.submissionDate" required)
-
+               input(type="date" name="date" ng-model="date" required)
+               div(ng-messages="newEvent.date.$error")
+                  div(ng-message="required") *Required
             md-input-container
                label Event Title
-               input(ng-model="title" type="text" required)
-
+               input(ng-model="title" name="title" type="text" required)
+               div(ng-messages="newEvent.title.$error")
+                  div(ng-message="required") *Required
             md-input-container
                label Event Location
-               input(ng-model="location" type="text" required)
-
+               input(ng-model="location" name="location" type="text")
             md-input-container
                label Event Start Time
-               input(type="time" required)
-
+               input(type="time" ng-model="sTime" name="sTime" required)
+               div(ng-messages="newEvent.sTime.$error")
+                  div(ng-message="required") *Required
             md-input-container
                label Event End Time
-               input(type="time" required)
-
+               input(type="time" ng-model="eTime" name="eTime" required)
+               div(ng-messages="newEvent.eTime.$error")
+                  div(ng-message="required") *Required
             md-input-container
                label Interview Time Slot Duration
-               input(type="number" required)
-
-            md-input-container
-               label Event Location
-               input(ng-model="location" type="text")
-
+               input(type="number" ng-model="slotDur" name="slotDur" required)
+               div(ng-messages="newEvent.slotDur.$error")
+                  div(ng-message="required") *Required
             md-input-container
                label Event Description
-               input(ng-model="description" type="text")
-
-               md-input-container
-                  label Event Organizer
-                  input(ng-model="organzier" type="text")
-
-         .loginbut(layout="row" layout-align="center center")
-                     md-button.md-raised(ng-click="submit()") Save New Event
-
-
+               input(ng-model="description" name="description" type="text")
+            md-input-container
+               label Event Organizer
+               input(ng-model="organizer" name="organizer" type="text")
+            .loginbut(layout="row" layout-align="center center")
+               md-button.md-raised(ng-click="submit(eventType, date, title, location, sTime, eTime, slotDur, description, organizer)") Save New Event
+                  span(flex)
+   span(flex="20")
