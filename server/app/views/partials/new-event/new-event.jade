@@ -3,7 +3,7 @@
    .md-whiteframe-z2(layout="column" flex="60" style="margin-top:50px")
       h2.md-display-1(layout="row" layout-margin="auto") Create New Event
       md-content(layout-margin="auto")
-         form(name="newEvent")
+         form(name="newEvent" novalidate)
             md-input-container
                label Event Type
                md-select(name="eventType" ng-model="eventType" required)
