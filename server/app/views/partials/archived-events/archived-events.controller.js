@@ -1,2 +1,4 @@
 
-// Archived events controller
+/*
+Archived events controller
+ */

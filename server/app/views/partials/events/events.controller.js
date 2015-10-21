@@ -1,5 +1,7 @@
 
-// Events controller
+/*
+ Events controller
+  */
 app.controller('eventsCtrl', function($scope) {
         this.tiles = buildGridModel({
             title: "Event Title",

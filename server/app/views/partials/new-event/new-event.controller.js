@@ -1,7 +1,10 @@
 
-// New event controller
+/*
+ New event controller
+  */
 app.controller('newEventCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.submit = function(evtype, date, title, location, sTime, eTime, slotDur, description, organizer){
+
         var event = {
             eventType: evtype,
             date: date,
@@ -13,7 +16,9 @@ app.controller('newEventCtrl', ['$scope', '$http', function($scope, $http) {
             description: description,
             organizer: organizer
         };
+
         console.log(event);
+
         $http({
             method: 'POST',
             url: 'api/event',
