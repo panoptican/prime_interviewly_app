@@ -7,13 +7,13 @@
             md-input-container
                label Event Type
                md-select(name="eventType" ng-model="eventType" required)
-                  md-option(value="1") Mock Interviews
-                  md-option(value="2") Career Day
+                  md-option(value="Mock Interviews") Mock Interviews
+                  md-option(value="Career Day") Career Day
                div(ng-messages="newEvent.eventType.$error")
                   div(ng-message="required") *Required
             md-input-container
                label Cohort
-               input(ng-model="cohort" name="corhot" type="text" required)
+               input(ng-model="cohort" name="cohort" type="text" required)
                div(ng-messages="newEvent.cohort.$error")
                   div(ng-message="required") *Required
              md-input-container

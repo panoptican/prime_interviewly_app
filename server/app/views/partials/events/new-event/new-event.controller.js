@@ -2,30 +2,28 @@
 /*
  New event controller
   */
-app.controller('newEventCtrl', ['$scope', '$http', function($scope, $http) {
-    $scope.submit = function(evtype, date, title, location, sTime, eTime, slotDur, description, organizer){
+app.controller('newEventCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+    $scope.submit = function() {
 
         var event = {
-            eventType: evtype,
-            date: date,
-            title: title,
-            location: location,
-            sTime: sTime,
-            eTime: eTime,
-            slotDur: slotDur,
-            description: description,
-            organizer: organizer
+            type: $scope.eventType,
+            cohort: $scope.cohort,
+            date: $scope.date,
+            location: $scope.location,
+            startTime: $scope.sTime,
+            endTime: $scope.eTime,
+            interviewDuration: $scope.slotDur,
+            organizer: $scope.organizer
         };
-
-        console.log(event);
 
         $http({
             method: 'POST',
             url: 'api/event',
-            data: event,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            data: event
         }).then(function success(data) {
             console.log(data);
-        }, function error() {})
+        }, function error() {}).then(function redirect() {
+            $location.path('/events')
+        })
     }
 }]);
