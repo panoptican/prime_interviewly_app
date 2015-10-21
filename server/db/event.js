@@ -1,6 +1,7 @@
 var EventModel = require('../models/Event');
 var Interviewers = require('./interviewer');
 var Students = require('./student');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var Event = {
     add: function(body, callback){
@@ -71,7 +72,7 @@ var Event = {
     },
     removeInterviewer: function(event, interviewer, callback){
         EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
-            { $pull: {interviewers: {fName: interviewer.fName, company: interviewer.company}}}, {new: true}, function(err, event){
+            { $pull: {interviewers: {_id: ObjectId(interviewer._id)}}}, {new: true}, function(err, event){
                 if(err){
                     console.log(err);
                 } else {
@@ -110,7 +111,7 @@ var Event = {
     },
     removeStudent: function(event, student, callback){
         EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
-            { $pull: {students: {fName: student.fName, lName: student.lName}}}, {new: true}, function(err, event){
+            { $pull: {students: {_id: ObjectId(student._id)}}}, {new: true}, function(err, event){
                 if(err){
                     console.log(err);
                 } else {
