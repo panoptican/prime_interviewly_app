@@ -1,5 +1,7 @@
 
-// Register dialog controller
+/*
+Register dialog controller
+ */
 app.controller('registerOpen', ['$scope', '$mdDialog', '$http', function($scope, $mdDialog){
     $scope.openRegister = function(ev){
         $mdDialog.show({

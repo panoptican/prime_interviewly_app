@@ -1,5 +1,7 @@
 
-// Student dialog controller
+/*
+Student dialog controller
+ */
 app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
     $scope.openUploads = function(ev){
         $mdDialog.show({
@@ -11,6 +13,13 @@ app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
         })
     };
     function uploadFile($scope, $mdDialog){
+
+        $scope.submit = function(file){
+            var mine = {
+                file: file
+            };
+        console.log(mine);
+        };
         $scope.close = function() {
             $mdDialog.hide();
         }

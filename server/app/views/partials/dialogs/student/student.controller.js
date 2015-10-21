@@ -1,5 +1,7 @@
 
-// Student dialog controller
+/*
+Student dialog controller
+ */
 app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
     $scope.openStudents = function(ev){
         $mdDialog.show({
@@ -23,6 +25,15 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
                 {name: 'career Delta'},
                 {name: 'mocks Epsilon'}
             ];
+        };
+        $scope.submit = function(fname, lname, email, cohort){
+            var student = {
+                fname: fname,
+                lname: lname,
+                email: email,
+                cohort: cohort
+            };
+            console.log(student);
         }
     }
 

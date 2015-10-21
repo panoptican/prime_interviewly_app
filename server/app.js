@@ -18,16 +18,25 @@ var index = require('./routes/index');
 var authenticate = require('./routes/authenticate');
 var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
-var test = require('./routes/test');
 var reset = require('./routes/reset');
-var change = require('./routes/change')
+var change = require('./routes/change');
 
 // require APIs
+var interviewer = require('./api/interviewer/interviewer');
+var student = require('./api/student/student');
 var users = require('./api/user');
-var interviewer = require('./api/interviewer');
-var student = require('./api/student');
-var event = require('./api/event');
-var schedule = require('./api/schedule');
+var event = require('./api/event/event');
+var schedule = require('./api/schedule/schedule');
+var addInterviewerToEvent = require('./api/event/addInterviewer');
+var addBulkInterviewersToEvent = require('./api/event/addBulkInterviewers');
+var addStudentToEvent = require('./api/event/addStudent');
+var addBulkStudentsToEvent = require('./api/event/addBulkStudents');
+var getSchedule = require('./api/event/getSchedule');
+var removeStudentFromEvent = require('./api/event/removeStudent');
+var removeInterviewerFromEvent = require('./api/event/removeInterviewer');
+var interviewerAddWeight = require('./api/interviewer/addWeight');
+var studentAddWeight = require('./api/student/addWeight');
+var interviewerUnavail = require('./api/interviewer/unavail');
 
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
@@ -51,12 +60,12 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'app')));
 
 // use routes
 app.use('/', index);
-app.use('/test', test);
 app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
 app.use('/reset', reset);
 app.use('/change', change);
+app.use('*', index);
 
 // use APIs
 app.use('/api/interviewer', interviewer);
@@ -64,7 +73,16 @@ app.use('/api/student', student);
 app.use('/api/event', event);
 app.use('/api/schedule', schedule);
 app.use('/api/users', users);
-app.use('*', index);
+app.use('/api/event/addInterviewer', addInterviewerToEvent);
+app.use('/api/event/addStudent', addStudentToEvent);
+app.use('/api/event/addBulkStudents', addBulkStudentsToEvent);
+app.use('/api/event/addBulkInterviewers', addBulkInterviewersToEvent);
+app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
+app.use('/api/event/removeStudent', removeStudentFromEvent);
+app.use('/api/event/getSchedule', getSchedule);
+app.use('/api/interviewer/addWeight', interviewerAddWeight);
+app.use('/api/student/addWeight', studentAddWeight);
+app.use('/api/interviewer/unavail', interviewerUnavail);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
