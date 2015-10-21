@@ -7,11 +7,10 @@ var Event = require('../../db/event');
 
 router.post('/', function(req, res, next){
     if(Object.keys(req.body).length > 0){
-        var event = {
-            cohort: req.body.cohort,
-            type: req.body.type
-        };
-        Event.addInterviewerToEvent(event, req.query, function(err, interviewer){
+        var event = req.query,
+            interviewer = req.body;
+
+        Event.addInterviewerToEvent(event, interviewer, function(err, interviewer){
             if(err){
                 console.log(err);
                 next(err);

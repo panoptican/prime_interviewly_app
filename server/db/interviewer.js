@@ -32,8 +32,8 @@ var Interviewer = {
         });
         callback(null, newInterviewer);
     },
-    find: function(query, callback){
-        InterviewerModel.findOne(query, function(err, doc){
+    find: function(query, projection, callback){
+        InterviewerModel.findOne(query, projection, function(err, doc){
             if(err){
                 console.log(err);
             } else {
@@ -41,8 +41,8 @@ var Interviewer = {
             }
         });
     },
-    findMany: function(query, callback){
-      InterviewerModel.find(query, function(err, docs){
+    findMany: function(query, projection, callback){
+      InterviewerModel.find(query, projection, function(err, docs){
           if(err){
               console.log(err);
           } else {
@@ -82,10 +82,6 @@ var Interviewer = {
     },
     addWeight: function(query, weight, callback){
         Student.find({fName: query.studentFirst, lName: query.studentLast}, function(err, student){
-            var weight = {
-                student[_id]: weight.value
-            };
-        console.log(weight);
             InterviewerModel.findOneAndUpdate({fName: query.fName, company: query.company}, {weight: weight}, {new: true}, function(err, doc){
                 if(err){
                     console.log(err);
