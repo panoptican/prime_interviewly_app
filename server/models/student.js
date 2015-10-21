@@ -12,7 +12,8 @@ var Student = new Schema({
             total: 0
         }}
     },
-    weight: {type: Schema.Types.Mixed, default:{}}
+    weight: {type: Schema.Types.Mixed, default:{}},
+    isArchived: {type: Boolean, default: false}
 }, { minimize: false });
 
 var studentSchema = mongoose.model('student', Student);
