@@ -79,7 +79,6 @@ app.directive("passwordVerify", function() {
         link: function(scope, element, attrs, ctrl) {
             scope.$watch(function() {
                 var combined;
-
                 if (scope.passwordVerify || ctrl.$viewValue) {
                     combined = scope.passwordVerify + '_' + ctrl.$viewValue;
                 }
