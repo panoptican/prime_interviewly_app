@@ -8,11 +8,11 @@ block content
         md-button(href="/interviewers" ng-hide="paths") Interviewers
         md-button.md-primary.md-raised.md-hue-1(href="/new-event" ng-hide="paths") Create New Event
         span(flex)
-        .menu(layout-align="center center")
 
+        .menu(layout-align="center center")
             md-menu(cascade="true" direction="'down'" ng-hide="paths" md-offset="60,0")
-                md-button(ng-click="$mdOpenMenu($event)") WELCOME {{user.username}}
-                    md-icon.i.material-icons expand_more
+                md-button(ng-click="$mdOpenMenu($event)") WELCOME {{user.username}}!
+                    md-icon.i.material-icons(layout-margin="auto") menu
 
                 md-menu-content(width="2")
 
