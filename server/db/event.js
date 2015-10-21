@@ -110,7 +110,7 @@ var Event = {
     },
     removeStudent: function(event, student, callback){
         EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
-            { $pull: {students: {fName: student.fName, lName: student.lName}}}, {new: true}, function(err, event){
+            { $pull: {students: {_id: ObjectId(student._id)}}}, {new: true}, function(err, event){
                 if(err){
                     console.log(err);
                 } else {
