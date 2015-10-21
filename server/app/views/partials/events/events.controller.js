@@ -2,27 +2,31 @@
 /*
  Events controller
   */
-app.controller('eventsCtrl', function($scope) {
-        this.tiles = buildGridModel({
-            title: "Event Title",
-            background: ""
-        });
-        function buildGridModel(tileTmpl){
-            var it, results = [ ];
-                it = angular.extend({},tileTmpl);
-                it.title = it.title;
-                it.span  = { row : 1, col : 1 };
-                it.background = "gray";
-                it.span.row = it.span.col = 1;
+app.controller('eventsCtrl', ['$scope', '$http', function($scope, $http) {
+    $http.get('/api/event').then(function success(response) {
+        console.log(response);
+    }, function error() {});
 
-                results.push(it);
-
-            return results;
-        }
+    this.tiles = buildGridModel({
+        title: "Event Title",
+        background: ""
     });
+    function buildGridModel(tileTmpl){
+        var it, results = [ ];
+            it = angular.extend({},tileTmpl);
+            it.title = it.title;
+            it.span  = { row : 1, col : 1 };
+            it.background = "gray";
+            it.span.row = it.span.col = 1;
+
+            results.push(it);
+
+        return results;
+    }
+}]);
 
 
-app.controller('modalCtrl', function($scope, $mdDialog) {
+app.controller('modalCtrl', ['$scope', '$mdDialog', function($scope, $mdDialog) {
     $scope.alert = '';
     $scope.showAlert = function (ev) {
         $mdDialog.show(
@@ -65,15 +69,16 @@ app.controller('modalCtrl', function($scope, $mdDialog) {
                 $scope.status = 'You cancelled the dialog.';
             });
     };
-});
-function DialogController($scope, $mdDialog) {
-    $scope.hide = function() {
-        $mdDialog.hide();
-    };
-    $scope.cancel = function() {
-        $mdDialog.cancel();
-    };
-    $scope.answer = function(answer) {
-        $mdDialog.hide(answer);
-    };
-}
+
+    function DialogController($scope, $mdDialog) {
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+        };
+    }
+}]);

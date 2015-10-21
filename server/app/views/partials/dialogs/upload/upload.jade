@@ -10,5 +10,5 @@ md-dialog.student(flex="40")
                .messageuser(ng-messages="CSVForm.file.$error")
                   .messageuser1(ng-message="required") *Required
             .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-click="submit(file)") Save
+               md-button.md-raised(ng-disabled="CSVForm.$invalid" ng-click="submit(file)") Save
                md-button.md-raised.md-warn(ng-click="close()") Cancel
