@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var Interviewer = require('../db/interviewer');
+var Interviewer = require('../../db/interviewer');
 
 /* GET interviewers */
-router.get('/interviewers', function(req, res, next) {
+router.get('/', function(req, res, next) {
     var query = req.query || {};
     Interviewer.find(query, function(err, data){
         if(err){
@@ -16,7 +16,7 @@ router.get('/interviewers', function(req, res, next) {
 });
 
 /* POST add new interviewer */
-router.post('/interviewers', function(req, res, next){
+router.post('/', function(req, res, next){
     if(Object.keys(req.body).length > 0){
         Interviewer.add(req.body, function(err, data){
             if(err){
@@ -32,7 +32,7 @@ router.post('/interviewers', function(req, res, next){
 });
 
 /* DELETE interviewer */
-router.delete('/interviewers', function(req, res, next){
+router.delete('/', function(req, res, next){
     if(Object.keys(req.query).length > 0){
         Interviewer.delete(req.query, function(err, data){
             if(err){
@@ -48,7 +48,7 @@ router.delete('/interviewers', function(req, res, next){
 });
 
 /* PUT update interviewer */
-router.put('/interviewers', function(req, res, next){
+router.put('/', function(req, res, next){
     if(Object.keys(req.query).length > 0){
         Interviewer.update(req.query, req.body, function(err, data){
             if(err){

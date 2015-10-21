@@ -18,14 +18,13 @@ var index = require('./routes/index');
 var authenticate = require('./routes/authenticate');
 var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
-var test = require('./routes/test');
 var reset = require('./routes/reset');
 
 // require APIs
-var interviewer = require('./api/interviewer');
-var student = require('./api/student');
+var interviewer = require('./api/interviewer/interviewer');
+var student = require('./api/student/student');
 var event = require('./api/event/event');
-var schedule = require('./api/schedule');
+var schedule = require('./api/schedule/schedule');
 var addInterviewerToEvent = require('./api/event/addInterviewer');
 var addStudentToEvent = require('./api/event/addStudent');
 var getSchedule = require('./api/event/getSchedule');
@@ -54,7 +53,6 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'app')));
 
 // use routes
 app.use('/', index);
-app.use('/test', test);
 app.use('/authenticate', authenticate);
 app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
@@ -69,7 +67,7 @@ app.use('/api/event/addInterviewer', addInterviewerToEvent);
 app.use('/api/event/addStudent', addStudentToEvent);
 app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
 app.use('/api/event/removeStudent', removeStudentFromEvent);
-app.use('/api/event/getSchedule', getSchedule)
+app.use('/api/event/getSchedule', getSchedule);
 app.use('*/reset/*', index);
 
 // catch 404 and forward to error handler

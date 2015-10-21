@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var Event = require('../db/event');
+var Event = require('../../db/event');
 
 /* GET schedule */
-router.get('/schedule', function(req, res, next) {
+router.get('/', function(req, res, next) {
     var query = req.query || {};
     Event.find(query, function(err, data){
         if(err){
@@ -16,7 +16,7 @@ router.get('/schedule', function(req, res, next) {
 });
 
 /* POST add new schedule */
-router.post('/schedule', function(req, res, next){
+router.post('/', function(req, res, next){
     if(Object.keys(req.body).length > 0){
         Event.add(req.body, function(err, data){
             if(err){
@@ -32,7 +32,7 @@ router.post('/schedule', function(req, res, next){
 });
 
 /* DELETE schedule */
-router.delete('/schedule', function(req, res, next){
+router.delete('/', function(req, res, next){
     if(Object.keys(req.query).length > 0){
         Event.delete(req.query, function(err, data){
             if(err){
@@ -48,7 +48,7 @@ router.delete('/schedule', function(req, res, next){
 });
 
 /* PUT update schedule */
-router.put('/schedule', function(req, res, next){
+router.put('/', function(req, res, next){
     if(Object.keys(req.query).length > 0){
         Event.update(req.query, req.body, function(err, data){
             if(err){

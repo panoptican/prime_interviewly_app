@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Student = require('../db/student');
+var Student = require('../../db/student');
 
 /* GET students */
 router.get('/students', function(req, res, next) {
