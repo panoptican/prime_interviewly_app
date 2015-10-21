@@ -2,8 +2,10 @@
 /*
  New event controller
   */
-app.controller('newEventCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('newEventCtrl', ['$scope', '$http', '$location', '$filter', function($scope, $http, $location, $filter) {
     $scope.submit = function() {
+
+        console.log($filter('date')(new Date($scope.sTime), 'h:mm'));
 
         var event = {
             type: $scope.eventType,

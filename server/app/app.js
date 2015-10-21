@@ -1,18 +1,21 @@
 var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 
-
-// Angular routing
+/*
+ Angular configuration
+ */
 app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function($routeProvider, $locationProvider, $mdThemingProvider){
 
-
+    // Color palette
     $mdThemingProvider.theme('default')
         .primaryPalette('blue-grey')
         .accentPalette('orange');
 
-
+    // HTML5 mode
     $locationProvider.html5Mode({
         enabled: true
     });
+
+    // Routes
     $routeProvider.
         when('/home', {
             templateUrl: 'views/partials/home/home.html'

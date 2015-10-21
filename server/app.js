@@ -65,7 +65,6 @@ app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
 app.use('/reset', reset);
 app.use('/change', change);
-app.use('*', index);
 
 // use APIs
 app.use('/api/interviewer', interviewer);
@@ -83,6 +82,9 @@ app.use('/api/event/getSchedule', getSchedule);
 app.use('/api/interviewer/addWeight', interviewerAddWeight);
 app.use('/api/student/addWeight', studentAddWeight);
 app.use('/api/interviewer/unavail', interviewerUnavail);
+
+// For testing
+app.use('*', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
