@@ -100,8 +100,22 @@ var Event = {
                     });
                     callback(null, students);
                 });
+            } else {
+                callback(null, 'This event already has students.')
             }
         });
+    },
+    addInterviewersBulk: function(event, callback){
+        EventModel.findOne({cohort: event.cohort, type: event.type}, function(err, event){
+            Interviewers.findMany({}, function(err, interviewers){
+                interviewers.forEach(function(interviewer){
+                    EventModel.findOneAndUpdate({_id: event._id}, {$push: {interviewers: interviewer._id}}, {new: true}, function(err, doc){
+                        if(err){console.log(err)}
+                    })
+                });
+                callback(null, interviewers);
+            })
+        })
     },
     addStudentToEvent: function(student, event, callback){
         EventModel.findOneAndUpdate(event, {$push: {students: student.id}}, {new: true}, function(err, doc){

@@ -40,7 +40,16 @@ var Interviewer = {
             }
         });
     },
-    findMany: function(array, callback){
+    findMany: function(query, callback){
+      InterviewerModel.find(query, function(err, docs){
+          if(err){
+              console.log(err);
+          } else {
+              callback(null, docs);
+          }
+      })
+    },
+    findManyById: function(array, callback){
         InterviewerModel.find({_id: {$in: array}}, function(err, docs){
             if(err){
                 console.log(err);

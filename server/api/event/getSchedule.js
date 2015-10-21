@@ -18,14 +18,14 @@ router.get('/', function(req, res, next){
         },
         function(event, callback){
             //grab students in event
-            Students.findMany(event.students, function(err, students){
+            Students.findManyById(event.students, function(err, students){
                 if(err){console.log(err)}
                 callback(null, event, students);
             })
         },
         function(event, students, callback){
             //grab interviewers in event
-            Interviewers.findMany(event.interviewers, function(err, interviewers){
+            Interviewers.findManyById(event.interviewers, function(err, interviewers){
                 if(err){console.log(err)}
                 callback(null, event, students, interviewers);
             })
