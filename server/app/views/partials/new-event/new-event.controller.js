@@ -14,5 +14,13 @@ app.controller('newEventCtrl', ['$scope', '$http', function($scope, $http) {
             organizer: organizer
         };
         console.log(event);
+        $http({
+            method: 'POST',
+            url: 'api/event',
+            data: event,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function success(data) {
+            console.log(data);
+        }, function error() {})
     }
 }]);
