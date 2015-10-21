@@ -41,6 +41,15 @@ var Student = {
             }
         });
     },
+    findOne: function(query, projections, callback){
+        StudentModel.findOne(query, projections, function(err, doc){
+            if(err){
+                console.log(err);
+            } else {
+                callback(null, doc);
+            }
+        })
+    },
     findCohort: function(query, conditions, callback){
       StudentModel.find(query, conditions, function(err, doc){
           if(err){
