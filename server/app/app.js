@@ -10,11 +10,6 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
         .accentPalette('orange');
 
 
-/*
- Angular routing
-  */
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
-
     $locationProvider.html5Mode({
         enabled: true
     });
