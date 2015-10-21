@@ -11,7 +11,7 @@ var combinations = {
                     name: interviewer.fName,
                     company: interviewer.company,
                     student: student.fName,
-                    weight: (interviewer.weight[student._id] || 0 + student.weight[interviewer._id] || 0),
+                    weight: 0,
                     unavailable: interviewer.unavailable,
                     interviewerID: interviewer._id
                 })

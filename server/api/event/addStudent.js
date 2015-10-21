@@ -6,13 +6,9 @@ var Event = require('../../db/event');
 
 router.post('/', function(req, res, next){
     if(Object.keys(req.body).length > 0){
-        var event = {
-            cohort: req.body.cohort,
-            type: req.body.type
-        };
-        var student = {
-            id: req.body.id
-        };
+        var event = req.query,
+            student = req.body;
+
         Event.addStudentToEvent(student, event, function(err, student){
             if(err){
                 console.log(err);

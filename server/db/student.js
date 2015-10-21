@@ -33,13 +33,22 @@ var Student = {
         callback(null, newStudent);
     },
     find: function(query, callback){
-        StudentModel.findOne(query, function(err, doc){
+        StudentModel.find(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
                 callback(null, doc);
             }
         });
+    },
+    findOne: function(query, projections, callback){
+        StudentModel.findOne(query, projections, function(err, doc){
+            if(err){
+                console.log(err);
+            } else {
+                callback(null, doc);
+            }
+        })
     },
     findCohort: function(query, conditions, callback){
       StudentModel.find(query, conditions, function(err, doc){
