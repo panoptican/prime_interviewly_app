@@ -1,25 +1,39 @@
 md-dialog.interviewer(flex="40")
    md-toolbar
       h2.md-display-1(layout="row" layout-margin="auto") Add Interviewer
-   form(name="interviewerForm" layout="row")
-   md-dialog-content()
-      .inputs(layout="column")
-               md-input-container
-                  label Name
-                  input(type="text")
-               md-input-container
-                  label Title
-                  input(type="text")
-               md-input-container
-                  label Company
-                  input(type="text")
-               md-input-container
-                  label Company Link
-                  input(type="text")
-               md-input-container
-                  label Company Description
-                  input(type="text")
-
-            .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised() Save
-               md-button.md-raised.md-warn(ng-click="close()") Cancel
+   md-dialog-content
+      form(name="interviewerForm")
+         .inputs(layout="column")
+            md-input-container
+               label First Name
+               input(type="text" name="fname" ng-model="fname" required)
+               .messagename(ng-messages="interviewerForm.fname.$error")
+                  .messagename1(ng-message="required") *Required
+            md-input-container
+               label Last Name
+               input(type="text" name="lname" ng-model="lname" required)
+               .messagename(ng-messages="interviewerForm.lname.$error")
+                  .messagename1(ng-message="required") *Required
+            md-input-container
+               label Title
+               input(type="text" name="title" ng-model="title" required)
+               .messagetitle(ng-messages="interviewerForm.title.$error")
+                  .messagetitle1(ng-message="required") *Required
+            md-input-container
+               label Company
+               input(type="text" name="company" ng-model="company" required)
+               .messagecompany(ng-messages="interviewerForm.company.$error")
+                  .messagecompany1(ng-message="required") *Required
+            md-input-container
+               label Company Link
+               input(type="text" name="link" ng-model="link" required)
+               .messagelink(ng-messages="interviewerForm.link.$error")
+                  .messagelink1(ng-message="required") *Required
+            md-input-container
+               label Company Description
+               textarea(type="text" name="description" ng-model="description" required)
+               .messagedesc(ng-messages="interviewerForm.description.$error")
+                  .messagedesc1(ng-message="required") *Required
+      .loginbut(layout="row" layout-align="center center")
+         md-button.md-raised() Save
+         md-button.md-raised.md-warn(ng-click="close()") Cancel

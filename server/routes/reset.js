@@ -4,7 +4,6 @@ var express = require('express'),
     async = require('async'),
     User = require('../models/users');
 
-<<<<<<< HEAD
 router.get('/:token', function(req, res, next) {
     User.findOne({resetPasswordToken: req.params.token}, function (err, user) {
         if (!user) {

@@ -1,21 +1,29 @@
 md-dialog.student(flex="40")
    md-toolbar
       h2.md-display-1(layout="row" layout-margin="auto") Registration
-   form
    md-dialog-content
-      .inputs
-         md-input-container
-            label Username
-            input(ng-model="username" type="text" name="username" required)
-         md-input-container
-            label Email
-            input(ng-model="email" type="text" name="email" required)
-         md-input-container
-            label Password
-            input(ng-model="password" type="password" name="password" required)
-         md-input-container
-            label Confirm Password
-            input(ng-model="confirm" type="password" name="confirm" required compare-to="password")
-         .regbut(layout="row" layout-align="center center")
-            md-button.md-raised(ng-click="register(username, email, password)") Submit
-            md-button.md-raised.md-warn(ng-click="close()") Cancel
+      form(name="regForm")
+         .inputs
+            md-input-container
+               label Username
+               input(type="text" required name="username" ng-model="username")
+               .div(ng-messages="regForm.username.$error")
+                  .div(ng-message="required") *Required
+            md-input-container
+               label Email
+               input(ng-model="email" type="text" name="email" required)
+               .messageuser(ng-messages="regForm.email.$error")
+                  .messageuser1(ng-message="required") *Required
+            md-input-container
+               label Password
+               input(ng-model="password" type="password" name="password" required)
+               .messageuser(ng-messages="regForm.password.$error")
+                  .messageuser1(ng-message="required") *Required
+            md-input-container
+               label Confirm Password
+               input(ng-model="confirm" type="password" name="confirm" required)
+               .messageuser(ng-messages="regForm.confirm.$error")
+                  .messageuser1(ng-message="required") *Required
+            .regbut(layout="row" layout-align="center center")
+               md-button.md-raised(ng-click="register(username, email, password)") Submit
+               md-button.md-raised.md-warn(ng-click="close()") Cancel

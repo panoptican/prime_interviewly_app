@@ -1,18 +1,18 @@
 .formlay(layout="row" layout-margin="auto")
    span(flex="30")
    .md-whiteframe-z2(layout="column" flex="40" style="margin:50px 0; ")
-      form(name="login" ng-controller="login")
+      form(name="login" ng-controller="login" novalidate)
          md-content(layout-padding)
             md-input-container
                label Username
-               input(ng-model="username" type="text" name="username")
-               .messageuser(ng-messages="login.username.$error" role="alert")
+               input(ng-model="username" type="text" name="username" required)
+               .messageuser(ng-messages="login.username.$error" ng-if="login.username.$touched")
                   .messageuser1(ng-message="required") Please enter username
             md-input-container
                label Password
-               .messagepass(ng-messages="login.password.$error" role="alert")
+               input(ng-model="password" type="password" name="password" required)
+               .messagepass(ng-messages="login.password.$error" ng-if="login.password.$touched")
                   .messagepass1(ng-message="required") Please enter password
-               input(ng-model="password" type="password")
          .loginbut(layout="row" layout-align="center center")
             md-button.md-raised(ng-click="submit(username, password)") Login
             md-button.md-raised(ng-controller="registerOpen" ng-click="openRegister($event)") Sign Up

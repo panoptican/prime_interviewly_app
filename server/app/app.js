@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
 
 // Angular routing
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
