@@ -1,6 +1,6 @@
 
 /*
- Events controller
+ Events list controller
   */
 app.controller('eventsCtrl', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
 

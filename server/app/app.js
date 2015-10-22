@@ -27,7 +27,10 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
             templateUrl: 'views/partials/account/forgot/forgot.html'
         }).
         when('/events', {
-            templateUrl: 'views/partials/events/events.html'
+            templateUrl: 'views/partials/events/events-list/events-list.html'
+        }).
+        when('/event?:eventId', {
+            templateUrl: 'views/partials/events/view-event/view-event.html'
         }).
         when('/students', {
             templateUrl: 'views/partials/students/students.html'
