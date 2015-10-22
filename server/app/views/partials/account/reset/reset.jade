@@ -5,10 +5,13 @@
          md-content(layout-padding)
             md-input-container
                label Password
-               input(type="password" ng-model="password" required)
+               input(type="password" name="password" ng-model="password" required)
             md-input-container
                label Confirm Password
-               input(type="password" ng-model="confirm" required)
+               input(type="password" ng-model="confirm" name="confirm" required data-password-verify="password")
+               .div(ng-messages="reset.confirm.$error")
+                  .div(ng-message="passwordVerify") Password doesn't match
+
             .forgotBut(layout="row" layout-align="center center")
-         md-button.md-raised(ng-click="changePass(password, confirm, headers.host.token)") Submit
+         md-button.md-raised(ng-disabled="reset.$invalid" ng-click="changePass(password, confirm, headers.host.token)") Submit
    span(flex="30")
