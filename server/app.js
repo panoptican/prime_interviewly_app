@@ -65,7 +65,6 @@ app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
 app.use('/reset', reset);
 app.use('/change', change);
-app.use('*', index);
 
 // use APIs
 app.use('/api/interviewer', interviewer);
