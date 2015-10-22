@@ -1,6 +1,7 @@
 var EventModel = require('../models/Event');
 var Interviewers = require('./interviewer');
 var Students = require('./student');
+var Schedule = require('./schedule');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 var Event = {
@@ -127,6 +128,18 @@ var Event = {
                     callback(null, event);
                 }
             })
+    },
+    saveSchedule: function(event, schedule, callback){
+        Schedule.find({_id: schedule._id}, function(err, schedule){
+            EventModel.findOneAndUpdate({_id: event._id},
+                {$set: {schedule: schedule}}, {new: true}, function(err, event){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        callback(null, event);
+                    }
+                })
+        });
     }
 };
 
