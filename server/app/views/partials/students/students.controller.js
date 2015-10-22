@@ -5,26 +5,22 @@ app.controller('students', ['$scope', '$http', '$mdDialog', function($scope, $ht
             $scope.students = response.data
         })
     };
-    $scope.editStudent = function(ev, id) {
+    $scope.editStudent = function(id) {
         $http.get('/api/student?_id=' + id).then(function (response) {
+            $scope.student = response.data[0];
+            console.log('hello');
             $mdDialog.show({
-                controller: editStudent(response),
+                controller: 'editStudent',
                 templateUrl: 'views/partials/dialogs/student/studentEdit.html',
                 parent: angular.element(document.body),
-                targetEvent: ev,
+                scope: $scope,
                 clickOutsideToClose: true
             })
         })
     };
-        function editStudent(response){
-            console.log(response);
-            var info = response.data[0];
-            $scope.student = {
-            fname: info.fName,
-            lname: info.lName,
-            email: info.email,
-            cohort: info.cohort
-        };
-            console.log($scope.student);
+}]);
+app.controller('editStudent', ['$scope', '$mdDialog', function($scope, $mdDialog){
+    $scope.close = function(){
+        $mdDialog.hide();
     }
 }]);
