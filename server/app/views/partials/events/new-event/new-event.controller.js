@@ -2,7 +2,7 @@
 /*
  New event controller
   */
-app.controller('newEventCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('newEventCtrl', ['$scope', '$http', '$location', '$filter', function($scope, $http, $location, $filter) {
     $scope.submit = function() {
 
         var event = {
@@ -10,8 +10,8 @@ app.controller('newEventCtrl', ['$scope', '$http', '$location', function($scope,
             cohort: $scope.cohort,
             date: $scope.date,
             location: $scope.location,
-            startTime: $scope.sTime,
-            endTime: $scope.eTime,
+            startTime: $filter('date')(new Date($scope.sTime), 'HH:mm'),
+            endTime: $filter('date')(new Date($scope.eTime), 'HH:mm'),
             interviewDuration: $scope.slotDur,
             organizer: $scope.organizer
         };

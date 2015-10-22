@@ -1,28 +1,26 @@
 
 /*
- Events controller
+ Events list controller
   */
-app.controller('eventsCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('eventsCtrl', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
     $http.get('/api/event').then(function success(response) {
-        console.log(response);
+
+        // set get request to a variable
+        eventsList = response.data;
+        console.log(eventsList);
+
+        // initialize an empty array for storing data to be used in ng-repeat
+        var tiles = [];
+
+        // iterate over response data and push objects into array for ng-repeat
+        eventsList.forEach(function(item, pos) {
+            tiles.push({title: title = item.cohort + ' ' + item.type, date: $filter('date')(new Date(item.date), 'MM/dd/yy'), _id: item._id});
+        });
+
+        // set scope tiles equal to the object array
+        $scope.tiles = tiles;
     }, function error() {});
 
-    this.tiles = buildGridModel({
-        title: "Event Title",
-        background: ""
-    });
-    function buildGridModel(tileTmpl){
-        var it, results = [ ];
-            it = angular.extend({},tileTmpl);
-            it.title = it.title;
-            it.span  = { row : 1, col : 1 };
-            it.background = "gray";
-            it.span.row = it.span.col = 1;
-
-            results.push(it);
-
-        return results;
-    }
 }]);
 
 
