@@ -3,6 +3,7 @@ var Converter = require('csvtojson').Converter;
 var converter = new Converter({});
 var fs = require('fs');
 var StudentModel = require('../models/student');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var Interviewer = {
     bulkImport: function(file, callback){
@@ -101,6 +102,12 @@ var Interviewer = {
             } else {
                 callback(null, doc);
             }
+        })
+    },
+    archive: function(query, callback){
+        InterviewerModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {isArchived: true}}, {new: true}, function(err, interviewer){
+            if(err){console.log(err)}
+            callback(null, interviewer);
         })
     }
 };
