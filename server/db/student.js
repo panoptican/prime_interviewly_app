@@ -1,4 +1,5 @@
 var StudentModel = require('../models/student');
+var InterviewerModel = require('../models/interviewer');
 var Converter = require('csvtojson').Converter;
 var converter = new Converter({});
 var fs = require('fs');
@@ -79,7 +80,7 @@ var Student = {
             }
         });
     },
-    update: function(query, body, callback) {
+    update: function(query, body, callback){
         StudentModel.findOneAndUpdate(query, body, {new: true}, function (err, doc) {
             if (err) {
                 console.log(err);
@@ -90,17 +91,15 @@ var Student = {
         })
     },
     addWeight: function(query, weight, callback){
-        Student.findOne({fName: query.studentFirst, lName: query.studentLast}, null, function(err, student){
-            InterviewerModel.findOneAndUpdate({fName: query.fName, company: query.company},
-                {$addToSet: {weights: {student: student._id, weight: weight.value}}}, {new: true}, function(err, doc){
-                    if(err){
-                        console.log(err);
-                        next(err);
-                    } else {
-                        callback(null, doc);
-                    }
-                })
-        });
+        InterviewerModel.findOne({fName: query.fName, company: query.company}, null, function(err, interviewer){
+            StudentModel.findOneAndUpdate({fName: query.studentfName, lName: query.studentlName},
+                {$addToSet: {weights: {interviewer: interviewer._id, weight: weight.value}}}, {new: true}, function(err, doc){
+                   if(err){console.log(err)}
+                    else {
+                       callback(null, doc);
+                   }
+                });
+        })
     }
 };
 
