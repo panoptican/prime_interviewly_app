@@ -16,18 +16,23 @@
         md-button.md-raised(ng-controller="uploads" ng-click="openUploads($event)") Upload File
             span(flex)
     span(flex="5")
-    .md-whiteframe-z2(class="table-responsive-vertical" layout="column")
-        table(id="table" class="table table-hover table-mc-light-blue")
-            thead
-            tr
-                th Name
-                th Company
-                th Title
-            tbody(ng-repeat="Interviewer in interviewers")
+    md-data-table-toolbar
+        h2(class="md-title") Interviewers
+    md-data-table-container
+        table(md-data-table md-row-select="selected" md-progress="deferred")
+            thead(md-order="query.order" md-trigger="onOrderChange")
                 tr
-                    td(data-title="Name" flex="20") {{Interviewer.fName}} {{Interviewer.lName}}
-                    td(data-title="email" flex="25") {{Interviewer.company}}
-                    td(data-title="cohort" flex="25") {{Interviewer.title}}
-                        md-button Archive
-                        md-button(ng-click="editInterviewer($event, Interviewer._id)") Edit
-    span(flex="5")
+                    th(name="First Name" order-by="name") First Name
+                    th(name="Last Name" order-by="name") Last Name
+                    th(name="company" order-by="name") Company
+                    th(name="title" order-by="name") Title
+            tbody
+                tr(md-auto-select ng-repeat="interviewer in interviewers")
+                    td {{interviewer.fName}}
+                    td {{interviewer.lName}}
+                    td {{interviewer.company}}
+                    td {{interviewer.title}}
+                    td
+                        md-button.md-raised Archive
+                    td
+                        md-button.md-raised Edit
