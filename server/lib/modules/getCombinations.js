@@ -18,7 +18,7 @@ var combinations = {
             }
         }
         return combinations;
-    }
+    },
     getWeight: function(interviewer, student){
 
     }
