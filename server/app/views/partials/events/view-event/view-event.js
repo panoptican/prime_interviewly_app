@@ -2,23 +2,14 @@
 /*
  View events controller
  */
-app.controller('eventsCtrl', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
+app.controller('viewEventCtrl', ['$scope', '$http', '$filter', '$routeParams', function($scope, $http, $filter, $routeParams) {
 
-    $http.get('/api/event').then(function success(response) {
+    var eventParam = $routeParams._id;
 
-        // set get request to a variable
-        eventsList = response.data;
+    $http.get('/api/event?_id=' + eventParam).then(function success(response) {
 
-        // initialize an empty array for storing data to be used in ng-repeat
-        var tiles = [];
+        $scope.eventTitle = response.data[0].cohort + ' ' + response.data[0].type
 
-        // iterate over response data and push objects into array for ng-repeat
-        eventsList.forEach(function(item, pos) {
-            tiles.push({title: title = item.cohort + ' ' + item.type, date: $filter('date')(new Date(item.date), 'MM/dd/yy'), _id: item._id});
-        });
-
-        // set scope tiles equal to the object array
-        $scope.tiles = tiles;
     }, function error() {});
 
 }]);

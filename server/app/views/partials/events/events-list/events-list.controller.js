@@ -3,11 +3,11 @@
  Events list controller
   */
 app.controller('eventsCtrl', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
-
     $http.get('/api/event').then(function success(response) {
 
         // set get request to a variable
         eventsList = response.data;
+        console.log(eventsList);
 
         // initialize an empty array for storing data to be used in ng-repeat
         var tiles = [];
