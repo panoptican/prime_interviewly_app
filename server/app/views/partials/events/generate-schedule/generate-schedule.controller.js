@@ -61,6 +61,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
 
                 // iterate over the scheduled object using the getOwnPropertyNames method
                 Object.getOwnPropertyNames(sched).forEach(function (elem, index, array) {
+
                     // create an array of objects that contains each scheduled item
                     // this array will contain the formatted schedule for an interviewer
                     titleObj = {};

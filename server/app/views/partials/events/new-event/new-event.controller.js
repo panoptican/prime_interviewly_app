@@ -5,15 +5,13 @@
 app.controller('newEventCtrl', ['$scope', '$http', '$location', '$filter', function($scope, $http, $location, $filter) {
     $scope.submit = function() {
 
-        console.log($filter('date')(new Date($scope.sTime), 'h:mm'));
-
         var event = {
             type: $scope.eventType,
             cohort: $scope.cohort,
             date: $scope.date,
             location: $scope.location,
-            startTime: $scope.sTime,
-            endTime: $scope.eTime,
+            startTime: $filter('date')(new Date($scope.sTime), 'HH:mm'),
+            endTime: $filter('date')(new Date($scope.eTime), 'HH:mm'),
             interviewDuration: $scope.slotDur,
             organizer: $scope.organizer
         };

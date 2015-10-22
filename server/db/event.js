@@ -15,7 +15,7 @@ var Event = {
         callback(null, newEvent);
     },
     find: function(query, callback){
-        EventModel.findOne(query, function(err, doc){
+        EventModel.find(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {

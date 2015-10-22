@@ -4,9 +4,7 @@ var Event = require('../../db/event');
 
 /* GET event */
 router.get('/', function(req, res, next) {
-    console.log('hello');
     var query = req.query || {};
-    console.log(query);
     Event.find(query, function(err, data){
         if(err){
             console.log(err);

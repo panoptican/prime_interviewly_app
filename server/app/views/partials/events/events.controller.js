@@ -3,23 +3,35 @@
  Events controller
   */
 app.controller('eventsCtrl', ['$scope', '$http', function($scope, $http) {
+
     $http.get('/api/event').then(function success(response) {
-        console.log(response);
+        eventsList = response.data;
+        var tiles = [];
+
+        eventsList.forEach(function(item, pos) {
+            var tile = buildGridModel({
+                title: item.cohort + ' ' + item.type
+            })
+        });
+
     }, function error() {});
 
-    this.tiles = buildGridModel({
+    console.log('this', this);
+
+    $scope.tiles = buildGridModel({
         title: "Event Title",
         background: ""
     });
-    function buildGridModel(tileTmpl){
-        var it, results = [ ];
-            it = angular.extend({},tileTmpl);
-            it.title = it.title;
-            it.span  = { row : 1, col : 1 };
-            it.background = "gray";
-            it.span.row = it.span.col = 1;
 
-            results.push(it);
+    function buildGridModel(event){
+        var results = [];
+        var it = angular.extend({}, event);
+        it.title = it.title;
+        it.span  = { row : 1, col : 1 };
+        it.background = "gray";
+        it.span.row = it.span.col = 1;
+
+        results.push(it);
 
         return results;
     }
