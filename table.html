@@ -1,0 +1,16 @@
+div class="table-responsive-vertical shadow-z-1">
+    table id="table" class="table table-hover table-mc-light-blue">
+        thead
+        tr
+            th ID
+            th Name
+            th Link
+            th Status
+        tbody(ng-repeat="student in students")
+            tr
+                td(data-title="ID") {{student._id}}
+                td(data-title="Name") {{student.fName}} {{student.lName}}
+                td(data-title="Link") {{student.email}}
+                td(data-title="Link") {{student.cohort}}
+
+
