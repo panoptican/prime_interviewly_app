@@ -15,17 +15,16 @@ router.post('/', function(req, res, next){
             });
         },
         function(token, done){
-            console.log(token);
             User.findOne({email: req.body.email}, function(err, user){
                 if(!user){
                     res.json({error: 'not found'});
+                } else {
+                    user.resetPasswordToken = token;
+                    user.resetPasswordExpires = Date.now() + 3600000;
+                    user.save(function(err){
+                        done(err, token, user);
+                    });
                 }
-                user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000;
-                user.save(function(err){
-                    done(err, token, user);
-                console.log(user);
-                });
             });
         },
         function(token, user, done){
