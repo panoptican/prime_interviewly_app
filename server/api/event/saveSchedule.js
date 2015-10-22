@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var Student = require('../../db/student');
+var Event = require('../../db/event');
 
+/* POST saves schedule to event */
 router.post('/', function(req, res, next){
-    var interviewer = req.query,
-        weight = req.body;
+    var event = req.query,
+        schedule = req.body;
 
-    Student.addWeight(interviewer, weight, function(err, data){
+    Event.saveSchedule(event, schedule, function(err, data){
         if(err){
             console.log(err);
             next(err);

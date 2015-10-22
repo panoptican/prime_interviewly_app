@@ -1,6 +1,8 @@
 var EventModel = require('../models/Event');
 var Interviewers = require('./interviewer');
 var Students = require('./student');
+var Schedule = require('./schedule');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var Event = {
     add: function(body, callback){
@@ -14,13 +16,22 @@ var Event = {
         callback(null, newEvent);
     },
     find: function(query, callback){
-        EventModel.findOne(query, function(err, doc){
+        EventModel.find(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
                 callback(null, doc);
             }
         });
+    },
+    findOne: function(query, callback){
+      EventModel.findOne(query, function(err, doc){
+          if(err){
+              console.log(err);
+          } else {
+              callback(err, doc);
+          }
+      })
     },
     delete: function(query, callback){
         var conditions = query || {};
@@ -71,7 +82,7 @@ var Event = {
     },
     removeInterviewer: function(event, interviewer, callback){
         EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
-            { $pull: {interviewers: {fName: interviewer.fName, company: interviewer.company}}}, {new: true}, function(err, event){
+            { $pull: {interviewers: {_id: ObjectId(interviewer._id)}}}, {new: true}, function(err, event){
                 if(err){
                     console.log(err);
                 } else {
@@ -117,6 +128,18 @@ var Event = {
                     callback(null, event);
                 }
             })
+    },
+    saveSchedule: function(event, schedule, callback){
+        Schedule.find({_id: schedule._id}, function(err, schedule){
+            EventModel.findOneAndUpdate({_id: event._id},
+                {$set: {schedule: schedule}}, {new: true}, function(err, event){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        callback(null, event);
+                    }
+                })
+        });
     }
 };
 

@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var Student = require('../../db/student');
+var Interviewer = require('../../db/interviewer');
 
-router.post('/', function(req, res, next){
-    var interviewer = req.query,
-        weight = req.body;
+router.delete('/', function(req, res, next){
+    var interviewer = req.query;
 
-    Student.addWeight(interviewer, weight, function(err, data){
+    Interviewer.resetWeight(interviewer, function(err, data){
         if(err){
             console.log(err);
             next(err);
