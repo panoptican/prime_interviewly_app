@@ -23,6 +23,15 @@ var Event = {
             }
         });
     },
+    findOne: function(query, callback){
+      EventModel.findOne(query, function(err, doc){
+          if(err){
+              console.log(err);
+          } else {
+              callback(err, doc);
+          }
+      })
+    },
     delete: function(query, callback){
         var conditions = query || {};
         EventModel.findOneAndRemove(conditions, function(err, doc){
