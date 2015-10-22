@@ -81,7 +81,7 @@ var Interviewer = {
         })
     },
     addWeight: function(query, weight, callback){
-        StudentModel.findOne({fName: query.studentfName, lName: query.studentlName}, null, function(err, student){
+        StudentModel.findOne({_id: ObjectId(query._id)}, null, function(err, student){
             InterviewerModel.findOneAndUpdate({fName: query.fName, company: query.company},
                 {$addToSet: {weights: {student: student._id, weight: weight.value}}}, {new: true}, function(err, doc){
                 if(err){
@@ -93,7 +93,7 @@ var Interviewer = {
         });
     },
     resetWeight: function(query, callback){
-      StudentModel.findOne({fName: query.studentfName, lName: query.studentlName}, null, function(err, student){
+      StudentModel.findOne({_id: ObjectId(query._id)}, null, function(err, student){
           InterviewerModel.findOneAndUpdate({fName: query.fName, company: query.company},
               {$pull: {weights: {student: student._id}}}, {new: true}, function(err, doc){
                   if(err){
