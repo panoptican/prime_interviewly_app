@@ -20,16 +20,14 @@
         table(id="table" class="table table-hover table-mc-light-blue")
             thead
             tr
-                th(flex="20") Name
-                th Email
-                th Cohort
-                th Archive
-            tbody(ng-repeat="student in students")
+                th Name
+                th Company
+                th Title
+            tbody(ng-repeat="Interviewer in interviewers")
                 tr
                     td(data-title="Name" flex="20") {{Interviewer.fName}} {{Interviewer.lName}}
-                    td(data-title="email" flex="25") {{Interviewer.email}}
-                    td(data-title="cohort" flex="25") {{Interviewer.cohort}}
-                    td(data-title="Archive" flex="20")
+                    td(data-title="email" flex="25") {{Interviewer.company}}
+                    td(data-title="cohort" flex="25") {{Interviewer.title}}
                         md-button Archive
                         md-button(ng-click="editInterviewer($event, Interviewer._id)") Edit
     span(flex="5")
