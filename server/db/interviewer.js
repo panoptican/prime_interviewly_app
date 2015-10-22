@@ -75,7 +75,6 @@ var Interviewer = {
         InterviewerModel.findOneAndUpdate(query, body, {new: true}, function(err, doc){
             if(err){
                 console.log(err);
-                next(err);
             } else {
                 callback(null, doc);
             }
@@ -87,18 +86,28 @@ var Interviewer = {
                 {$addToSet: {weights: {student: student._id, weight: weight.value}}}, {new: true}, function(err, doc){
                 if(err){
                     console.log(err);
-                    next(err);
                 } else {
                     callback(null, doc);
                 }
             })
         });
     },
+    resetWeight: function(query, callback){
+      StudentModel.findOne({fName: query.studentfName, lName: query.studentlName}, null, function(err, student){
+          InterviewerModel.findOneAndUpdate({fName: query.fName, company: query.company},
+              {$pull: {weights: {student: student._id}}}, {new: true}, function(err, doc){
+                  if(err){
+                      console.log(err);
+                  } else {
+                      callback(null, doc);
+                  }
+              })
+      })
+    },
     editUnavail: function(query, slots, callback){
         InterviewerModel.findOneAndUpdate(query, {unavailable: slots}, {new: true}, function(err, doc){
             if(err){
                 console.log(err);
-                next(err);
             } else {
                 callback(null, doc);
             }

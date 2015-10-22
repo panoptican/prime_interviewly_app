@@ -41,6 +41,7 @@ var saveScheduleToEvent = require('./api/event/saveSchedule');
 var archiveStudent = require('./api/student/archive');
 var archiveInterviewer = require('./api/interviewer/archive');
 var archiveEvent = require('./api/event/archive');
+var interviewerResetWeight = require('./api/interviewer/resetWeight');
 
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
@@ -84,6 +85,7 @@ app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
 app.use('/api/event/removeStudent', removeStudentFromEvent);
 app.use('/api/event/getSchedule', getSchedule);
 app.use('/api/interviewer/addWeight', interviewerAddWeight);
+app.use('/api/interviewer/resetWeight', interviewerResetWeight);
 app.use('/api/student/addWeight', studentAddWeight);
 app.use('/api/interviewer/unavail', interviewerUnavail);
 app.use('/api/event/saveSchedule', saveScheduleToEvent);
