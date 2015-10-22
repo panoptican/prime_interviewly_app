@@ -4,6 +4,7 @@ var Converter = require('csvtojson').Converter;
 var converter = new Converter({});
 var fs = require('fs');
 var path = require('path');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var Student = {
     bulkImport: function(file, callback){
@@ -99,6 +100,12 @@ var Student = {
                        callback(null, doc);
                    }
                 });
+        })
+    },
+    archive: function(query, callback){
+        StudentModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {isArchived: true}}, {new: true}, function(err, student){
+            if(err){console.log(err)}
+            callback(null, student);
         })
     }
 };

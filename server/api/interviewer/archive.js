@@ -2,11 +2,10 @@ var express = require('express');
 var router = express.Router();
 var Interviewer = require('../../db/interviewer');
 
-/* DELETE remove a weight from an interviewer */
-router.delete('/', function(req, res, next){
+router.post('/', function(req, res, next){
     var interviewer = req.query;
 
-    Interviewer.resetWeight(interviewer, function(err, data){
+    Interviewer.archive(interviewer, function(err, data){
         if(err){
             console.log(err);
             next(err);

@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
             console.log(err);
             next(err);
         } else {
-            console.log(data);
             res.json(data);
         }
     })
