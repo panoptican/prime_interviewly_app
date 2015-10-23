@@ -8,9 +8,14 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
 
+    // schedule ID
+    var scheduleId;
+
     // Initialize UI Grid variables
     var gridCols = [];
     var gridData = [];
+
+    // Initialize time slots column for UI Grid
     var timeCol;
     var timeColLabel = {name: 'intTime', field: 'intTime', width: 100, pinnedLeft: true, enableCellEdit:false, displayName: 'Time Slot'};
 
@@ -28,30 +33,34 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
     // get event details
     $http.get('api/event?_id=' + eventParam).then(function success(response) {
 
-        console.log(response.data[0]);
-
-        // time experiments
+        // store all manner of time data
         var startTime = moment(response.data[0].startTime, 'h:mm A').format('HH:mm');
         var endTime = moment(response.data[0].endTime, 'h:mm A').format('HH:mm');
         var eventLength = moment(endTime, 'HH:mm').diff(moment(startTime, 'HH:mm'), 'minutes');
         var slotLength = moment.duration(response.data[0].interviewDuration, 'minutes').asMinutes();
         var slotCount = Math.floor(eventLength/slotLength).toFixed(0);
-        console.log(startTime, endTime, eventLength, slotLength, slotCount);
-        console.log(moment(startTime, 'HH:mm').add((slotLength * 8), 'minutes').format('h:mm A'));
 
+        // push first time slot into time columns variable
         timeCol = [{intTime: moment(startTime, 'HH:mm').format('h:mm A')}];
+
+        // iterate over the remainder of time slots and push each into time columns variable
         var rowCount = slotCount;
         while (rowCount--){
             timeCol.push({intTime: moment(startTime, 'HH:mm').add((slotLength * (slotCount - rowCount)), 'minutes').format('h:mm A')})
         }
-        console.log(timeCol);
 
+        // pop off any extra time slots
+        // these are created when the math doesn't really work
+        // namely, if interview duration conflicts with event duration
+        // i.e. there is enough time for x number of interviews but last slot is shorter than desired duration
         if(timeCol.length > slotCount) {
             timeCol.pop();
         }
 
-        console.log(timeCol);
+    });
 
+    $http.get('api/event?_id=' + eventParam).then(function success(response) {
+        console.log(response.data[0]);
     });
 
     // "Generate" button click function
@@ -62,6 +71,9 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
             method: 'GET',
             url: 'api/event/getSchedule?_id=' + eventParam
         }).then(function successCallback(response) {
+
+            // update schedule ID variable
+            scheduleId = response.data._id;
 
             // empty the UI Grid variables in case there is data
             $scope.gridOptions.columnDefs = [];
@@ -149,8 +161,6 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
             // update the gridData variable
             gridData = gridArr;
 
-            console.table(gridData);
-            console.table(gridCols);
         }).then(function() {
 
             // after capturing and formatting the data, update UI Grid options
@@ -160,6 +170,8 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
     };
 
     $scope.saveEvent = function() {
-        console.log('save');
+        $http.post('/api/event/saveSchedule?_id=' + eventParam, {_id: scheduleId}).then(function success(response) {
+            console.log(response);
+        })
     };
 }]);
