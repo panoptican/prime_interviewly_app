@@ -36,5 +36,5 @@
                     td
                         md-button.md-raised(ng-hide="student.added" ng-click="addStudent(student._id)") Add
                     td
-                        md-button.md-raised.md-warn(ng-show="student.added") Delete
+                        md-button.md-raised.md-warn(ng-show="student.added" ng-click="remove(student._id)") Remove
 
