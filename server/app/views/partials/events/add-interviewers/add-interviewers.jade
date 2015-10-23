@@ -12,22 +12,24 @@
                 md-button.md-raised(ng-click="submit()") Go
                     span(flex)
     span(flex="5")
-    md-data-table-toolbar
-        h2(class="md-title") Interviewers
-    md-data-table-container
-        table(md-data-table md-row-select="selected" md-progress="deferred")
-            thead(md-order="query.order" md-trigger="onOrderChange")
-                tr
-                    th(name="First Name" order-by="name") First Name
-                    th(name="Last Name" order-by="name") Last Name
-                    th(name="company" order-by="name") Company
-                    th(name="title" order-by="name") Title
-            tbody
-                tr(md-auto-select ng-repeat="interviewer in interviewers")
-                    td {{interviewer.fName}}
-                    td {{interviewer.lName}}
-                    td {{interviewer.company}}
-                    td {{interviewer.title}}
-                    td
-                        md-button.md-raised(ng-hide="interviewer.added" ng-click="addInterviewer(interviewer._id)") Add
-                        md-button.md-raised.md-warn(ng-show="interviewer.added" ng-click="remove(interviewer._id)") Remove
+    md-content
+        md-card
+            md-data-table-toolbar
+                h2(class="md-title") Interviewers
+            md-data-table-container
+                table(md-data-table md-row-select="selected" md-progress="deferred")
+                    thead(md-order="query.order" md-trigger="onOrderChange")
+                        tr
+                            th(name="First Name" order-by="name") First Name
+                            th(name="Last Name" order-by="name") Last Name
+                            th(name="company" order-by="name") Company
+                            th(name="title" order-by="name") Title
+                    tbody
+                        tr(md-auto-select ng-repeat="interviewer in interviewers")
+                            td {{interviewer.fName}}
+                            td {{interviewer.lName}}
+                            td {{interviewer.company}}
+                            td {{interviewer.title}}
+                            td
+                                md-button.md-raised(ng-hide="interviewer.added" ng-click="addInterviewer(interviewer._id)") Add
+                                md-button.md-raised.md-warn(ng-show="interviewer.added" ng-click="remove(interviewer._id)") Remove

@@ -1,4 +1,10 @@
 app.controller('students', ['$scope', '$http', '$mdDialog', '$rootScope', function($scope, $http, $mdDialog, $rootScope){
+    $scope.query = {
+        order: 'name',
+        limit: 50,
+        page: 1
+    };
+
     $http.get('/api/student').then(function (response) {
         $scope.students = response.data
     });
