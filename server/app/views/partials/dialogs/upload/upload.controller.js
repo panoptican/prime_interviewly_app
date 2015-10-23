@@ -2,7 +2,7 @@
 /*
 Student dialog controller
  */
-app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
+app.controller('uploads', ['$scope', '$mdDialog', 'Upload', function($scope, $mdDialog, Upload){
     $scope.openUploads = function(ev){
         $mdDialog.show({
             controller: uploadFile,
@@ -12,13 +12,12 @@ app.controller('uploads', ['$scope', '$mdDialog', function($scope, $mdDialog){
             clickOutsideToClose: true
         })
     };
-    function uploadFile($scope, $mdDialog){
+    function uploadFile($scope, $mdDialog, Upload){
 
         $scope.submit = function(file){
             var mine = {
                 file: file
             };
-        console.log(mine);
         };
         $scope.close = function() {
             $mdDialog.hide();
