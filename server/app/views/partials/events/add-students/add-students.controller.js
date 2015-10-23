@@ -13,7 +13,7 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
         $http({
             method: 'POST',
             url: '/api/event/addStudent?_id=' + eventParam,
-            data: event
+            data: id
         }).then(function success(data) {
             console.log(data);
         }, function error() {
