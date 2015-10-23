@@ -1,7 +1,12 @@
-app.controller('students', ['$scope', '$http', '$mdDialog', function($scope, $http, $mdDialog){
+app.controller('students', ['$scope', '$http', '$mdDialog', '$rootScope', function($scope, $http, $mdDialog, $rootScope){
     $http.get('/api/student').then(function (response) {
-        console.log(response);
         $scope.students = response.data
+    });
+
+    $rootScope.$on('gotStudents', function(){
+        $http.get('/api/student').then(function (response) {
+            $scope.students = response.data
+        });
     });
 
     $scope.editStudent = function(id) {
