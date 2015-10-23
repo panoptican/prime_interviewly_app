@@ -1,0 +1,38 @@
+.welcome(ng-controller="addStudents" layout="column")
+    .header(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+        md-subheader(class="md-primary")
+            h1.md-display-1 Add Students
+
+        .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+            md-content(layout-margin="auto")
+                md-input-container
+                    label Search Students
+                    input(ng-model="search" type="text")
+            .searchbut(layout="row" layout-align="center center")
+                md-button.md-raised(ng-click="submit()") Go
+                    span(flex)
+            .addheader(layout="row" layout-margin="auto" flex="auto" layout-align="end center")
+        md-button.md-raised(ng-controller="student" ng-click="openStudents($event)") Add Student
+            span(flex)
+        md-button.md-raised(ng-controller="uploads" ng-click="openUploads($event)") Upload File
+            span(flex)
+    span(flex="5")
+    md-data-table-toolbar
+        h2(class="md-title") Students
+    md-data-table-container
+        table(md-data-table md-row-select="selected" md-progress="deferred")
+            thead(md-order="query.order" md-trigger="onOrderChange")
+                tr
+                    th(name="First Name" order-by="name") First Name
+                    th(name="Last Name" order-by="name") Last Name
+                    th(name="email" order-by="name") Email
+                    th(name="cohort" order-by="name") Cohort
+            tbody
+                tr(md-auto-select ng-repeat="student in students")
+                    td {{student.fName}}
+                    td {{student.lName}}
+                    td {{student.email}}
+                    td {{student.cohort}}
+                    td
+                        md-button.md-raised(ng-click="addStudent({{student._id}})") Add
+
