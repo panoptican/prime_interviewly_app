@@ -17,8 +17,6 @@ app.controller('viewEventCtrl', ['$scope', '$http', '$filter', '$routeParams', f
         $scope.eventLoc = typeof response.data[0].location != 'undefined' ? response.data[0].location : 'NA';
         $scope.eventOrg = typeof response.data[0].organizer != 'undefined' ? response.data[0].organizer : 'NA';
 
-        console.log(response.data[0]);
-
     }, function error() {});
 
 }]);
