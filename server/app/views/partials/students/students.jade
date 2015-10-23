@@ -36,7 +36,7 @@
                             td {{student.email}}
                             td {{student.cohort}}
                             td
-                                md-button.md-raised Archive
+                                md-button.md-raised(ng-click="archive(student._id)") Archive
                             td
                                 md-button.md-raised(ng-click="editStudent(student._id)") Edit
             md-data-table-pagination(md-limit="query.limit" md-page="query.page" md-total="{{students.length}}" md-trigger="onpagechange")
