@@ -95,9 +95,6 @@ app.use('/api/interviewer/archive', archiveInterviewer);
 app.use('/api/event/archive', archiveEvent);
 app.use('/api/upload', upload);
 
-// For testing
-app.use('*', index);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

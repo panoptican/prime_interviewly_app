@@ -1,7 +1,6 @@
 app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     $http.get('/api/student').then(function (response) {
-        console.log(response);
-        $scope.students = response.data;
+        $scope.students = response.data
     });
     $http.get('/api/event?_id='+$routeParams._id).then(function(response){
         var added = response.data[0].students.slice();
@@ -21,8 +20,6 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
 
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
-    console.log(eventParam);
-    console.log($routeParams);
 
     $scope.addStudent = function(id) {
         $http({
@@ -41,7 +38,7 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
                 }
             }
         }, function error() {
-        }).then(function redirect() {
+        }).then(function hideRow() {
             // hide row
         });
     };
