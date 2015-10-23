@@ -1,16 +1,16 @@
 .welcome
-    .interviewersheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+    .header(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
         md-subheader(class="md-primary")
             h1.md-display-1 Events
 
-        .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
-            md-content(layout-margin="auto")
-                md-input-container
-                    label Search Events
-                    input(ng-model="search" type="text")
-            .searchbut(layout="row" layout-align="center center")
-                md-button.md-raised(ng-click="submit()") Go
-                    span(flex)
+        //.searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+        //    md-content(layout-margin="auto")
+        //        md-input-container
+        //            label Search Events
+        //            input(ng-model="search" type="text")
+        //    .searchbut(layout="row" layout-align="center center")
+        //        md-button.md-raised(ng-click="submit()") Go
+        //            span(flex)
 
     .gridheader(layout="row" layout-align="center center" layout-margin="auto" layout-padding="auto" flex="auto")
         div(ng-controller="eventsCtrl", flex="auto", ng-cloak="" class="eventsCtrl")
