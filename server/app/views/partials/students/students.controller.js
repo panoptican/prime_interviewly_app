@@ -11,15 +11,19 @@ app.controller('students', ['$scope', '$http', '$mdDialog', function($scope, $ht
             console.log('hello');
             $mdDialog.show({
                 controller: 'editStudent',
+                locals: {
+                    items: $scope.student
+                },
                 templateUrl: 'views/partials/dialogs/student/studentEdit.html',
                 parent: angular.element(document.body),
-                scope: $scope,
                 clickOutsideToClose: true
             })
         })
     };
 }]);
-app.controller('editStudent', ['$scope', '$mdDialog', function($scope, $mdDialog){
+app.controller('editStudent', ['$scope', '$mdDialog', 'items', function($scope, $mdDialog, items){
+    $scope.student = items;
+
     $scope.close = function(){
         $mdDialog.hide();
     }
