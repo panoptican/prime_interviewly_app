@@ -2,9 +2,24 @@ var express = require('express');
 var router = express.Router();
 var Student = require('../../db/student');
 
-/* GET students */
+/* GET CURRENT students */
 router.get('/', function(req, res, next) {
     var query = req.query || {};
+    query.isArchived = false;
+    Student.find(query, function(err, data){
+        if(err){
+            console.log(err);
+            next(err);
+        } else {
+            res.json(data);
+        }
+    })
+});
+
+/* GET ARCHIVED students */
+router.get('/archived', function(req, res, next){
+    var query = req.query || {};
+    query.isArchived = true;
     Student.find(query, function(err, data){
         if(err){
             console.log(err);
