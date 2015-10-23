@@ -69,7 +69,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
     // "Generate" button click function
     $scope.generate = function () {
 
-        $scope.saveButton = 'Save';
+        //$scope.saveButton = 'Save';
 
         // request matches from server given event settings
         $http({
@@ -90,7 +90,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
             gridData.push(timeCol);
 
             // console log API response for debugging
-            console.log(response);
+            console.log(response.data);
 
             // iterate over the interviewer array within the response
             // create various arrays and objects to meet UI Grid data requirements
@@ -98,7 +98,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
 
                 // push the company and interviewer name into the column names array
                 // this will be the column header for a particular interviewer
-                gridCols.push({name: item.company + ' / ' + item.fName, field: item.company + '_' + item.name, width: 150, displayName: item.company + ' / ' + item.fName});
+                gridCols.push({name: item.company + ' / ' + item.fName, field: item.company + '_' + item.fName, width: 150, displayName: item.company + ' / ' + item.fName});
 
                 // set the scheduled object to a variable
                 // this object contains the entire schedule for an interviewer
@@ -114,7 +114,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
                     // create an array of objects that contains each scheduled item
                     // this array will contain the formatted schedule for an interviewer
                     titleObj = {};
-                    titleObj[item.company + '_' + item.fname] = sched[elem];
+                    titleObj[item.company + '_' + item.fName] = sched[elem];
                     students.push(titleObj);
             });
 
@@ -165,6 +165,9 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
 
             // update the gridData variable
             gridData = gridArr;
+
+            console.table(gridData);
+            console.table(gridCols);
 
         }).then(function() {
 
