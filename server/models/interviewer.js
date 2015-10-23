@@ -7,6 +7,8 @@ var Interviewer = new Schema({
     lName: String,
     email: String,
     company: String,
+    url: String,
+    description: String,
     scheduled: {type: Schema.Types.Mixed, default: {}},
     unavailable: {type: Schema.Types.Mixed, default: {}},
     breaks: {type: Number, default: 0},

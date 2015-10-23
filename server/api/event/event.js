@@ -5,6 +5,21 @@ var Event = require('../../db/event');
 /* GET event */
 router.get('/', function(req, res, next) {
     var query = req.query || {};
+    query.isArchived = false;
+    Event.find(query, function(err, data){
+        if(err){
+            console.log(err);
+            next(err);
+        } else {
+            res.json(data);
+        }
+    })
+});
+
+/* GET event */
+router.get('/archived', function(req, res, next) {
+    var query = req.query || {};
+    query.isArchived = true;
     Event.find(query, function(err, data){
         if(err){
             console.log(err);
