@@ -5,11 +5,11 @@
 
         .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
             .addheader(layout="row" layout-margin="auto" flex="auto" layout-align="end center")
-        md-button.md-raised(ng-click="openStudents($event)") Add Students
+        md-button.md-raised(href="/event/add-students?_id={{eventId}}") Add Students
             span(flex)
-        md-button.md-raised(ng-click="openUploads($event)") Add Interviewers
+        md-button.md-raised(href="/event/add-interviewers?_id={{eventId}}") Add Interviewers
             span(flex)
-        md-button.md-raised(href="/schedule?_id={{eventId}}") View Schedule
+        md-button.md-raised(href="/event/schedule?_id={{eventId}}") View Schedule
             span(flex)
     .formlay(layout="row" layout-margin="auto")
         span(flex="20")
