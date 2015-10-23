@@ -54,7 +54,7 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
             }
         }
         var event = $routeParams._id;
-        $http.delete('api/event/removeStudent?_id='+event, {_id: id}).then(function(response){
+        $http.post('api/event/removeStudent?_id='+event, {_id: id}).then(function(response){
             console.log(response);
         })
     }
