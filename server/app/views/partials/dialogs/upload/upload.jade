@@ -1,14 +1,6 @@
 md-dialog.student(flex="40")
    md-toolbar
       h2.md-display-1(layout="row" layout-margin="auto") CSV File Upload
-   md-dialog-content
-      form(name="CSVForm" novalidate)
-         .inputs
-            md-input-container
-               label CSV File
-               input(type="text" name="file" required ng-model="file")
-               .messageuser(ng-messages="CSVForm.file.$error")
-                  .messageuser1(ng-message="required") *Required
-            .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-disabled="CSVForm.$invalid" ng-click="submit(file)") Save
-               md-button.md-raised.md-warn(ng-click="close()") Cancel
+   md-dialog-content(layout="column" layout-padding layout-margin)
+      md-button.md-raised.md-primary(ngf-select="upload($file)") Select File
+      md-button.md-raised.md-warn(ng-click="close()") Cancel

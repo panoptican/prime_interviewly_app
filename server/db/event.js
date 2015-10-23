@@ -111,13 +111,18 @@ var Event = {
         })
     },
     addStudentToEvent: function(student, event, callback){
-        EventModel.findOneAndUpdate(event, {$addToSet: {students: student}}, {new: true}, function(err, doc){
-            if(err){
-                console.log(err);
-            } else {
-                callback(null, doc);
+        Students.findOne({_id: student._id}, '_id fName lName', function(err, student){
+           if(err){console.log(err)}
+            else {
+                EventModel.findOneAndUpdate({_id: ObjectId(event._id)}, {$addToSet: {students: student}}, {new: true}, function(err, doc){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        callback(null, doc);
+                    }
+                })
             }
-        })
+        });
     },
     removeStudent: function(event, student, callback){
         EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},

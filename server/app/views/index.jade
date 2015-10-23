@@ -1,6 +1,6 @@
 extends layout
 block content
-    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3" ng-controller="toolbar")
+    md-toolbar.md-default(layout="row" layout-align="center center" class="md-whiteframe-z3" ng-controller="toolbar" flex)
         md-button(href="/home") Interviewly for
         img(ng-click="goHome()" src="assets/img/prime-logo.png" alt="prime-logo" width="48" height="48" layout-margin="auto")
         md-button(href="/events" ng-hide="paths") Events

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter', 'ngFileUpload']);
 
 /*
  Angular configuration
@@ -31,6 +31,15 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
         }).
         when('/event?:eventId', {
             templateUrl: 'views/partials/events/view-event/view-event.html'
+        }).
+        when('/event/add-students?:eventId', {
+            templateUrl: 'views/partials/events/add-students/add-students.html'
+        }).
+        when('/event/add-interviewers?:eventId', {
+            templateUrl: 'views/partials/events/add-interviewers/add-interviewers.html'
+        }).
+        when('/event/schedule?:eventId', {
+            templateUrl: 'views/partials/events/schedule/schedule.html'
         }).
         when('/students', {
             templateUrl: 'views/partials/students/students.html'

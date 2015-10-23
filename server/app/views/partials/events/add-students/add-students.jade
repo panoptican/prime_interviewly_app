@@ -1,7 +1,7 @@
-.welcome(ng-controller="students" layout="column")
-    .studentssheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+.welcome(ng-controller="addStudents" layout="column")
+    .header(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
         md-subheader(class="md-primary")
-            h1.md-display-1 Students
+            h1.md-display-1 Add Students
 
         .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
             md-content(layout-margin="auto")
@@ -34,7 +34,5 @@
                     td {{student.email}}
                     td {{student.cohort}}
                     td
-                        md-button.md-raised Archive
-                    td
-                        md-button.md-raised(ng-click="editStudent(student._id)") Edit
+                        md-button.md-raised(ng-click="addStudent(student._id)") Add
 

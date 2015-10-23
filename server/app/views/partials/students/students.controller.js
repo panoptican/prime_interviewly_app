@@ -1,10 +1,9 @@
 app.controller('students', ['$scope', '$http', '$mdDialog', function($scope, $http, $mdDialog){
-    $scope.submit = function() {
-        $http.get('/api/student').then(function (response) {
-            console.log(response);
-            $scope.students = response.data
-        })
-    };
+    $http.get('/api/student').then(function (response) {
+        console.log(response);
+        $scope.students = response.data
+    });
+
     $scope.editStudent = function(id) {
         $http.get('/api/student?_id=' + id).then(function (response) {
             $scope.student = response.data[0];
