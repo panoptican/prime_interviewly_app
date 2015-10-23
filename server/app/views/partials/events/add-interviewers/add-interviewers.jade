@@ -1,7 +1,7 @@
 .welcome(ng-controller="addInterviewer" layout="column")
     .interviewersheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
         md-subheader(class="md-primary")
-            h1.md-display-1 Interviewers
+            h1.md-display-1 Add Interviewers To Event
 
         .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
             md-content(layout-margin="auto")
@@ -11,11 +11,6 @@
             .searchbut(layout="row" layout-align="center center")
                 md-button.md-raised(ng-click="submit()") Go
                     span(flex)
-            .addheader(layout="row" layout-margin="auto" flex="auto" layout-align="end center")
-        md-button.md-raised(ng-controller="interviewer" ng-click="openInterviewer($event)") Add Interviewer
-            span(flex)
-        md-button.md-raised(ng-controller="uploads" ng-click="openUploads($event)") Upload File
-            span(flex)
     span(flex="5")
     md-data-table-toolbar
         h2(class="md-title") Interviewers
