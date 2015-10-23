@@ -28,7 +28,7 @@
                     th(name="email" order-by="name") Email
                     th(name="cohort" order-by="name") Cohort
             tbody
-                tr(md-auto-select ng-repeat="student in students")
+                tr(md-auto-select ng-repeat="student in students" data-row-id="{{student._id}}")
                     td {{student.fName}}
                     td {{student.lName}}
                     td {{student.email}}
