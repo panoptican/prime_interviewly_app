@@ -13,7 +13,6 @@ router.post('/', upload.single('file'), function(req, res, next){
        target = req.body.target,
        csv = path.join(__dirname, '../uploads/' + filename);
 
-   console.log(filename, target);
 
    if(target == '/interviewers'){
       Interviewer.bulkImport(csv, function(err, data){
