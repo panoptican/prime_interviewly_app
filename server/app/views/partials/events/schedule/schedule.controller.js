@@ -158,4 +158,8 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
             $scope.gridOptions.data = gridData;
         })
     };
+
+    $scope.saveEvent = function() {
+        console.log('save');
+    };
 }]);
