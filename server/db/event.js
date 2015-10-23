@@ -62,12 +62,13 @@ var Event = {
         })
     },
     addInterviewerToEvent: function(event, interviewer, callback){
-        Interviewers.find({fName: interviewer.fName, company: interviewer.company}, '_id fName lName company', function(err, interviewer){
+        Interviewers.find({_id: interviewer._id}, '_id fName lName company', function(err, interviewer){
+            console.log(interviewer);
             if(err){
                 console.log(err);
             } else {
                 if(interviewer){
-                    EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type}, {$addToSet: {interviewers: interviewer}}, {new: true}, function(err, doc){
+                    EventModel.findOneAndUpdate({_id: ObjectId(event._id)}, {$addToSet: {interviewers: interviewer}}, {new: true}, function(err, doc){
                         if(err){
                             console.log(err);
                         } else {
