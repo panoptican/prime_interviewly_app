@@ -5,7 +5,7 @@
         .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
             md-content(layout-margin="auto")
                 md-button.md-raised(ng-click="generate()") Generate
-                md-button.md-raised(ng-click="saveEvent()") Save
+                md-button.md-raised(ng-click="saveEvent()") {{saveButton}}
                     span(flex)
     .formlay(layout="row" layout-margin="auto" layout-align="center center")
         div(id="grid1" ui-grid="gridOptions" ui-grid-edit ui-grid-exporter ui-grid-pinning class="schedGrid" flex="90")

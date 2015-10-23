@@ -4,6 +4,9 @@ Generate event controller
  */
 app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 
+    // Save button
+    $scope.saveButton = 'Save';
+
     // event ID
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
@@ -65,6 +68,8 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
 
     // "Generate" button click function
     $scope.generate = function () {
+
+        $scope.saveButton = 'Save';
 
         // request matches from server given event settings
         $http({
@@ -172,6 +177,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
     $scope.saveEvent = function() {
         $http.post('/api/event/saveSchedule?_id=' + eventParam, {_id: scheduleId}).then(function success(response) {
             console.log(response);
+            $scope.saveButton = 'Saved';
         })
     };
 }]);
