@@ -37,7 +37,8 @@ gulp.task('copy-libraries', function() {
         'node_modules/angular-ui-grid/ui-grid.woff',
         'node_modules/angular-ui-grid/ui-grid.ttf',
         'node_modules/angular-material-data-table/dist/md-data-table.min.js',
-        'node_modules/angular-material-data-table/dist/md-data-table.min.css'])
+        'node_modules/angular-material-data-table/dist/md-data-table.min.css',
+        'node_modules/ng-file-upload/dist/ng-file-upload.min.js'])
         .pipe(gulp.dest('client/app/assets/vendor'));
 });
 
