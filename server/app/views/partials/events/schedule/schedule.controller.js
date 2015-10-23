@@ -2,7 +2,11 @@
 /*
 Generate event controller
  */
-app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+
+    // event ID
+    var eventParam = $routeParams._id;
+    $scope.eventId = eventParam;
 
     // time experiments
     var startTime = moment('1:00 PM', 'h:mm A').format('HH:mm');
@@ -31,7 +35,7 @@ app.controller('generateCtrl', ['$scope', '$http', function($scope, $http) {
         // request matches from server given event settings
         $http({
             method: 'GET',
-            url: 'http://localhost:3000/test'
+            url: 'api/event/getSchedule?_id=' + eventParam
         }).then(function successCallback(response) {
 
             // empty the UI Grid variables in case there is data
