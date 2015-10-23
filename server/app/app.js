@@ -8,7 +8,8 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
     // Color palette
     $mdThemingProvider.theme('default')
         .primaryPalette('blue-grey')
-        .accentPalette('orange');
+        .accentPalette('orange')
+        .backgroundPalette('grey');
 
     // HTML5 mode
     $locationProvider.html5Mode({
