@@ -50,6 +50,12 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
         when('/archived-events', {
             templateUrl: 'views/partials/events/archived-events/archived-events.html'
         }).
+        when('/archived-students', {
+            templateUrl: 'views/partials/students/archived-students/archived-students.html'
+        }).
+        when('/archived-interviewers', {
+            templateUrl: 'views/partials/interviewers/archived-interviewers/archived-interviewers.html'
+        }).
         when('/profile', {
             templateUrl: 'views/partials/account/profile/profile.html'
         }).

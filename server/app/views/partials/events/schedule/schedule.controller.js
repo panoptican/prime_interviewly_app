@@ -166,9 +166,6 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
             // update the gridData variable
             gridData = gridArr;
 
-            console.table(gridData);
-            console.table(gridCols);
-
         }).then(function() {
 
             // after capturing and formatting the data, update UI Grid options
