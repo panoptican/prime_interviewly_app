@@ -2,7 +2,7 @@
 /*
 Student dialog controller
  */
-app.controller('uploads', ['$scope', '$mdDialog', 'Upload', '$routeParams', '$location', function($scope, $mdDialog, Upload, $location){
+app.controller('uploads', ['$scope', '$mdDialog', 'Upload', '$routeParams', '$location', '$rootScope', function($scope, $mdDialog, Upload, $location, $rootScope){
     $scope.openUploads = function(ev){
         $mdDialog.show({
             controller: uploadFile,
@@ -12,7 +12,7 @@ app.controller('uploads', ['$scope', '$mdDialog', 'Upload', '$routeParams', '$lo
             clickOutsideToClose: true
         })
     };
-    function uploadFile($scope, $mdDialog, Upload, $location){
+    function uploadFile($scope, $mdDialog, Upload, $location, $rootScope){
 
         var target = $location.path();
 
@@ -29,6 +29,8 @@ app.controller('uploads', ['$scope', '$mdDialog', 'Upload', '$routeParams', '$lo
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            }).then(function redirect (){
+                $rootScope.$broadcast('gotStudents')
             });
         };
 

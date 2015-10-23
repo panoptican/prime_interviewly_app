@@ -6,8 +6,9 @@ var upload = multer({dest: path.join(__dirname, '../uploads')});
 var Interviewer = require('../db/interviewer');
 var Student = require('../db/student');
 
+/* POST uploads file and immediately adds to database */
+
 router.post('/', upload.single('file'), function(req, res, next){
-   console.log(req.body);
 
    var filename = req.file.filename,
        target = req.body.target,
