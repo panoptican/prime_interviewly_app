@@ -13,16 +13,17 @@ app.controller('uploads', ['$scope', '$mdDialog', 'Upload', '$routeParams', '$lo
         })
     };
     function uploadFile($scope, $mdDialog, Upload, $location){
-        var target = $location.path;
+
+        var target = $location.path();
 
         // upload on file select or drop
         $scope.upload = function (file) {
-            console.log(file);
             Upload.upload({
                 url: '/api/upload',
-                data: {file: file, target: $location.path}
+                data: {file: file, target: target}
             }).then(function (resp) {
                 console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                $mdDialog.hide();
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {

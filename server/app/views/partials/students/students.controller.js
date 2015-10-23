@@ -1,6 +1,5 @@
 app.controller('students', ['$scope', '$http', '$mdDialog', function($scope, $http, $mdDialog){
     $http.get('/api/student').then(function (response) {
-        console.log(response);
         $scope.students = response.data
     });
 

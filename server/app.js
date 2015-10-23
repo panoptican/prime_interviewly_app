@@ -16,7 +16,6 @@ mongoose.connect('mongodb://localhost:27017/interviewly_dev');
 // require routes
 var index = require('./routes/index');
 var authenticate = require('./routes/authenticate');
-var csvtojson = require('./routes/csvtojson');
 var forgot = require('./routes/forgot');
 var reset = require('./routes/reset');
 var change = require('./routes/change');
@@ -68,7 +67,6 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'app')));
 // use routes
 app.use('/', index);
 app.use('/authenticate', authenticate);
-app.use('/csvtojson', csvtojson);
 app.use('/forgot', forgot);
 app.use('/reset', reset);
 app.use('/change', change);

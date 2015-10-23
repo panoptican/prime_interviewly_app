@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var Event = require('../../db/event');
 
-/* DELETE remove a student from an event */
+/* POST remove a student from an event */
 
-router.delete('/', function(req, res, next){
+router.post('/', function(req, res, next){
     var event = req.query,
         student = req.body;
 
