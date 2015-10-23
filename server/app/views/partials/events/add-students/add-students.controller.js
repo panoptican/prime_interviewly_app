@@ -2,7 +2,7 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
 
     $http.get('/api/student').then(function (response) {
         console.log(response);
-        $scope.students = response.data
+        $scope.students = response.data;
     });
 
     var eventParam = $routeParams._id;
