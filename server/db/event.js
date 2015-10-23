@@ -25,7 +25,7 @@ var Event = {
         });
     },
     findOne: function(query, callback){
-      EventModel.findOne(query, function(err, doc){
+      EventModel.findOne({_id: ObjectId(query)}, function(err, doc){
           if(err){
               console.log(err);
           } else {
@@ -63,7 +63,6 @@ var Event = {
     },
     addInterviewerToEvent: function(event, interviewer, callback){
         Interviewers.find({_id: interviewer._id}, '_id fName lName company', function(err, interviewer){
-            console.log(interviewer);
             if(err){
                 console.log(err);
             } else {

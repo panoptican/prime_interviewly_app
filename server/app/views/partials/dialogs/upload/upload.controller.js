@@ -14,11 +14,22 @@ app.controller('uploads', ['$scope', '$mdDialog', 'Upload', function($scope, $md
     };
     function uploadFile($scope, $mdDialog, Upload){
 
-        $scope.submit = function(file){
-            var mine = {
-                file: file
-            };
+        // upload on file select or drop
+        $scope.upload = function (file) {
+            console.log(file);
+            Upload.upload({
+                url: '/api/upload',
+                data: {file: file}
+            }).then(function (resp) {
+                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            }, function (resp) {
+                console.log('Error status: ' + resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            });
         };
+
         $scope.close = function() {
             $mdDialog.hide();
         }

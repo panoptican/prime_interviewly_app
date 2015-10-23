@@ -11,7 +11,7 @@ router.get('/', function(req, res, next){
     async.waterfall([
         function(callback){
             //find event
-            Event.findOne({cohort: req.query.cohort, type: req.query.type}, function(err, event){
+            Event.findOne(req.query._id, function(err, event){
                 if(err){console.log(err)}
                 callback(null, event);
             })
