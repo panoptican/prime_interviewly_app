@@ -81,7 +81,7 @@ var Event = {
         });
     },
     removeInterviewer: function(event, interviewer, callback){
-        EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
+        EventModel.findOneAndUpdate({_id: ObjectId(event._id)},
             { $pull: {interviewers: {_id: ObjectId(interviewer._id)}}}, {new: true}, function(err, event){
                 if(err){
                     console.log(err);
@@ -125,7 +125,7 @@ var Event = {
         });
     },
     removeStudent: function(event, student, callback){
-        EventModel.findOneAndUpdate({cohort: event.cohort, type: event.type},
+        EventModel.findOneAndUpdate({_id: ObjectId(event._id)},
             { $pull: {students: {_id: ObjectId(student._id)}}}, {new: true}, function(err, event){
                 if(err){
                     console.log(err);

@@ -45,13 +45,6 @@ var archiveEvent = require('./api/event/archive');
 var interviewerResetWeight = require('./api/interviewer/resetWeight');
 var upload = require('./api/upload');
 
-//enable uploads
-//app.configure(function(){
-//  app.use(express.methodOverride());
-//  app.use(express.bodyParser({keepExtensions:true,uploadDir:path.join(__dirname,'/files'}));
-//
-//});
-
 // view engine setup
 app.set('views', path.join(__dirname, './app/views'));
 app.set('view engine', 'jade');

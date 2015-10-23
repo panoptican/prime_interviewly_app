@@ -2,7 +2,7 @@
 /*
 Student dialog controller
  */
-app.controller('uploads', ['$scope', '$mdDialog', 'Upload', function($scope, $mdDialog, Upload){
+app.controller('uploads', ['$scope', '$mdDialog', 'Upload', '$routeParams', '$location', function($scope, $mdDialog, Upload, $location){
     $scope.openUploads = function(ev){
         $mdDialog.show({
             controller: uploadFile,
@@ -12,14 +12,15 @@ app.controller('uploads', ['$scope', '$mdDialog', 'Upload', function($scope, $md
             clickOutsideToClose: true
         })
     };
-    function uploadFile($scope, $mdDialog, Upload){
+    function uploadFile($scope, $mdDialog, Upload, $location){
+        var target = $location.path;
 
         // upload on file select or drop
         $scope.upload = function (file) {
             console.log(file);
             Upload.upload({
                 url: '/api/upload',
-                data: {file: file}
+                data: {file: file, target: $location.path}
             }).then(function (resp) {
                 console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function (resp) {
