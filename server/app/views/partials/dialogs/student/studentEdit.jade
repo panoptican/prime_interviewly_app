@@ -6,7 +6,7 @@ md-dialog.student(flex="40")
          md-content
             md-input-container
                label First Name
-               input(ng-model="student.fName" name="fname" type="text" required)
+               input(ng-model="student.fName" name="fname" type="text" editable="true" required)
                div(ng-messages="studentForm.fname.$error")
                   div(ng-message="required") *Required
             md-input-container
