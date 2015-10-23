@@ -8,16 +8,12 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
 
-    // time experiments
-    var startTime = moment('1:00 PM', 'h:mm A').format('HH:mm');
-    var endTime = moment('4:00 PM', 'h:mm A').format('HH:mm');
-    var eventLength = moment(endTime, 'HH:mm').diff(moment(startTime, 'HH:mm'), 'minutes');
-    var slotLength = moment.duration((eventLength / 9), 'minutes').asMinutes();
-    console.log(moment(startTime, 'HH:mm').add((slotLength * 8), 'minutes').format('h:mm A'));
-
     // Initialize UI Grid variables
     var gridCols = [];
     var gridData = [];
+    var timeCol;
+    var timeColLabel = {name: 'intTime', field: 'intTime', width: 100, pinnedLeft: true, enableCellEdit:false, displayName: 'Time Slot'};
+
 
     // UI Grid options
     $scope.gridOptions = {
@@ -28,6 +24,35 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
             $scope.gridApi = gridApi;
         }
     };
+
+    // get event details
+    $http.get('api/event?_id=' + eventParam).then(function success(response) {
+
+        console.log(response.data[0]);
+
+        // time experiments
+        var startTime = moment(response.data[0].startTime, 'h:mm A').format('HH:mm');
+        var endTime = moment(response.data[0].endTime, 'h:mm A').format('HH:mm');
+        var eventLength = moment(endTime, 'HH:mm').diff(moment(startTime, 'HH:mm'), 'minutes');
+        var slotLength = moment.duration(response.data[0].interviewDuration, 'minutes').asMinutes();
+        var slotCount = Math.floor(eventLength/slotLength).toFixed(0);
+        console.log(startTime, endTime, eventLength, slotLength, slotCount);
+        console.log(moment(startTime, 'HH:mm').add((slotLength * 8), 'minutes').format('h:mm A'));
+
+        timeCol = [{intTime: moment(startTime, 'HH:mm').format('h:mm A')}];
+        var rowCount = slotCount;
+        while (rowCount--){
+            timeCol.push({intTime: moment(startTime, 'HH:mm').add((slotLength * (slotCount - rowCount)), 'minutes').format('h:mm A')})
+        }
+        console.log(timeCol);
+
+        if(timeCol.length > slotCount) {
+            timeCol.pop();
+        }
+
+        console.log(timeCol);
+
+    });
 
     // "Generate" button click function
     $scope.generate = function () {
@@ -44,6 +69,9 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
             gridCols = [];
             gridData = [];
 
+            gridCols.push(timeColLabel);
+            gridData.push(timeCol);
+
             // console log API response for debugging
             console.log(response);
 
@@ -53,7 +81,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
 
                 // push the company and interviewer name into the column names array
                 // this will be the column header for a particular interviewer
-                gridCols.push({name: item.company + ' / ' + item.fName, field: item.company + '_' + item.name, width:150, displayName: item.company + ' / ' + item.fName});
+                gridCols.push({name: item.company + ' / ' + item.fName, field: item.company + '_' + item.name, width: 150, displayName: item.company + ' / ' + item.fName});
 
                 // set the scheduled object to a variable
                 // this object contains the entire schedule for an interviewer
@@ -120,6 +148,9 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', function($sc
 
             // update the gridData variable
             gridData = gridArr;
+
+            console.table(gridData);
+            console.table(gridCols);
         }).then(function() {
 
             // after capturing and formatting the data, update UI Grid options
