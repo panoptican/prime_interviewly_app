@@ -53,18 +53,23 @@ app.controller('modalCtrl', ['$scope', '$mdDialog', '$http', '$rootScope', funct
         });
     };
 
-    $scope.showConfirm = function (ev) {
+    $scope.showConfirm = function (id) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
             .title('Would you like to delete this Event?')
             .content('This will permanently delete this Event.')
             .ariaLabel('Delete')
-            .targetEvent(ev)
             .ok('Yes, delete this Event!')
             .cancel('No way, that was close!');
 
         $mdDialog.show(confirm).then(function () {
-            $scope.status = 'You deleted this event.';
+            $http.delete('api/event?_id=' + id)
+                .then(function(response){
+                    console.log(response.data)
+                    $scope.status = 'You deleted this event.';
+                    $rootScope.$broadcast('got/events');
+                });
+
         }, function () {
             $scope.status = 'You did not delete this event.';
         });
