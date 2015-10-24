@@ -2,7 +2,7 @@
 /*
 Student dialog controller
  */
-app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
+app.controller('student', ['$scope', '$mdDialog', '$http', '$rootScope', function($scope, $mdDialog, $htt, $rootScope){
     $scope.openStudents = function(ev){
         $mdDialog.show({
             controller: addStudent,
@@ -12,29 +12,18 @@ app.controller('student', ['$scope', '$mdDialog', function($scope,$mdDialog){
             clickOutsideToClose: true
         })
     };
-    function addStudent($scope) {
+    function addStudent($scope, $mdDialog, $http, $rootScope) {
         $scope.close = function () {
             $mdDialog.hide();
-            $scope.companies = [
-                {name: 'Prime'},
-                {name: 'Nerdery'},
-                {name: 'Digital People'}
-            ];
-            $scope.events = [
-                {name: 'mocks Delta'},
-                {name: 'career Delta'},
-                {name: 'mocks Epsilon'}
-            ];
         };
-        $scope.submit = function(fname, lname, email, cohort){
-            var student = {
-                fname: fname,
-                lname: lname,
-                email: email,
-                cohort: cohort
-            };
-            console.log(student);
-        }
+
+        $scope.submit = function(student){
+            $http.post('api/student', student)
+                .then(function(response){
+                $rootScope.$broadcast('got/students');
+                $mdDialog.hide();
+            })
+        };
     }
 
 }]);
