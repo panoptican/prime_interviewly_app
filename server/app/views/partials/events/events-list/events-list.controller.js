@@ -65,7 +65,6 @@ app.controller('modalCtrl', ['$scope', '$mdDialog', '$http', '$rootScope', funct
         $mdDialog.show(confirm).then(function () {
             $http.delete('api/event?_id=' + id)
                 .then(function(response){
-                    console.log(response.data)
                     $scope.status = 'You deleted this event.';
                     $rootScope.$broadcast('got/events');
                 });
