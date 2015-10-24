@@ -25,5 +25,5 @@ md-dialog.student(flex="40")
                div(ng-messages="studentForm.cohort.$error")
                   div(ng-message="required") *Required
             .loginbut(layout="row" layout-align="center center")
-               md-button.md-raised(ng-disabled="editStudent.$invalid" ng-click="submit(fname, lname, email, cohort)") Save
+               md-button.md-raised(ng-disabled="editStudent.$invalid" ng-click="edit(student)") Save
                md-button.md-raised.md-warn(ng-click="close()") Cancel

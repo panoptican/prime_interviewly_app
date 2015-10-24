@@ -146,8 +146,8 @@ var Event = {
                 })
         });
     },
-    archive: function(query, callback){
-        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {isArchived: true}}, {new: true}, function(err, event){
+    archive: function(query, status, callback){
+        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, status, {new: true}, function(err, event){
             if(err){console.log(err)}
             callback(null, event);
         })

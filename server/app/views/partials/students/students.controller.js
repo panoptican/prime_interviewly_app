@@ -18,7 +18,6 @@ app.controller('students', ['$scope', '$http', '$mdDialog', '$rootScope', functi
     $scope.editStudent = function(id) {
         $http.get('/api/student?_id=' + id).then(function (response) {
             $scope.student = response.data[0];
-            console.log('hello');
             $mdDialog.show({
                 controller: 'editStudent',
                 locals: {
@@ -37,8 +36,17 @@ $scope.archive = function(id){
     })
 };
 }]);
-app.controller('editStudent', ['$scope', '$mdDialog', 'items', function($scope, $mdDialog, items){
+app.controller('editStudent', ['$scope', '$mdDialog', 'items', '$http', '$rootScope', function($scope, $mdDialog, items, $http, $rootScope){
     $scope.student = items;
+
+    $scope.edit = function(student){
+        $http.put('api/student?_id=' + student._id, student)
+            .then(function(response){
+                $rootScope.$broadcast('got/students');
+                $mdDialog.hide();
+
+            });
+    };
 
     $scope.close = function(){
         $mdDialog.hide();
