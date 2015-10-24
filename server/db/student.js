@@ -114,8 +114,8 @@ var Student = {
                 })
         })
     },
-    archive: function(query, callback){
-        StudentModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {isArchived: true}}, {new: true}, function(err, student){
+    archive: function(query, status, callback){
+        StudentModel.findOneAndUpdate({_id: ObjectId(query._id)}, status, {new: true}, function(err, student){
             if(err){console.log(err)}
             callback(null, student);
         })

@@ -5,7 +5,7 @@ app.controller('ArchInterviewers', ['$scope', '$http', function($scope, $http){
     });
 
     $scope.unarchive = function(id){
-        $http.post('api/interviewer?_id='+id, {archived: false}).then(function(response){
+        $http.post('api/interviewer/archive?_id='+id, {isArchived: false}).then(function(response){
             $http.get('api/interviewer/archived').then(function(response){
                 $scope.interviewers = response.data;
             });
