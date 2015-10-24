@@ -4,7 +4,7 @@ app.controller('interviewers', ['$scope', '$http', '$rootScope', function($scope
    $scope.interviewers = response.data
   });
 
- $rootScope.$on('gotInterviewers', function(){
+ $rootScope.$on('got/interviewers', function(){
   $http.get('/api/interviewer').then(function(response){
    console.log(response);
    $scope.interviewers = response.data

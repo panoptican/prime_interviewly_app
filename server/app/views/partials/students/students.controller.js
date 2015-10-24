@@ -9,7 +9,7 @@ app.controller('students', ['$scope', '$http', '$mdDialog', '$rootScope', functi
         $scope.students = response.data
     });
 
-    $rootScope.$on('gotStudents', function(){
+    $rootScope.$on('got/students', function(){
         $http.get('/api/student').then(function (response) {
             $scope.students = response.data
         });
