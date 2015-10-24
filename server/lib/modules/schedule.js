@@ -32,7 +32,7 @@ var scheduler = {
         array = shuffle.get(array);
         return array;
     },
-    //returns true if count of all student interviews are equal
+    //returns true if count of all student interviews are within 1 of interviewTarget
     check: function(students, interviewTarget){
         var counts = [], studentL = students.length, lng = studentL;
         while(studentL){
@@ -42,7 +42,7 @@ var scheduler = {
         console.log(counts);
         var c = counts.length, cng = c;
         while(c){
-            if(counts[cng-c--] !== interviewTarget){
+            if(counts[cng-c--] < interviewTarget - 1){
                 return false;
             }
         }
@@ -166,8 +166,8 @@ var scheduler = {
                 interviewer.breaks = 0;
             }
             counter++;
-            //if no matches can be found after 4 tries, decrement interviewMax
-            if(counter > 4){
+            //if no matches can be found after 10 tries, decrement interviewMax
+            if(counter > 10){
                 counter = 0;
                 interviewMax--;
             }
