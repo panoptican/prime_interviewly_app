@@ -4,7 +4,7 @@ app.controller('interviewers', ['$scope', '$http', '$rootScope', function($scope
    $scope.interviewers = response.data
   });
 
- $rootScope.$on('gotInterviewers', function(){
+ $rootScope.$on('got/interviewers', function(){
   $http.get('/api/interviewer').then(function(response){
    console.log(response);
    $scope.interviewers = response.data
@@ -26,8 +26,8 @@ app.controller('interviewers', ['$scope', '$http', '$rootScope', function($scope
   })
  };
  $scope.archive = function(id){
-  $http.post('api/interviewer/archive?_id='+id, {archived: true}).then(function(response){
-   $rootScope.$broadcast('gotInterviewers');
+  $http.post('api/interviewer/archive?_id='+id, {isArchived: true}).then(function(response){
+   $rootScope.$broadcast('got/interviewers');
   })
  };
 }]);

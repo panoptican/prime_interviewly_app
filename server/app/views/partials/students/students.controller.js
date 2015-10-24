@@ -9,7 +9,7 @@ app.controller('students', ['$scope', '$http', '$mdDialog', '$rootScope', functi
         $scope.students = response.data
     });
 
-    $rootScope.$on('gotStudents', function(){
+    $rootScope.$on('got/students', function(){
         $http.get('/api/student').then(function (response) {
             $scope.students = response.data
         });
@@ -32,8 +32,8 @@ app.controller('students', ['$scope', '$http', '$mdDialog', '$rootScope', functi
     };
 
 $scope.archive = function(id){
-    $http.post('api/student/archive?_id='+id, {archived: true}).then(function(response){
-        $rootScope.$broadcast('gotStudents');
+    $http.post('api/student/archive?_id='+id, {isArchived: true}).then(function(response){
+        $rootScope.$broadcast('got/students');
     })
 };
 }]);

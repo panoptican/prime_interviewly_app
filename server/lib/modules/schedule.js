@@ -69,7 +69,7 @@ var scheduler = {
             student.scheduled.count.total = 1 + (student.scheduled.count.total || 0);
             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
             student.scheduled.with[match.interviewerID] = true;
-            interviewer.scheduled['slot' + currentSlot] = student.fName;
+            interviewer.scheduled['slot' + currentSlot] = student.fName + ' ' + student.lName;
         }
         //this function updates the student and interviewer objects to schedule a break
         var scheduleBreak = (student, interviewer, currentSlot) => {
@@ -88,7 +88,7 @@ var scheduler = {
 
                     //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
                 if( interview.interviewerID == interviewer._id &&
-                    interview.student == student.fName &&
+                    interview.student == student.fName + ' ' + student.lName &&
                     !interview.unavailable['slot' + currentSlot] &&
                     student.scheduled.count.total < interviewMax &&
                     !student.scheduled.with[interview.interviewerID]
