@@ -10,6 +10,7 @@ block content
         span(flex)
 
         .menu(layout-align="center center")
+            md-button(href="/" ng-hide="!paths") Login
             md-menu(cascade="true" direction="'down'" ng-hide="paths" md-offset="60,0")
                 md-button(ng-click="$mdOpenMenu($event)") WELCOME {{user.username}}!
                     md-icon.i.material-icons(layout-margin="auto") menu
