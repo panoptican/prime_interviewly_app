@@ -6,24 +6,22 @@ md-dialog.student(flex="40")
             .inputs
                 md-input-container
                     label First Name
-                    input(ng-model="fname" name="fname" type="text" required)
+                    input(ng-model="student.fName" name="fname" type="text" required)
                     div(ng-messages="studentForm.fname.$error")
                         div(ng-message="required") *Required
                 md-input-container
                     label Last Name
-                    input(ng-model="lname" name="lname" type="text" required)
+                    input(ng-model="student.lName" name="lname" type="text" required)
                     div(ng-messages="studentForm.lname.$error")
                         div(ng-message="required") *Required
                 md-input-container
                     label Email
-                    input(ng-model="email" name="email" type="email" required)
+                    input(ng-model="student.email" name="email" type="email" required)
                     div(ng-messages="studentForm.email.$error")
                         div(ng-message="required") *Required
                 md-input-container
-                    label Select Cohort
-                    md-select(ng-model="cohort" name="cohort" required)
-                        md-option(ng-repeat="cohort in cohorts")
-                            p.md-body-1  {{cohort.name}}
+                    label Cohort
+                    input(ng-model="student.cohort" name="cohort" required)
                     div(ng-messages="studentForm.cohort.$error")
                         div(ng-message="required") *Required
                 .loginbut(layout="row" layout-align="center center")
