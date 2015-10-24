@@ -2,43 +2,52 @@
 /*
  Events list controller
   */
-app.controller('eventsCtrl', ['$scope', '$http', '$filter', function($scope, $http, $filter) {
-    $http.get('/api/event').then(function success(response) {
+app.controller('eventsCtrl', ['$scope', '$http', '$filter', '$rootScope', function($scope, $http, $filter, $rootScope) {
+    var getEvents = function(){
+        $http.get('/api/event').then(function success(response) {
 
-        // set get request to a variable
-        eventsList = response.data;
+            // set get request to a variable
+            eventsList = response.data;
 
-        // initialize an empty array for storing data to be used in ng-repeat
-        var tiles = [];
+            // initialize an empty array for storing data to be used in ng-repeat
+            var tiles = [];
 
-        // iterate over response data and push objects into array for ng-repeat
-        eventsList.forEach(function(item, pos) {
-            tiles.push({title: title = item.cohort + ' ' + item.type, date: $filter('date')(new Date(item.date), 'MM/dd/yy'), _id: item._id});
-        });
+            // iterate over response data and push objects into array for ng-repeat
+            eventsList.forEach(function(item, pos) {
+                tiles.push({title: title = item.cohort + ' ' + item.type, date: $filter('date')(new Date(item.date), 'MM/dd/yy'), _id: item._id});
+            });
 
-        // set scope tiles equal to the object array
-        $scope.tiles = tiles;
+            // set scope tiles equal to the object array
+            $scope.tiles = tiles;
 
-    }, function error() {});
-
+        }, function error() {});
+    };
+    getEvents();
+    $rootScope.$on('got/events', function(){
+        getEvents();
+    });
 }]);
 
 
-app.controller('modalCtrl', ['$scope', '$mdDialog', function($scope, $mdDialog) {
+app.controller('modalCtrl', ['$scope', '$mdDialog', '$http', '$rootScope', function($scope, $mdDialog, $http, $rootScope) {
     $scope.alert = '';
 
-    $scope.showAlert = function (ev) {
+    $scope.showAlert = function (id) {
         // Appending dialog to document.body to cover sidenav in docs app
         var confirm = $mdDialog.confirm()
             .title('You are about to Archive this Event!')
             .content('Click to confirm. You can access this Event at any time in Archived Events.')
             .ariaLabel('Archive')
-            .targetEvent(ev)
             .ok('Got it!')
             .cancel('Nevermind.');
 
         $mdDialog.show(confirm).then(function () {
-            $scope.status = 'You archived this event.';
+            $http.post('api/event/archive?_id=' + id, {isArchived: true})
+                .then(function(response){
+                    $scope.status = 'You archived this event.';
+                    $rootScope.$broadcast('got/events');
+                });
+
         }, function () {
             $scope.status = 'You did not archive this event.';
         });
