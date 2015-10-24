@@ -12,7 +12,8 @@ var Student = new Schema({
             total: 0
         }}
     },
-    preferences: Array
+    weights: Array,
+    isArchived: {type: Boolean, default: false}
 }, { minimize: false });
 
 var studentSchema = mongoose.model('student', Student);

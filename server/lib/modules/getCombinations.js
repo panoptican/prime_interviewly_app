@@ -11,13 +11,16 @@ var combinations = {
                     name: interviewer.fName,
                     company: interviewer.company,
                     student: student.fName,
-                    weight: random.between(-2, 2),
+                    weight: 0,
                     unavailable: interviewer.unavailable,
                     interviewerID: interviewer._id
                 })
             }
         }
         return combinations;
+    },
+    getWeight: function(interviewer, student){
+
     }
 };
 

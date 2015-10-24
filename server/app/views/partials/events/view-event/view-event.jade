@@ -1,0 +1,23 @@
+.welcome(ng-controller="viewEventCtrl" layout="column")
+    .header(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+        md-subheader(class="md-primary")
+            h1.md-display-1 {{eventTitle}}
+
+        .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+            .addheader(layout="row" layout-margin="auto" flex="auto" layout-align="end center")
+        md-button.md-raised(href="/event/add-students?_id={{eventId}}") Students
+            span(flex)
+        md-button.md-raised(href="/event/add-interviewers?_id={{eventId}}") Interviewers
+            span(flex)
+        md-button.md-raised(href="/event/schedule?_id={{eventId}}") Schedule
+            span(flex)
+    .formlay(layout="row" layout-margin="auto")
+        span(flex="20")
+        .md-whiteframe-z2(layout="column" flex="60")
+            form(name="new-event")
+                p.md-body-1(layout="row" layout-margin="auto") Date: {{eventDate}}
+                p.md-body-1(layout="row" layout-margin="auto") Start time: {{eventStime}}
+                p.md-body-1(layout="row" layout-margin="auto") End time: {{eventEtime}}
+                p.md-body-1(layout="row" layout-margin="auto") Interview duration: {{eventDur}}
+                p.md-body-1(layout="row" layout-margin="auto") Location: {{eventLoc}}
+                p.md-body-1(layout="row" layout-margin="auto") Organizer: {{eventOrg}}

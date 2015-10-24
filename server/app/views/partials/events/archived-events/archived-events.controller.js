@@ -1,0 +1,4 @@
+
+/*
+Archived events controller
+ */

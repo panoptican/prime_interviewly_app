@@ -35,16 +35,19 @@ gulp.task('copy-libraries', function() {
         'node_modules/angular-ui-grid/ui-grid.min.js',
         'node_modules/angular-ui-grid/ui-grid.min.css',
         'node_modules/angular-ui-grid/ui-grid.woff',
-        'node_modules/angular-ui-grid/ui-grid.ttf'])
+        'node_modules/angular-ui-grid/ui-grid.ttf',
+        'node_modules/angular-material-data-table/dist/md-data-table.min.js',
+        'node_modules/angular-material-data-table/dist/md-data-table.min.css',
+        'node_modules/ng-file-upload/dist/ng-file-upload.min.js'])
         .pipe(gulp.dest('client/app/assets/vendor'));
 });
 
 // Copies and uglifies app.js and all associated controllers from server to client
 gulp.task('build-app', function() {
-    return gulp.src(['./server/app/app.js', './server/app/views/partials/**/*.js'])
+    return gulp.src(['./server/app/app.js', './server/app/views/partials/**/*.js', './server/app/views/partials/dialogs/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('app.min.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./client/app/assets/js'))
 });

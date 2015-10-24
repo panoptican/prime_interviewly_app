@@ -1,8 +1,10 @@
 var StudentModel = require('../models/student');
+var InterviewerModel = require('../models/interviewer');
 var Converter = require('csvtojson').Converter;
 var converter = new Converter({});
 var fs = require('fs');
 var path = require('path');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var Student = {
     bulkImport: function(file, callback){
@@ -41,6 +43,33 @@ var Student = {
             }
         });
     },
+    findOne: function(query, projections, callback){
+        StudentModel.findOne(query, projections, function(err, doc){
+            if(err){
+                console.log(err);
+            } else {
+                callback(null, doc);
+            }
+        })
+    },
+    findCohort: function(query, conditions, callback){
+      StudentModel.find(query, conditions, function(err, doc){
+          if(err){
+              console.log(err);
+          } else {
+              callback(null, doc);
+          }
+      })
+    },
+    findManyById: function(array, callback){
+      StudentModel.find({_id: {$in: array}}, function(err, docs){
+          if(err){
+              console.log(err);
+          } else {
+              callback(null, docs);
+          }
+      })
+    },
     delete: function(query, callback){
         var conditions = query || {};
         StudentModel.findOneAndRemove(conditions, function(err, doc){
@@ -52,7 +81,7 @@ var Student = {
             }
         });
     },
-    update: function(query, body, callback) {
+    update: function(query, body, callback){
         StudentModel.findOneAndUpdate(query, body, {new: true}, function (err, doc) {
             if (err) {
                 console.log(err);
@@ -60,6 +89,35 @@ var Student = {
             } else {
                 callback(null, doc);
             }
+        })
+    },
+    addWeight: function(query, weight, callback){
+        InterviewerModel.findOne({_id: ObjectId(query._id)}, null, function(err, interviewer){
+            StudentModel.findOneAndUpdate({fName: query.studentfName, lName: query.studentlName},
+                {$addToSet: {weights: {interviewer: interviewer._id, weight: weight.value}}}, {new: true}, function(err, doc){
+                   if(err){console.log(err)}
+                    else {
+                       callback(null, doc);
+                   }
+                });
+        })
+    },
+    resetWeight: function(query, callback){
+        InterviewerModel.findOne({_id: ObjectId(query._id)}, null, function(err, interviewer){
+            StudentModel.findOneAndUpdate({fName: query.studentfName, lName: query.studentlName},
+                {$pull: {weights: {interviewer: interviewer._id}}}, {new: true}, function(err, doc){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        callback(null, doc);
+                    }
+                })
+        })
+    },
+    archive: function(query, callback){
+        StudentModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {isArchived: true}}, {new: true}, function(err, student){
+            if(err){console.log(err)}
+            callback(null, student);
         })
     }
 };

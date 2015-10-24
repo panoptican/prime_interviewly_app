@@ -15,17 +15,16 @@ router.post('/', function(req, res, next){
             });
         },
         function(token, done){
-            console.log(token);
             User.findOne({email: req.body.email}, function(err, user){
                 if(!user){
                     res.json({error: 'not found'});
+                } else {
+                    user.resetPasswordToken = token;
+                    user.resetPasswordExpires = Date.now() + 3600000;
+                    user.save(function(err){
+                        done(err, token, user);
+                    });
                 }
-                user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000;
-                user.save(function(err){
-                    done(err, token, user);
-                console.log(user);
-                });
             });
         },
         function(token, user, done){
@@ -40,7 +39,7 @@ router.post('/', function(req, res, next){
                 to: {name: user.username, address: user.email},
                 from: 'Prime Digital Academy <nodemailertest123@gmail.com>',
                 subject: 'Password Reset',
-                text: 'http://'+req.headers.host+'/'+token
+                text: 'http://'+req.headers.host+'/#/reset/'+token
             };
             transporter.sendMail(mailOptions, function(err){
                 done(err, 'done')

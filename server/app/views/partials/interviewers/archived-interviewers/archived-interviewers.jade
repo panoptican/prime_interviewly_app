@@ -1,0 +1,32 @@
+.welcome(ng-controller="ArchInterviewers" layout="column")
+   .interviewersheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+      md-subheader(class="md-primary")
+         h1.md-display-1 Archived Interviewers
+
+      .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
+         md-content(layout-margin="auto")
+            md-input-container
+               label Search Archived Interviewers
+               input(ng-model="search" type="text")
+         .searchbut(layout="row" layout-align="center center")
+            md-button.md-raised(ng-click="submit()") Go
+               span(flex)
+   span(flex="5")
+   md-data-table-toolbar
+      h2(class="md-title") Interviewers
+   md-data-table-container
+      table(md-data-table md-row-select="selected" md-progress="deferred")
+         thead(md-order="query.order" md-trigger="onOrderChange")
+            tr
+               th(name="First Name" order-by="name") First Name
+               th(name="Last Name" order-by="name") Last Name
+               th(name="company" order-by="name") Company
+               th(name="title" order-by="name") Title
+         tbody
+            tr(md-auto-select ng-repeat="interviewer in interviewers")
+               td {{interviewer.fName}}
+               td {{interviewer.lName}}
+               td {{interviewer.company}}
+               td {{interviewer.title}}
+               td
+                  md-button.md-raised(ng-click="unarchive(interviewer._id)") Unarchive

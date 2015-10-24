@@ -7,7 +7,9 @@ var express = require('express'),
 router.get('/:token', function(req, res, next) {
     User.findOne({resetPasswordToken: req.params.token}, function (err, user) {
         if (!user) {
-            res.json({error: 'error'});
+            res.redirect('/#/')
+        } else {
+            res.redirect('/#/reset/'+req.params.token);
         }
     });
 });
@@ -19,7 +21,6 @@ router.post('/', function(req, res, next){
                 resetPasswordToken: req.body.token,
                 resetPasswordExpires: {$gt: Date.now()}
             }, function (err, user) {
-                console.log(user);
                 if (!user) {
                     res.json({error: 'error'})
                 }
