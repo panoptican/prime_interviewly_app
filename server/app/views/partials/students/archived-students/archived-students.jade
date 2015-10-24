@@ -12,21 +12,23 @@
             md-button.md-raised(ng-click="submit()") Go
                span(flex)
    span(flex="5")
-   md-data-table-toolbar
-      h2(class="md-title") Students
-   md-data-table-container
-      table(md-data-table md-row-select="selected" md-progress="deferred")
-         thead(md-order="query.order" md-trigger="onOrderChange")
-            tr
-               th(name="First Name" order-by="name") First Name
-               th(name="Last Name" order-by="name") Last Name
-               th(name="email" order-by="name") Email
-               th(name="cohort" order-by="name") Cohort
-         tbody
-            tr(md-auto-select ng-repeat="student in students")
-               td {{student.fName}}
-               td {{student.lName}}
-               td {{student.email}}
-               td {{student.cohort}}
-               td
-                  md-button.md-raised(ng-click="unarchive(student._id)") Unarchive
+   md-content
+      md-card(ng-show="students.length")
+         md-data-table-toolbar
+            h2(class="md-title") Students
+         md-data-table-container
+            table(md-data-table md-row-select="selected" md-progress="deferred")
+               thead(md-order="query.order" md-trigger="onOrderChange")
+                  tr
+                     th(name="First Name" order-by="name") First Name
+                     th(name="Last Name" order-by="name") Last Name
+                     th(name="email" order-by="name") Email
+                     th(name="cohort" order-by="name") Cohort
+               tbody
+                  tr(md-auto-select ng-repeat="student in students")
+                     td {{student.fName}}
+                     td {{student.lName}}
+                     td {{student.email}}
+                     td {{student.cohort}}
+                     td
+                        md-button.md-raised(ng-click="unarchive(student._id)") Unarchive

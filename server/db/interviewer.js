@@ -113,8 +113,8 @@ var Interviewer = {
             }
         })
     },
-    archive: function(query, callback){
-        InterviewerModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {isArchived: true}}, {new: true}, function(err, interviewer){
+    archive: function(query, status, callback){
+        InterviewerModel.findOneAndUpdate({_id: ObjectId(query._id)}, status, {new: true}, function(err, interviewer){
             if(err){console.log(err)}
             callback(null, interviewer);
         })

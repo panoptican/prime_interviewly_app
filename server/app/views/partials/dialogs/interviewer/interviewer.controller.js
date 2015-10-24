@@ -2,7 +2,7 @@
 /*
 Interviewer dialog controller
  */
-app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog){
+app.controller('interviewer', ['$scope', '$mdDialog', '$http', '$rootScope', function($scope, $mdDialog, $http, $rootScope){
     $scope.openInterviewer = function(ev){
         $mdDialog.show({
             controller: addInterviewer,
@@ -12,30 +12,16 @@ app.controller('interviewer', ['$scope', '$mdDialog', function($scope, $mdDialog
             clickOutsideToClose: true
         })
     };
-    function addInterviewer($scope){
+    function addInterviewer($scope, $mdDialog, $http, $rootScope){
         $scope.close = function() {
             $mdDialog.hide();
-            $scope.cohorts = [
-                {name: 'Delta'},
-                {name: 'gamma'},
-                {name: 'Epsilon'}
-            ];
-            $scope.events = [
-                {name: 'mocks Delta'},
-                {name: 'career Delta'},
-                {name: 'mocks Epsilon'}
-            ];
         };
-        $scope.submit = function(fname, lname, title, company, link, desc){
-            var interviewer = {
-                fName: fname,
-                lName: lname,
-                title: title,
-                company: company,
-                link: link,
-                description: desc
-            };
-            console.log(interviewer);
+        $scope.submit = function(interviewer){
+            $http.post('api/interviewer', interviewer)
+                .then(function(response){
+                    $rootScope.$broadcast('got/interviewers');
+                    $mdDialog.hide();
+                })
         };
     }
 }]);

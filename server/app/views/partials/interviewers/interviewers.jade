@@ -18,7 +18,7 @@
             span(flex)
     span(flex="5")
     md-content
-        md-card
+        md-card(ng-show="interviewers.length")
             md-data-table-toolbar
                 h2(class="md-title") Interviewers
             md-data-table-container
@@ -27,17 +27,21 @@
                         tr
                             th(name="First Name" order-by="name") First Name
                             th(name="Last Name" order-by="name") Last Name
+                            th(name="EMail" order-by="name") EMail
                             th(name="company" order-by="name") Company
                             th(name="title" order-by="name") Title
                     tbody
                         tr(md-auto-select ng-repeat="interviewer in interviewers")
                             td {{interviewer.fName}}
                             td {{interviewer.lName}}
+                            td {{interviewer.email}}
                             td {{interviewer.company}}
                             td {{interviewer.title}}
                             td
-                                md-button.md-raised(ng-click="archive(interviewer._id)") Archive
                             td
-                                md-button.md-raised(ng-click="editInterviewer(interviewer._id)") Edit
+                            td
+                            td
+                                md-button.md-raised.md-warn(ng-click="archive(interviewer._id)") Archive
+                                md-button.md-raised.md-accent(ng-click="editInterviewer(interviewer._id)") Edit
 
 

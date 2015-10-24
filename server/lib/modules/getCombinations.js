@@ -10,7 +10,7 @@ var combinations = {
                 combinations.push({
                     name: interviewer.fName,
                     company: interviewer.company,
-                    student: student.fName,
+                    student: student.fName + ' ' + student.lName,
                     weight: 0,
                     unavailable: interviewer.unavailable,
                     interviewerID: interviewer._id

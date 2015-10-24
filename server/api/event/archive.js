@@ -4,8 +4,9 @@ var Event = require('../../db/event');
 
 /* POST to archive event */
 router.post('/', function(req, res, next){
-    var event = req.query;
-    Event.archive(event, function(err, data){
+    var event = req.query,
+        status = req.body;
+    Event.archive(event, status, function(err, data){
         if(err){
             console.log(err);
             next(err);
