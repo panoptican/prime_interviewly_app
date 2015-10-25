@@ -5,6 +5,21 @@ app.controller('students', ['$scope', '$http', '$mdDialog', '$rootScope', functi
         page: 1
     };
 
+    $scope.filter = {
+        options: {
+            debounce: 500
+        }
+    };
+
+    $scope.removeFilter = function () {
+        $scope.filter.show = false;
+        $scope.query.filter = '';
+
+        if($scope.filter.form.$dirty) {
+            $scope.filter.form.$setPristine();
+        }
+    };
+
     $http.get('/api/student').then(function (response) {
         $scope.students = response.data
     });

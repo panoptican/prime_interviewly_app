@@ -9,7 +9,23 @@ app.controller('interviewers', ['$scope', '$http', '$rootScope', '$mdDialog', fu
   });
  });
 
- $scope.editInterviewer = function(id) {
+    $scope.filter = {
+        options: {
+            debounce: 500
+            }
+    };
+
+    $scope.removeFilter = function () {
+        $scope.filter.show = false;
+        $scope.query.filter = '';
+
+        if($scope.filter.form.$dirty) {
+            $scope.filter.form.$setPristine();
+        }
+    };
+
+
+    $scope.editInterviewer = function(id) {
   $http.get('/api/interviewer?_id=' + id).then(function (response) {
    $scope.interviewer = response.data[0];
    $mdDialog.show({
