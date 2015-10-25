@@ -11,11 +11,17 @@
             span(flex)
         md-button.md-raised(href="/event/schedule?_id={{eventId}}") Schedule
             span(flex)
-    .formlay(layout="row" layout-margin="auto")
-        span(flex="20")
-        .md-whiteframe-z2(layout="column" flex="60")
-            form(name="new-event")
-                p.md-body-1(layout="row" layout-margin="auto") Date: {{eventDate}}
-                p.md-body-1(layout="row" layout-margin="auto") Start time: {{eventStime}}
-                p.md-body-1(layout="row" layout-margin="auto") End time: {{eventEtime}}
-                p.md-body-1(layout="row" layout-margin="auto") Interview duration: {{eventDur}}
+    md-tabs
+        md-tab(label="label 1")
+            md-content
+                .formlay(layout="row" layout-margin="auto")
+                    span(flex="20")
+                    .md-whiteframe-z2(layout="column" flex="60")
+                        form(name="new-event")
+                            p.md-body-1(layout="row" layout-margin="auto") Date: {{eventDate}}
+                            p.md-body-1(layout="row" layout-margin="auto") Start time: {{eventStime}}
+                            p.md-body-1(layout="row" layout-margin="auto") End time: {{eventEtime}}
+                            p.md-body-1(layout="row" layout-margin="auto") Interview duration: {{eventDur}}
+        md-tab(label="ADD STUDENTS" href="/event/add-students?:eventId")
+            div(ng-include="'views/partials/events/add-students/add-students.html'")
+

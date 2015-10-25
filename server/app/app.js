@@ -94,9 +94,7 @@ app.controller('toolbar', ['$rootScope','$location','$scope', '$window', functio
         $location.path('/');
     };
     $scope.loggedEvent = function(){
-        if($window.sessionStorage.token == undefined){
-            $location.path('/')
-        } else {
+        if($window.sessionStorage.token != undefined){
             $location.path('/events')
         }
     }
