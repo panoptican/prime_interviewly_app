@@ -13,9 +13,6 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
                 }
             }
         }
-        console.log($scope.added);
-        console.log($scope.students);
-
     });
 
     var eventParam = $routeParams._id;

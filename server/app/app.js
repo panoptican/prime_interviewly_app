@@ -92,6 +92,11 @@ app.controller('toolbar', ['$rootScope','$location','$scope', '$window', functio
     });
     $scope.goHome = function(){
         $location.path('/');
+    };
+    $scope.loggedEvent = function(){
+        if($window.sessionStorage.token != undefined){
+            $location.path('/events')
+        }
     }
 }]);
 
