@@ -2,7 +2,7 @@
 /*
 Generate event controller
  */
-app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleGet', 'eventDetails', function($scope, $http, $routeParams, scheduleGet, eventDetails) {
+app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleConfig', 'eventDetails', function($scope, $http, $routeParams, scheduleConfig, eventDetails) {
 
     // Save button
     $scope.saveButton = 'Save';
@@ -12,6 +12,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleGet
     $scope.eventId = eventParam;
 
     // schedule data
+    var uglySchedule;
     var scheduleId;
     var hasSchedule;
 
@@ -35,8 +36,8 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleGet
 
     eventDetails.variables(eventParam).then(function(response) {
 
-        // update hasSchedule variable
-        hasSchedule = response.schedule.length > 0;
+        // schedule information
+        hasSchedule = response.schedule;
 
         // push first time slot into time columns variable
         timeCol = [{intTime: moment(response.startTime, 'HH:mm').format('h:mm A')}];
@@ -53,7 +54,10 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleGet
             timeCol.pop();
         }
     }).then(function() {
-        if (hasSchedule) {
+        if (hasSchedule.length > 0) {
+
+            // set the unformatted schedule to uglySchedule
+            uglySchedule = hasSchedule[0];
 
             // Update the save button state
             $scope.saveButton = 'Saved';
@@ -68,13 +72,12 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleGet
             gridCols.push(timeColLabel);
             gridData.push(timeCol);
 
-            scheduleGet.getFormattedSchedule(eventParam, gridCols, gridData).then(function(response) {
-                gridCols = response.cols;
-                gridData = response.data;
-            }).then(function() {
-                $scope.gridOptions.columnDefs = gridCols;
-                $scope.gridOptions.data = gridData;
-            });
+            // format the schedule
+            var savedSchedule = scheduleConfig.formatSchedule(uglySchedule, gridCols, gridData);
+
+            // set UI Grid values to saved schedule
+            $scope.gridOptions.columnDefs = savedSchedule.cols;
+            $scope.gridOptions.data = savedSchedule.data;
         }
     });
 
@@ -94,13 +97,20 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleGet
         gridCols.push(timeColLabel);
         gridData.push(timeCol);
 
-        scheduleGet.getFormattedSchedule(eventParam, gridCols, gridData).then(function(response) {
-            scheduleId = response.id;
-            gridCols = response.cols;
-            gridData = response.data;
-        }).then(function() {
-            $scope.gridOptions.columnDefs = gridCols;
-            $scope.gridOptions.data = gridData;
+        $http.get('api/event/getSchedule?_id=' + eventParam).then(function (response) {
+
+            // store the schedule ID in case it is saved
+            scheduleId = response.data._id;
+
+            // set the unformatted schedule to uglySchedule
+            uglySchedule = response.data;
+
+            // format the schedule
+            var savedSchedule = scheduleConfig.formatSchedule(uglySchedule, gridCols, gridData);
+
+            // set UI Grid values to saved schedule
+            $scope.gridOptions.columnDefs = savedSchedule.cols;
+            $scope.gridOptions.data = savedSchedule.data;
         });
     };
 
