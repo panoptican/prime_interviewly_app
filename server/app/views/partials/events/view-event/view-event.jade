@@ -11,8 +11,8 @@
             span(flex)
         md-button.md-raised(href="/event/schedule?_id={{eventId}}") Schedule
             span(flex)
-    md-tabs
-        md-tab(label="label 1")
+    md-tabs(md-dynamic-height)
+        md-tab(label="Event Details")
             md-content
                 .formlay(layout="row" layout-margin="auto")
                     span(flex="20")
@@ -28,3 +28,5 @@
             div(ng-include="'views/partials/events/add-students/add-students.html'")
         md-tab(label="INTERVIEWERS")
             div(ng-include="'views/partials/events/add-interviewers/add-interviewers.html'")
+        md-tab(label="SCHEDULE")
+            div(ng-include="'views/partials/events/schedule/schedule.html'")
