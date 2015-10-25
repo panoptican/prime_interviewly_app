@@ -1,17 +1,4 @@
 .welcome(ng-controller="addInterviewer" layout="column")
-    .interviewersheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
-        md-subheader(class="md-primary")
-            h1.md-display-1 Add Interviewers To Event
-
-        .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
-            md-content(layout-margin="auto")
-                md-input-container
-                    label Search Interviewers
-                    input(ng-model="search" type="text")
-            .searchbut(layout="row" layout-align="center center")
-                md-button.md-raised(ng-click="submit()") Go
-                    span(flex)
-    span(flex="5")
     md-content
         md-card
             md-data-table-toolbar
