@@ -1,6 +1,6 @@
-md-content.md-default(ng-controller="students" layout="column")
+md-content.md-default.eventBg(ng-controller="students" layout="column")
     md-card.md-whiteframe-5dp
-        md-data-table-toolbar.md-primary(ng-hide="filter.show")
+        md-data-table-toolbar.md-primary.eventBg(ng-hide="filter.show")
             h2.md-title Students
             div(flex)
             md-button.md-icon-button.md-default(ng-click="filter.show = true")
@@ -10,7 +10,7 @@ md-content.md-default(ng-controller="students" layout="column")
                 i.material-icons.md-dark add
             md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads($event)")
                 i.material-icons.md-dark file_upload
-        md-data-table-toolbar(layout="row" layout-align="center center" ng-show="filter.show && students.length")
+        md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && students.length")
             i.material-icons.md-dark search
             form(flex name="filter.form")
                 md-input-container
@@ -20,15 +20,16 @@ md-content.md-default(ng-controller="students" layout="column")
             md-button.md-icon-button.md-default(ng-click="removeFilter()")
                 i.material-icons.md-dark close
                 .md-ripple-container
-        md-data-table-container
-            table.md-primary(md-data-table md-row-select="selected" md-progress="deferred")
-                thead(md-order="query.order" md-trigger="onOrderChange")
+        md-data-table-container.eventBg
+            table.md-primary.eventBg(md-data-table md-row-select="selected" md-progress="deferred")
+                thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
                     tr
                         th(name="First Name" order-by="name") First Name
                         th(name="Last Name" order-by="type") Last Name
                         th(name="email" order-by="email") Email
                         th(name="cohort" order-by="cohort") Cohort
-                tbody
+                        th &nbsp;
+                tbody.eventBg
                     tr(md-auto-select ng-repeat="student in students | orderBy: query.order | limitTo: query.limit: (query.page -1) * query.limit")
                         td {{student.fName}}
                         td {{student.lName}}
