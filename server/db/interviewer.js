@@ -105,7 +105,8 @@ var Interviewer = {
       })
     },
     editUnavail: function(query, slots, callback){
-        InterviewerModel.findOneAndUpdate(query, {unavailable: slots}, {new: true}, function(err, doc){
+        console.log(slots);
+        InterviewerModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {unavailable: slots}}, {new: true, upsert: true}, function(err, doc){
             if(err){
                 console.log(err);
             } else {
