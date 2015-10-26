@@ -1,6 +1,5 @@
 app.controller('addInterviewer', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
     $http.get('/api/interviewer').then(function (response) {
-        console.log(response);
         $scope.interviewers = response.data;
     });
     $http.get('/api/event?_id='+$routeParams._id).then(function(response){
@@ -14,15 +13,10 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', function($s
                 }
             }
         }
-        console.log($scope.added);
-        console.log($scope.students);
-
     });
 
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
-    console.log(eventParam);
-    console.log($routeParams);
 
     $scope.addInterviewer = function(id) {
         $http({

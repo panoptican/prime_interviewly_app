@@ -24,6 +24,11 @@ app.factory('scheduleConfig', ['$http', function($http) {
                 gridCols.push({
                     name: item.company + ' / ' + item.fName,
                     field: item.company + '_' + item.fName,
+                    cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+                        if (grid.getCellValue(row,col) === 'Break') {
+                            return 'breakCell';
+                        }
+                    },
                     width: 200,
                     displayName: item.company + ' / ' + item.fName
                 });

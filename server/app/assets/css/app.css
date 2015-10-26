@@ -9,3 +9,8 @@ body {
 .eventsCtrl .gray {
     background: #E6E6E6;
 }
+
+.breakCell {
+    color: darkred;
+    font-weight: bold;
+}
