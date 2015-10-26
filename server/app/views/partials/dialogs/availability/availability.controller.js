@@ -12,7 +12,7 @@ app.controller('availability', ['$scope', '$http', '$mdDialog', 'items', 'event'
             //set time slots
             var event = response.data[0],
                 duration = (parseInt(event.endTime) - parseInt(event.startTime)) * 60,
-                slots = duration / event.interviewDuration,
+                slots = Math.floor(duration / event.interviewDuration),
                 count = slots,
                 times = [{intTime: moment(event.startTime, 'HH:mm').format('h:mm A')}];
 
