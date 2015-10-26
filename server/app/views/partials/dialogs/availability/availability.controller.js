@@ -5,7 +5,6 @@ app.controller('availability', ['$scope', '$http', '$mdDialog', 'items', 'event'
     if(!$scope.interviewer.unavailable[event]){
         $scope.interviewer.unavailable[event] = {};
     }
-    console.log(event);
 
     //get selected event
     $http.get('api/event?_id=' + event)
@@ -16,7 +15,7 @@ app.controller('availability', ['$scope', '$http', '$mdDialog', 'items', 'event'
                 slots = Math.floor(duration / event.interviewDuration),
                 count = slots,
                 times = [{intTime: moment(event.startTime, 'HH:mm').format('h:mm A')}];
-            console.log(event, duration, slots, count, times);
+
             while(count--){
                 times.push({intTime: moment(event.startTime, 'HH:mm')
                     .add((event.interviewDuration * (slots - count)), 'minutes')
