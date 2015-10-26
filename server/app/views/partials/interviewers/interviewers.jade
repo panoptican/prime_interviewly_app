@@ -4,21 +4,21 @@ md-content.md-default(ng-controller="interviewers" layout="column")
             h2.md-title Interviewers
             div(flex)
             md-button.md-icon-button.md-default(ng-click="filter.show = true")
-                i.material-icons.md-dark filter_list
+                md-icon.material-icons.md-dark filter_list
                 .md-ripple-container
             md-button.md-icon-button.md-default(ng-controller="interviewer" ng-click="openInterviewer($event)")
-                i.material-icons.md-dark add
+                md-icon.material-icons.md-dark add
             md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads($event)")
-                i.material-icons.md-dark file_upload
+                md-icon.material-icons.md-dark file_upload
         md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && interviewers.length")
-            i.material-icons.md-dark search
+            md-icon.material-icons.md-dark search
             form(flex name="filter.form")
                 md-input-container
                     label search
                     input(type="text" ng-model="query.filter" ng-model-options="filter.options")
             span(flex="70")
             md-button.md-icon-button.md-default(ng-click="removeFilter()")
-                i.material-icons.md-dark close
+                md-icon.material-icons.md-dark close
                 .md-ripple-container
         md-data-table-container.eventBg
             table(md-data-table md-row-select="selected" md-progress="deferred")
@@ -39,8 +39,8 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         td {{interviewer.title}}
                         td(layout="row" layout-align="center end")
                             md-button.md-icon-button(ng-click="archive(interviewer._id)")
-                                i.material-icons.md-dark archive
+                                md-icon.material-icons.md-dark archive
                                 .md-ripple-container
                             md-button.md-icon-button(ng-click="editInterviewer(interviewer._id)")
-                                i.material-icons.md-dark edit
+                                md-icon.material-icons.md-dark edit
                                 .md-ripple-container

@@ -4,21 +4,21 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
             h2.md-title Students
             div(flex)
             md-button.md-icon-button.md-default(ng-click="filter.show = true")
-                i.material-icons.md-dark filter_list
+                md-icon.material-icons.md-dark filter_list
                 div.md-ripple-container
             md-button.md-icon-button.md-default(ng-controller="student" ng-click="openStudents($event)")
-                i.material-icons.md-dark add
+                md-icon.material-icons.md-dark add
             md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads($event)")
-                i.material-icons.md-dark file_upload
+                md-icon.material-icons.md-dark file_upload
         md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && students.length")
-            i.material-icons.md-dark search
+            md-icon.material-icons.md-dark search
             form(flex name="filter.form")
                 md-input-container
                     label search
                     input(type="text" ng-model="query.filter" ng-model-options="filter.options")
             span(flex="70")
             md-button.md-icon-button.md-default(ng-click="removeFilter()")
-                i.material-icons.md-dark close
+                md-icon.material-icons.md-dark close
                 .md-ripple-container
         md-data-table-container.eventBg
             table.md-primary.eventBg(md-data-table md-row-select="selected" md-progress="deferred")
@@ -37,9 +37,9 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
                         td {{student.cohort}}
                         td(layout="row" layout-align="center end")
                             md-button.md-icon-button(ng-click="archive(student._id)" aria-label="archive")
-                                i.material-icons.md-dark archive
+                                md-icon.material-icons.md-dark archive
                                 .md-ripple-container
                             md-button.md-icon-button(ng-click="editStudent(student._id)" aria-label="edit")
-                                i.material-icons.md-dark edit
+                                md-icon.material-icons.md-dark edit
                                 .md-ripple-container
         md-data-table-pagination(md-limit="query.limit" md-page="query.page" md-total="{{students.length}}" md-trigger="onpagechange")
