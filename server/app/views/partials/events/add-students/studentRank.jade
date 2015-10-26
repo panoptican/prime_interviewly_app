@@ -1,0 +1,27 @@
+div
+   md-content
+      md-card(layout="row")
+         md-input-container
+            label Interviewer
+            md-select
+               md-option
+         md-input-container
+            label Student
+            md-select
+               md-option
+         md-slider(flex min="-1" max="1")
+         md-card
+            md-data-table-container
+               table(md-data-table md-row-select="selected" md-progress="deferred")
+                  thead(md-order="query.order" md-trigger="onOrderChange")
+                     tr
+                        th(name="First Name" order-by="name") Interviewer Name
+                        th(name="Last Name" order-by="name") Student Name
+                        th(name="ranking" order-by="name") Ranking
+                  tbody
+                     tr(md-auto-select ng-repeat="student in students")
+                        td {{student.fName}} {{student.lName}}
+                        td {{interviewer.fName}} {{interviewer.lName}}
+                        td {{interviewer.rank}}
+                        td
+                           md-button.md-raised.md-warn(ng-show="student.added" ng-click="remove(student._id)") Remove
