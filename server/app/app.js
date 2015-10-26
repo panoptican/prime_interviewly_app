@@ -40,10 +40,10 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
             templateUrl: 'views/partials/events/add-interviewers/add-interviewers.html'
         }).
         when('/event/interviewersRank?:eventId', {
-            templateUrl: 'views/partials/events/add-interviewers/interviewerRank.html'
+            templateUrl: 'views/partials/ranks/interviewerRank.html'
         }).
         when('/event/studentsRank?:eventId', {
-            templateUrl: 'views/partials/events/add-interviewers/studentRank.html'
+            templateUrl: 'views/partials/ranks/studentRank.html'
         }).
         when('/event/schedule?:eventId', {
             templateUrl: 'views/partials/events/schedule/schedule.html'
