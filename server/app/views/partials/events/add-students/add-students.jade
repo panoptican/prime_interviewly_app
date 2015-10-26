@@ -11,7 +11,7 @@
                             th(name="Last Name" order-by="name") Last Name
                             th(name="email" order-by="name") Email
                             th(name="cohort" order-by="name") Cohort
-                            th &nbsp;
+                            th(name="addRemove" order-by="name") Add / Remove
                     tbody.eventBg
                         tr(md-auto-select ng-repeat="student in students")
                             td {{student.fName}}
@@ -19,5 +19,7 @@
                             td {{student.email}}
                             td {{student.cohort}}
                             td
-                                md-button.md-raised(ng-hide="student.added" ng-click="addStudent(student._id)") Add
-                                md-button.md-raised.md-warn(ng-show="student.added" ng-click="remove(student._id)") Remove
+                                md-button.md-icon-button(ng-hide="student.added" ng-click="addStudent(student._id)")
+                                    md-icon add
+                                md-button.md-icon-button(ng-show="student.added" ng-click="remove(student._id)")
+                                    md-icon remove
