@@ -1,8 +1,9 @@
-app.controller('addInterviewer', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog', function($scope, $http, $routeParams, $mdDialog){
+
     $http.get('/api/interviewer').then(function (response) {
-        console.log(response);
         $scope.interviewers = response.data;
     });
+
     $http.get('/api/event?_id='+$routeParams._id).then(function(response){
         var added = response.data[0].interviewers.slice();
         var interviewers = $scope.interviewers;
@@ -14,15 +15,10 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', function($s
                 }
             }
         }
-        console.log($scope.added);
-        console.log($scope.students);
-
     });
 
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
-    console.log(eventParam);
-    console.log($routeParams);
 
     $scope.addInterviewer = function(id) {
         $http({
@@ -45,6 +41,7 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', function($s
             // hide row
         });
     };
+
     $scope.remove = function(id){
         var interviewers = $scope.interviewers;
         for(var i=0; i <interviewers.length; i++){
@@ -57,5 +54,22 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', function($s
         $http.post('api/event/removeInterviewer?_id='+event, {_id: id}).then(function(response){
             console.log(response);
         })
+    };
+
+    $scope.editAvailability = function(id){
+        $http.get('api/interviewer?_id=' + id)
+            .then(function(response){
+                $scope.interviewer = response.data[0];
+                $mdDialog.show({
+                    controller: 'availability',
+                    locals: {
+                        event: $scope.eventId,
+                        items: $scope.interviewer
+                    },
+                    templateUrl: 'views/partials/dialogs/availability/availability.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true
+                })
+            })
     }
 }]);

@@ -93,7 +93,7 @@ var Student = {
     },
     addWeight: function(query, weight, callback){
         InterviewerModel.findOne({_id: ObjectId(query._id)}, null, function(err, interviewer){
-            StudentModel.findOneAndUpdate({fName: query.studentfName, lName: query.studentlName},
+            StudentModel.findOneAndUpdate({_id: ObjectId(weight._id)},
                 {$addToSet: {weights: {interviewer: interviewer._id, weight: weight.value}}}, {new: true}, function(err, doc){
                    if(err){console.log(err)}
                     else {

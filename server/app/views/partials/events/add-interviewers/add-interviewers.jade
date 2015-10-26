@@ -1,22 +1,29 @@
 .welcome(ng-controller="addInterviewer" layout="column")
-    md-content
+    md-content.eventBg
         md-card
-            md-data-table-toolbar
+            md-data-table-toolbar.eventBg
                 h2(class="md-title") Interviewers
-            md-data-table-container
+            md-data-table-container.eventBg
                 table(md-data-table md-row-select="selected" md-progress="deferred")
-                    thead(md-order="query.order" md-trigger="onOrderChange")
-                        tr
+                    thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
+                        tr.eventBg
                             th(name="First Name" order-by="name") First Name
                             th(name="Last Name" order-by="name") Last Name
                             th(name="company" order-by="name") Company
                             th(name="title" order-by="name") Title
-                    tbody
+                            th(name="addRemove" order-by="name") Add / Remove
+                            th(name="availability" order-by="availability") Availability
+                    tbody.eventBg
                         tr(md-auto-select ng-repeat="interviewer in interviewers")
                             td {{interviewer.fName}}
                             td {{interviewer.lName}}
                             td {{interviewer.company}}
                             td {{interviewer.title}}
                             td
-                                md-button.md-raised(ng-hide="interviewer.added" ng-click="addInterviewer(interviewer._id)") Add
-                                md-button.md-raised.md-warn(ng-show="interviewer.added" ng-click="remove(interviewer._id)") Remove
+                                md-button.md-icon-button(ng-hide="interviewer.added" ng-click="addInterviewer(interviewer._id)")
+                                    md-icon add
+                                md-button.md-icon-button(ng-show="interviewer.added" ng-click="remove(interviewer._id)")
+                                    md-icon remove
+                            td
+                                md-button.md-icon-button(ng-click="editAvailability(interviewer._id)")
+                                    md-icon event_available

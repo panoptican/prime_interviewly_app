@@ -1,2 +1,11 @@
+body {
+    background: #F5F5F5;
+}
+
+.md-subheader, .formlay, .eventBg, .header {
+    background: #F5F5F5;
+}
+
 .eventsCtrl .gray {
-    background: #f5f5f5;}
+    background: #E6E6E6;
+}
