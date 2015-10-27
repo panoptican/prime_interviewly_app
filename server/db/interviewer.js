@@ -72,7 +72,7 @@ var Interviewer = {
         });
     },
     update: function(query, body, callback){
-        InterviewerModel.findOneAndUpdate(query, body, {new: true}, function(err, doc){
+        InterviewerModel.findOneAndUpdate(query, body, {new: true, upsert: true}, function(err, doc){
             if(err){
                 console.log(err);
             } else {
@@ -105,8 +105,7 @@ var Interviewer = {
       })
     },
     editUnavail: function(query, slots, callback){
-        console.log(slots);
-        InterviewerModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$set: {unavailable: slots}}, {new: true, upsert: true}, function(err, doc){
+        InterviewerModel.findOneAndUpdate({_id: ObjectId(query._id)}, {unavailable: slots}, {new: true, upsert: true}, function(err, doc){
             if(err){
                 console.log(err);
             } else {

@@ -1,15 +1,18 @@
-div(ng-controller="interviewerRank")
+div(ng-controller="interviewerRank" layout-margin="15px")
    md-content
-      md-card(layout="row")
-         md-input-container
-            label Interviewer
-            md-select
-               md-option
-         md-input-container
-            label Student
-            md-select
-               md-option
-         md-slider(flex min="-1" max="1")
+      md-card(layout="column")
+         div(layout="row")
+            md-input-container(flex="30")
+               label Interviewer
+               md-select(ng-model="interviewer")
+                  md-option(ng-repeat="interviewer in interviewers" value="{{interviewer._id}}") {{interviewer.fName}} {{interviewer.lName}} {{interviewer.company}}
+            md-input-container(flex="30")
+               label Student
+               md-select(ng-model="student")
+                  md-option(ng-repeat="student in students" value="{{student._id}}") {{student.fName}} {{student.lName}}
+            md-button(ng-click="save(interviewer, student, weight)") SAVE
+         md-slider(flex="30" min="-1" max="1" md-discrete ng-model="weight")
+
          md-card
             md-data-table-container
                table(md-data-table md-row-select="selected" md-progress="deferred")
@@ -20,8 +23,8 @@ div(ng-controller="interviewerRank")
                         th(name="ranking" order-by="name") Ranking
                   tbody
                      tr(md-auto-select ng-repeat="student in students")
-                        td {{student.fName}} {{student.lName}}
-                        td {{interviewer.fName}} {{interviewer.lName}}
-                        td {{interviewer.rank}}
+                        td {{selStudent.fName}} {{selStudent.lName}}
+                        td {{selInterviewer.fName}} {{selInterviewer.lName}}
+                        td {{selInterviewer.rank}}
                         td
                            md-button.md-raised.md-warn(ng-show="student.added" ng-click="remove(student._id)") Remove
