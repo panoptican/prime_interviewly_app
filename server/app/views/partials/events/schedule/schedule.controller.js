@@ -18,7 +18,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleCon
 
     // Initialize time slot columns for UI Grid
     var timeCol;
-    var timeColLabel = {name: 'intTime', field: 'intTime', width: 100, pinnedLeft: true, enableCellEdit:false, displayName: 'Time Slot'};
+    var timeColLabel = {name: 'intTime', field: 'intTime', enableColumnMenu: false, width: 100, pinnedLeft: true, enableCellEdit:false, displayName: 'Time Slot'};
 
     // UI Grid options
     $scope.gridOptions = {
