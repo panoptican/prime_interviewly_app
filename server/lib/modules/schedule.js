@@ -49,7 +49,7 @@ var scheduler = {
         return true;
     },
     //matches interviews
-    match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax){
+    match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, eventId){
 
         var initCombinations = combinations.slice(),
             initInterviewers = interviewers.slice(),
@@ -85,7 +85,6 @@ var scheduler = {
             interviewers.forEach((interviewer, i) => {
                 sortedCombinations.some((interview, k) => {
                     var student = currentStudents[(i + shifter) % students.length];
-
                     //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
                 if( interview.interviewerID == interviewer._id &&
                     interview.student == student.fName + ' ' + student.lName &&

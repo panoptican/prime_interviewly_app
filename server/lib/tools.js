@@ -6,11 +6,11 @@ var getCombinations = require('./modules/getCombinations');
 var scheduler = require('./modules/schedule');
 
 var Tools = {
-    combine: function(interviewers, students, cb){
-        cb(getCombinations.generate(interviewers,students));
+    combine: function(interviewers, students, eventId, cb){
+        cb(getCombinations.generate(interviewers,students, eventId));
     },
-    schedule: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, cb){
-        cb(scheduler.match(interviewSlots, interviewers, students, combinations, interviewMax, companyMax));
+    schedule: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, eventId, cb){
+        cb(scheduler.match(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, eventId));
     },
     random: function(min, max, cb){
         cb(getRandom.between(min, max));

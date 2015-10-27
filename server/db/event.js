@@ -71,7 +71,21 @@ var Event = {
                         if(err){
                             console.log(err);
                         } else {
-                            callback(null, doc);
+                            var duration = (parseInt(doc.endTime) - parseInt(doc.startTime)) * 60,
+                                slots = Math.floor(duration / doc.interviewDuration),
+                                id = doc._id,
+                                avail = {};
+
+                            while(slots--){
+                                var slot = slots + 1;
+                                avail['slot' + slot] = false;
+                            }
+                            var setModifier = { $set: {} };
+                            setModifier.$set['unavailable.' + id] = avail;
+                            Interviewers.update({_id: ObjectId(interviewer._id)}, setModifier, function(err, update){
+                                if(err){console.log(err)};
+                                callback(null, doc);
+                            })
                         }
                     })
                 } else {

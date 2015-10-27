@@ -32,7 +32,7 @@ router.get('/', function(req, res, next){
         },
         function(event, students, interviewers, callback){
             //create all possible interview combinations
-            Tools.combine(interviewers, students, function(combinations){
+            Tools.combine(interviewers, students, event._id, function(combinations){
                 callback(null, event, interviewers, students, combinations);
             })
         },
@@ -46,9 +46,8 @@ router.get('/', function(req, res, next){
             } else {
                 companyMax = 2;
             }
-            console.log(duration, slots, interviewMax, companyMax);
             //create interview schedule
-            Tools.schedule(slots, interviewers, students, combinations, interviewMax, companyMax, function(schedule){
+            Tools.schedule(slots, interviewers, students, combinations, interviewMax, companyMax, event._id, function(schedule){
                 callback(null, schedule);
             })
         },
