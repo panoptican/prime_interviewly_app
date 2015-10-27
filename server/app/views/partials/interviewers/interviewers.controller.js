@@ -1,17 +1,31 @@
-app.controller('interviewers', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope){
+app.controller('interviewers', ['$scope', '$http', '$rootScope', '$mdDialog', function($scope, $http, $rootScope, $mdDialog){
   $http.get('/api/interviewer').then(function(response){
-   console.log(response);
    $scope.interviewers = response.data
   });
 
- $rootScope.$on('gotInterviewers', function(){
+ $rootScope.$on('got/interviewers', function(){
   $http.get('/api/interviewer').then(function(response){
-   console.log(response);
    $scope.interviewers = response.data
   });
  });
 
- $scope.editInterviewer = function(id) {
+    $scope.filter = {
+        options: {
+            debounce: 500
+            }
+    };
+
+    $scope.removeFilter = function () {
+        $scope.filter.show = false;
+        $scope.query.filter = '';
+
+        if($scope.filter.form.$dirty) {
+            $scope.filter.form.$setPristine();
+        }
+    };
+
+
+    $scope.editInterviewer = function(id) {
   $http.get('/api/interviewer?_id=' + id).then(function (response) {
    $scope.interviewer = response.data[0];
    $mdDialog.show({
@@ -26,15 +40,22 @@ app.controller('interviewers', ['$scope', '$http', '$rootScope', function($scope
   })
  };
  $scope.archive = function(id){
-  $http.post('api/interviewer/archive?_id='+id, {archived: true}).then(function(response){
-   $rootScope.$broadcast('gotInterviewers');
+  $http.post('api/interviewer/archive?_id='+id, {isArchived: true}).then(function(response){
+   $rootScope.$broadcast('got/interviewers');
   })
  };
 }]);
 
-app.controller('gotInterviewers', ['$scope', '$mdDialog', 'items', function($scope, $mdDialog, items){
+app.controller('editInterviewer', ['$scope', '$mdDialog', 'items', '$http', '$rootScope', function($scope, $mdDialog, items, $http, $rootScope){
  $scope.interviewer = items;
- console.log(items);
+
+ $scope.edit = function(interviewer){
+  $http.put('api/interviewer?_id=' + interviewer._id, interviewer)
+      .then(function(response){
+       $rootScope.$broadcast('got/interviewers');
+       $mdDialog.hide();
+      });
+ };
 
  $scope.close = function(){
   $mdDialog.hide();

@@ -1,0 +1,29 @@
+div(ng-controller="studentRank")
+   md-content
+      md-card(layout="column")
+         div(layout="row")
+            md-input-container(flex="33")
+               label Student
+               md-select(ng-model="student")
+                  md-option(ng-repeat="student in students" value="{{student._id}}") {{student.fName}} {{student.lName}}
+            md-input-container(flex="33")
+               label Interviewer
+               md-select(ng-model="interviewer")
+                  md-option(ng-repeat="interviewer in interviewers" value="{{interviewer._id}}") {{interviewer.fName}} {{interviewer.lName}} {{interviewer.company}}
+            md-button(ng-click="save(student, interviewer, weight)") SAVE
+         md-slider(flex="33" min="-1" max="1" md-discrete ng-model="weight")
+         md-card
+            md-data-table-container
+               table(md-data-table md-row-select="selected" md-progress="deferred")
+                  thead(md-order="query.order" md-trigger="onOrderChange")
+                     tr
+                        th(name="First Name" order-by="name") Student Name
+                        th(name="Last Name" order-by="name") Interviewer Name
+                        th(name="ranking" order-by="name") Ranking
+                  tbody
+                     tr(md-auto-select ng-repeat="interviewer in interviewers")
+                        td {{selInterviewer.fName}} {{selInterviewer.lName}}
+                        td {{selStudent.fName}} {{selStudent.lName}}
+                        td {{selStudent.rank}}
+                        td
+                           md-button.md-raised.md-warn(ng-show="student.added" ng-click="remove(student._id)") Remove

@@ -33,7 +33,6 @@ gulp.task('copy-libraries', function() {
         'node_modules/angular-route/angular-route.min.js',
         'node_modules/angular-messages/angular-messages.min.js',
         'node_modules/angular-ui-grid/ui-grid.min.js',
-        'node_modules/angular-ui-grid/ui-grid.min.css',
         'node_modules/angular-ui-grid/ui-grid.woff',
         'node_modules/angular-ui-grid/ui-grid.ttf',
         'node_modules/angular-material-data-table/dist/md-data-table.min.js',
