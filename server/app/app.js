@@ -39,6 +39,12 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
         when('/event/add-interviewers?:eventId', {
             templateUrl: 'views/partials/events/add-interviewers/add-interviewers.html'
         }).
+        when('/event/interviewersRank?:eventId', {
+            templateUrl: 'views/partials/ranks/interviewerRank.html'
+        }).
+        when('/event/studentsRank?:eventId', {
+            templateUrl: 'views/partials/ranks/studentRank.html'
+        }).
         when('/event/schedule?:eventId', {
             templateUrl: 'views/partials/events/schedule/schedule.html'
         }).
