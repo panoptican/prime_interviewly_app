@@ -33,15 +33,13 @@ var addBulkStudentsToEvent = require('./api/event/addBulkStudents');
 var getSchedule = require('./api/event/getSchedule');
 var removeStudentFromEvent = require('./api/event/removeStudent');
 var removeInterviewerFromEvent = require('./api/event/removeInterviewer');
-var interviewerAddWeight = require('./api/interviewer/addWeight');
-var studentAddWeight = require('./api/student/addWeight');
-var studentResetWeight = require('./api/student/resetWeight');
+var interviewerWeight = require('./api/event/interviewerWeight');
+var studentWeight = require('./api/event/studentWeight');
 var interviewerUnavail = require('./api/interviewer/unavail');
 var saveScheduleToEvent = require('./api/event/saveSchedule');
 var archiveStudent = require('./api/student/archive');
 var archiveInterviewer = require('./api/interviewer/archive');
 var archiveEvent = require('./api/event/archive');
-var interviewerResetWeight = require('./api/interviewer/resetWeight');
 var upload = require('./api/upload');
 
 // view engine setup
@@ -84,16 +82,14 @@ app.use('/api/event/addBulkInterviewers', addBulkInterviewersToEvent);
 app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
 app.use('/api/event/removeStudent', removeStudentFromEvent);
 app.use('/api/event/getSchedule', getSchedule);
-app.use('/api/interviewer/addWeight', interviewerAddWeight);
-app.use('/api/interviewer/resetWeight', interviewerResetWeight);
-app.use('/api/student/addWeight', studentAddWeight);
-app.use('/api/student/resetWeight', studentResetWeight);
 app.use('/api/interviewer/unavail', interviewerUnavail);
 app.use('/api/event/saveSchedule', saveScheduleToEvent);
 app.use('/api/student/archive', archiveStudent);
 app.use('/api/interviewer/archive', archiveInterviewer);
 app.use('/api/event/archive', archiveEvent);
 app.use('/api/upload', upload);
+app.use('/api/event/interviewerWeight', interviewerWeight);
+app.use('/api/event/studentWeight', studentWeight);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
