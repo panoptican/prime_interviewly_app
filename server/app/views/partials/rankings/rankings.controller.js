@@ -1,6 +1,8 @@
 app.controller('studentRank', ['$scope','$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope){
     var event = $routeParams._id;
-    $scope.weight = {};
+    $scope.weight = {
+        value: 0
+    };
 
     var getWeights = function(){
         $http.get('api/event?_id='+ event).then(function(response){
@@ -41,7 +43,9 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', '$rootScope', f
 
 app.controller('interviewerRank', ['$scope','$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope){
     var event = $routeParams._id;
-    $scope.weight = {};
+    $scope.weight = {
+        value: 0
+    };
 
     var getWeights = function(){
         $http.get('api/event?_id='+ event).then(function(response){

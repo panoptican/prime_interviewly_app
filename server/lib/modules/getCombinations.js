@@ -39,7 +39,7 @@ var combinations = {
 
                    if(studentId == thisStudent
                    && interviewerId == thisInterviewer){
-                       studentWeight = elem.weight;
+                       studentWeight = elem.weight * 2;
                        return true;
                    }
                 });
