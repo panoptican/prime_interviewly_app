@@ -11,7 +11,7 @@ var Event = new Schema({
     students: Array,
     interviewers: Array,
     schedule: Array,
-    interviewersWeight: Array,
+    interviewerWeight: Array,
     studentWeight: Array,
     isArchived: { type: Boolean, default: false }
 });
