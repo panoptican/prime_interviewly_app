@@ -127,6 +127,7 @@ sftp-config.json
 ### User Customizations ###
 .env
 client/
+resources/slides/
 
 ### Code ###
 .settings/

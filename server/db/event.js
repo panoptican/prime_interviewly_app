@@ -165,6 +165,30 @@ var Event = {
             if(err){console.log(err)}
             callback(null, event);
         })
+    },
+    addStudentWeight: function(query, weight, callback){
+        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$addToSet: {studentWeight: weight}}, {new: true, upsert: true}, function(err, event){
+            if(err){console.log(err)}
+            callback(null, event);
+        })
+    },
+    removeStudentWeight: function(query, weight, callback){
+        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$pull: {studentWeight: weight}}, {new: true}, function(err, doc){
+            if(err){console.log(err)}
+            callback(null, doc);
+        })
+    },
+    addInterviewerWeight: function(query, weight, callback){
+        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$addToSet: {interviewerWeight: weight}}, {new: true, upsert: true}, function(err, event){
+            if(err){console.log(err)}
+            callback(null, event);
+        })
+    },
+    removeInterviewerWeight: function(query, weight, callback){
+        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$pull: {studentWeight: weight}}, {new: true}, function(err, doc){
+            if(err){console.log(err)}
+            callback(null, doc);
+        })
     }
 };
 
