@@ -32,7 +32,7 @@ router.get('/', function(req, res, next){
         },
         function(event, students, interviewers, callback){
             //create all possible interview combinations
-            Tools.combine(interviewers, students, event._id, function(combinations){
+            Tools.combine(interviewers, students, event, function(combinations){
                 callback(null, event, interviewers, students, combinations);
             })
         },
