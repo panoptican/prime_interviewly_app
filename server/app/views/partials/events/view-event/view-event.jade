@@ -18,14 +18,13 @@
                             p.md-body-1(layout="row" layout-margin="auto") Organizer: {{eventOrg}}
                             span(flex)
                             md-button EDIT
-        md-tab(label="STUDENTS")
+        md-tab(label="Students")
             div(ng-include="'views/partials/events/add-students/add-students.html'")
-        md-tab(label="STUDENT RANKINGS")
-            div(ng-include="'views/partials/ranks/studentRank.html'")
-        md-tab(label="INTERVIEWERS")
+        md-tab(label="Student Rankings")
+            div(ng-include="'views/partials/rankings/student-rankings.html'")
+        md-tab(label="Interviewers")
             div(ng-include="'views/partials/events/add-interviewers/add-interviewers.html'")
-        md-tab(label="INTERVIEWER RANKINGS")
-            div(ng-include="'views/partials/ranks/interviewerRank.html'")
-        md-tab(label="SCHEDULE")
+        md-tab(label="Interviewer Rankings")
+            div(ng-include="'views/partials/rankings/interviewer-rankings.html'")
+        md-tab(label="Schedule")
             div(ng-include="'views/partials/events/schedule/schedule.html'")
-
