@@ -1,7 +1,9 @@
-app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('addStudents', ['$scope', '$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope){
+
     $http.get('/api/student').then(function (response) {
         $scope.students = response.data
     });
+
     $http.get('/api/event?_id='+$routeParams._id).then(function(response){
         var added = response.data[0].students.slice();
         var students = $scope.students;
@@ -24,6 +26,7 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
             url: '/api/event/addStudent?_id=' + eventParam,
             data: {_id: id}
         }).then(function success(response) {
+            $rootScope.$broadcast('eventStudents');
             var added = response.data.students.slice();
             var students = $scope.students;
             for(var i = 0; i < students.length; i++){
@@ -49,7 +52,7 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scop
         }
         var event = $routeParams._id;
         $http.post('api/event/removeStudent?_id='+event, {_id: id}).then(function(response){
-            console.log(response);
+            $rootScope.$broadcast('eventStudents');
         })
     }
 }]);
