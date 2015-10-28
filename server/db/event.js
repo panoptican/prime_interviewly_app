@@ -200,7 +200,7 @@ var Event = {
                     {$addToSet: { interviewerWeight: {
                         studentId: student._id,
                         interviewerId: interviewer._id,
-                        studentName: student.fName + ' ' + student. lName,
+                        studentName: student.fName + ' ' + student.lName,
                         interviewerName: interviewer.fName + ' ' + interviewer.lName,
                         weight: body.weight
                     }}}, {new: true, upsert: true}, function(err, event){
@@ -211,7 +211,7 @@ var Event = {
         });
     },
     removeInterviewerWeight: function(query, weight, callback){
-        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$pull: {studentWeight: weight}}, {new: true}, function(err, doc){
+        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$pull: {interviewerWeight: weight}}, {new: true}, function(err, doc){
             if(err){console.log(err)}
             callback(null, doc);
         })

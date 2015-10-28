@@ -27,10 +27,12 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', '$rootScope', f
     };
 
     $scope.remove = function(weight){
-        console.log(weight);
-        $http.post('api/event/studentWeight/remove?_id=' + event, weight)
+        $http.post('api/event/studentWeight/remove?_id=' + event, {
+            interviewerName: weight.interviewerName,
+            studentName: weight.studentName,
+            weight: weight.weight
+        })
             .then(function(response){
-                console.log(response, 'this is the response');
                 getWeights();
             })
     }
@@ -53,6 +55,18 @@ app.controller('interviewerRank', ['$scope','$http', '$routeParams', '$rootScope
     $rootScope.$on('eventInterviewers', function(){
         getWeights();
     });
+
+    $scope.remove = function(weight){
+        $http.post('api/event/interviewerWeight/remove?_id=' + event, {
+            interviewerName: weight.interviewerName,
+            studentName: weight.studentName,
+            weight: weight.weight
+        })
+            .then(function(response){
+                console.log(response);
+                getWeights();
+            })
+    };
 
     $scope.save = function(interviewer, student, weight){
         $http.post('api/event/interviewerWeight?_id=' + event, {

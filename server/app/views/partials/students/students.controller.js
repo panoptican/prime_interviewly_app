@@ -51,6 +51,7 @@ $scope.archive = function(id){
     })
 };
 }]);
+
 app.controller('editStudent', ['$scope', '$mdDialog', 'items', '$http', '$rootScope', function($scope, $mdDialog, items, $http, $rootScope){
     $scope.student = items;
 
@@ -59,7 +60,6 @@ app.controller('editStudent', ['$scope', '$mdDialog', 'items', '$http', '$rootSc
             .then(function(response){
                 $rootScope.$broadcast('got/students');
                 $mdDialog.hide();
-
             });
     };
 
