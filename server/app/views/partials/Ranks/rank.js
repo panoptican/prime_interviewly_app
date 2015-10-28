@@ -1,18 +1,24 @@
 app.controller('studentRank', ['$scope','$http', '$routeParams', function($scope, $http, $routeParams){
     var event = $routeParams._id;
+    $scope.weight = {};
 
-    $http.get('api/event?_id='+ event).then(function(response){
-        $scope.interviewers = response.data[0].interviewers;
-        $scope.students = response.data[0].students;
-    });
+    var getWeights = function(){
+        $http.get('api/event?_id='+ event).then(function(response){
+            $scope.interviewers = response.data[0].interviewers;
+            $scope.students = response.data[0].students;
+            $scope.weights = response.data[0].studentWeight;
+        });
+    };
+
+    getWeights();
 
     $scope.save = function(student, interviewer, weight){
         $http.post('api/event/studentWeight?_id=' + event, {
             studentId: student,
             interviewerId: interviewer,
-            weight: weight
+            weight: weight.value
         }).then(function(response){
-            console.log(response);
+            getWeights();
         })
     }
 
@@ -20,19 +26,24 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', function($scope
 
 app.controller('interviewerRank', ['$scope','$http', '$routeParams', function($scope, $http, $routeParams){
     var event = $routeParams._id;
+    $scope.weight = {};
 
-    $http.get('api/event?_id='+ event).then(function(response){
-        $scope.interviewers = response.data[0].interviewers;
-        $scope.students = response.data[0].students;
-    });
+    var getWeights = function(){
+        $http.get('api/event?_id='+ event).then(function(response){
+            $scope.interviewers = response.data[0].interviewers;
+            $scope.students = response.data[0].students;
+            $scope.weights = response.data[0].interviewerWeight;
+        });
+    };
+    getWeights();
 
     $scope.save = function(interviewer, student, weight){
         $http.post('api/event/interviewerWeight?_id=' + event, {
             interviewerId: interviewer,
             studentId: student,
-            value: weight
+            weight: weight.value
         }).then(function(response){
-            console.log(response);
+            getWeights();
         })
     }
 }]);

@@ -1,4 +1,4 @@
-div(ng-controller="interviewerRank" layout-margin="15px")
+div(ng-controller="interviewerRank" layout-margin)
    md-content
       md-card(layout="column")
          div(layout="row")
@@ -11,7 +11,7 @@ div(ng-controller="interviewerRank" layout-margin="15px")
                md-select(ng-model="student")
                   md-option(ng-repeat="student in students" value="{{student._id}}") {{student.fName}} {{student.lName}}
             md-button(ng-click="save(interviewer, student, weight)") SAVE
-         md-slider(flex="30" min="-1" max="1" md-discrete ng-model="weight")
+         md-slider(flex="30" min="-1" max="1" md-discrete ng-model="weight.value")
 
          md-card
             md-data-table-container
@@ -21,10 +21,12 @@ div(ng-controller="interviewerRank" layout-margin="15px")
                         th(name="First Name" order-by="name") Interviewer Name
                         th(name="Last Name" order-by="name") Student Name
                         th(name="ranking" order-by="name") Ranking
+                        th(name="remove") Remove
                   tbody
-                     tr(md-auto-select ng-repeat="student in students")
-                        td {{selStudent.fName}} {{selStudent.lName}}
-                        td {{selInterviewer.fName}} {{selInterviewer.lName}}
-                        td {{selInterviewer.rank}}
+                     tr(md-auto-select ng-repeat="info in weights")
+                        td {{info.interviewerName}}
+                        td {{info.studentName}}
+                        td {{info.weight}}
                         td
-                           md-button.md-raised.md-warn(ng-show="student.added" ng-click="remove(student._id)") Remove
+                           md-button.md-icon-button(ng-click="remove(student._id)")
+                              md-icon delete

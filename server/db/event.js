@@ -166,11 +166,24 @@ var Event = {
             callback(null, event);
         })
     },
-    addStudentWeight: function(query, weight, callback){
-        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$addToSet: {studentWeight: weight}}, {new: true, upsert: true}, function(err, event){
+    addStudentWeight: function(query, body, callback){
+        Students.findOne({_id: ObjectId(body.studentId)}, null, function(err, student){
             if(err){console.log(err)}
-            callback(null, event);
-        })
+            Interviewers.find({_id: ObjectId(body.interviewerId)}, null, function(err, interviewer){
+                if(err){console.log(err)}
+                EventModel.findOneAndUpdate({_id: ObjectId(query._id)},
+                    {$addToSet: { studentWeight: {
+                        studentId: student._id,
+                        interviewerId: interviewer._id,
+                        studentName: student.fName + ' ' + student. lName,
+                        interviewerName: interviewer.fName + ' ' + interviewer.lName,
+                        weight: body.weight
+                    }}}, {new: true, upsert: true}, function(err, event){
+                    if(err){console.log(err)}
+                    callback(null, event);
+                })
+            })
+        });
     },
     removeStudentWeight: function(query, weight, callback){
         EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$pull: {studentWeight: weight}}, {new: true}, function(err, doc){
@@ -178,11 +191,24 @@ var Event = {
             callback(null, doc);
         })
     },
-    addInterviewerWeight: function(query, weight, callback){
-        EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$addToSet: {interviewerWeight: weight}}, {new: true, upsert: true}, function(err, event){
+    addInterviewerWeight: function(query, body, callback){
+        Students.findOne({_id: ObjectId(body.studentId)}, null, function(err, student){
             if(err){console.log(err)}
-            callback(null, event);
-        })
+            Interviewers.find({_id: ObjectId(body.interviewerId)}, null, function(err, interviewer){
+                if(err){console.log(err)}
+                EventModel.findOneAndUpdate({_id: ObjectId(query._id)},
+                    {$addToSet: { interviewerWeight: {
+                        studentId: student._id,
+                        interviewerId: interviewer._id,
+                        studentName: student.fName + ' ' + student. lName,
+                        interviewerName: interviewer.fName + ' ' + interviewer.lName,
+                        weight: body.weight
+                    }}}, {new: true, upsert: true}, function(err, event){
+                        if(err){console.log(err)}
+                        callback(null, event);
+                    })
+            })
+        });
     },
     removeInterviewerWeight: function(query, weight, callback){
         EventModel.findOneAndUpdate({_id: ObjectId(query._id)}, {$pull: {studentWeight: weight}}, {new: true}, function(err, doc){
