@@ -26,10 +26,11 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                     tr
                         th(name="First Name" order-by="name") First Name
                         th(name="Last Name" order-by="name") Last Name
-                        th(name="EMail" order-by="name") EMail
+                        th(name="EMail" order-by="name") Email
                         th(name="company" order-by="name") Company
                         th(name="title" order-by="name") Title
-                        th &nbsp;
+                        th(name="archive") Archive
+                        th(name="edit") Edit
                 tbody.eventBg
                     tr.eventBg(md-auto-select ng-repeat="interviewer in interviewers")
                         td {{interviewer.fName}}
@@ -37,10 +38,11 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         td {{interviewer.email}}
                         td {{interviewer.company}}
                         td {{interviewer.title}}
-                        td(layout="row" layout-align="center end")
+                        td
                             md-button.md-icon-button(ng-click="archive(interviewer._id)")
                                 md-icon.material-icons.md-dark archive
                                 .md-ripple-container
+                        td
                             md-button.md-icon-button(ng-click="editInterviewer(interviewer._id)")
                                 md-icon.material-icons.md-dark edit
                                 .md-ripple-container

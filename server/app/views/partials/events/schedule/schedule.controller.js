@@ -18,13 +18,26 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleCon
 
     // Initialize time slot columns for UI Grid
     var timeCol;
-    var timeColLabel = {name: 'intTime', field: 'intTime', width: 100, pinnedLeft: true, enableCellEdit:false, displayName: 'Time Slot'};
+    var timeColLabel = {name: 'intTime', field: 'intTime', enableColumnMenu: false, width: 100, pinnedLeft: true, enableCellEdit:false, displayName: 'Time Slot'};
 
     // UI Grid options
     $scope.gridOptions = {
         enableSorting: false,
         enableGridMenu: true,
         enableFiltering: false,
+        exporterCsvFilename: 'myFile.csv',
+        exporterPdfDefaultStyle: {fontSize: 8},
+        exporterPdfTableStyle: {margin: [20, 20, 20, 20]},
+        exporterPdfTableHeaderStyle: {fontSize: 8, bold: true, italics: true, color: 'red'},
+        //exporterPdfCustomFormatter: function ( docDefinition ) {
+        //    docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+        //    docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+        //    return docDefinition;
+        //},
+        exporterPdfOrientation: 'landscape',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 550,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
         }

@@ -12,7 +12,6 @@ var Student = new Schema({
             total: 0
         }}
     },
-    weights: Array,
     isArchived: {type: Boolean, default: false}
 }, { minimize: false });
 

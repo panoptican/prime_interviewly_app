@@ -1,4 +1,4 @@
-app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog', function($scope, $http, $routeParams, $mdDialog){
+app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog', '$rootScope', function($scope, $http, $routeParams, $mdDialog, $rootScope){
 
     $http.get('/api/interviewer').then(function (response) {
         $scope.interviewers = response.data;
@@ -26,6 +26,7 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog'
             url: '/api/event/addInterviewer?_id=' + eventParam,
             data: {_id: id}
         }).then(function success(response) {
+            $rootScope.$broadcast('eventInterviewers');
             var added = response.data.interviewers.slice();
             var interviewers = $scope.interviewers;
             for(var i = 0; i < interviewers.length; i++){
@@ -52,7 +53,7 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog'
         }
         var event = $routeParams._id;
         $http.post('api/event/removeInterviewer?_id='+event, {_id: id}).then(function(response){
-            console.log(response);
+            $rootScope.$broadcast('eventInterviewers');
         })
     };
 

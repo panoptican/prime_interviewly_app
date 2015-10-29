@@ -1,20 +1,17 @@
 var InterviewerModel = require('../models/interviewer');
 var Converter = require('csvtojson').Converter;
-var converter = new Converter({});
 var fs = require('fs');
 var StudentModel = require('../models/student');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 var Interviewer = {
     bulkImport: function(file, callback){
-        fs.createReadStream(file).pipe(converter);
-
+        var converter = new Converter({});
         converter.on("end_parsed", function(array){
             array.forEach(function(interviewer){
                 Interviewer.add(interviewer, function(err, interviewer){
                     if(err){
                         console.log(err);
-                        next(err);
                     } else {
                         console.log('added ' + interviewer.fName + " " + interviewer.lName);
                     }
@@ -22,6 +19,8 @@ var Interviewer = {
             });
             callback(null, array);
         });
+
+        fs.createReadStream(file).pipe(converter);
     },
     add: function(body, callback){
         var newInterviewer = new InterviewerModel(body);
@@ -79,30 +78,6 @@ var Interviewer = {
                 callback(null, doc);
             }
         })
-    },
-    addWeight: function(query, weight, callback){
-        StudentModel.findOne({_id: ObjectId(query._id)}, null, function(err, student){
-            InterviewerModel.findOneAndUpdate({_id: ObjectId(weight._id)},
-                {$addToSet: {weights: {student: student._id, weight: weight.value}}}, {new: true}, function(err, doc){
-                if(err){
-                    console.log(err);
-                } else {
-                    callback(null, doc);
-                }
-            })
-        });
-    },
-    resetWeight: function(query, callback){
-      StudentModel.findOne({_id: ObjectId(query._id)}, null, function(err, student){
-          InterviewerModel.findOneAndUpdate({fName: query.fName, company: query.company},
-              {$pull: {weights: {student: student._id}}}, {new: true}, function(err, doc){
-                  if(err){
-                      console.log(err);
-                  } else {
-                      callback(null, doc);
-                  }
-              })
-      })
     },
     editUnavail: function(query, slots, callback){
         InterviewerModel.findOneAndUpdate({_id: ObjectId(query._id)}, {unavailable: slots}, {new: true, upsert: true}, function(err, doc){
