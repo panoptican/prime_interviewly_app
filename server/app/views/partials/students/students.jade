@@ -10,7 +10,7 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
                 md-icon.material-icons.md-dark add
             md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads($event)")
                 md-icon.material-icons.md-dark file_upload
-        md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && students.length")
+        md-data-table-toolbar.eventBg(layout="row" ng-show="filter.show && students.length")
             md-icon.material-icons.md-dark search
             form(flex name="filter.form")
                 md-input-container
@@ -28,17 +28,19 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
                         th(name="Last Name" order-by="type") Last Name
                         th(name="email" order-by="email") Email
                         th(name="cohort" order-by="cohort") Cohort
-                        th &nbsp;
+                        th(name="archive") Archive
+                        th(name="edit") Edit
                 tbody.eventBg
                     tr(md-auto-select ng-repeat="student in students | orderBy: query.order | limitTo: query.limit: (query.page -1) * query.limit")
                         td {{student.fName}}
                         td {{student.lName}}
                         td {{student.email}}
                         td {{student.cohort}}
-                        td(layout="row" layout-align="center end")
+                        td
                             md-button.md-icon-button(ng-click="archive(student._id)" aria-label="archive")
                                 md-icon.material-icons.md-dark archive
                                 .md-ripple-container
+                        td
                             md-button.md-icon-button(ng-click="editStudent(student._id)" aria-label="edit")
                                 md-icon.material-icons.md-dark edit
                                 .md-ripple-container

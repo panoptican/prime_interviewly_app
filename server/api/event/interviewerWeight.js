@@ -8,14 +8,16 @@ router.post('/', function(req, res, next){
     var event = req.query,
         weight = req.body;
 
-   Event.addInterviewerWeight(event, weight, function(err, data){
-       if(err){
-           console.log(err);
-           next(err);
-       } else {
-           res.json(data);
-       }
-   })
+    if(Object.keys(weight).length > 1){
+        Event.addInterviewerWeight(event, weight, function(err, data){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                res.json(data);
+            }
+        })
+    }
 });
 
 

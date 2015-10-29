@@ -1,20 +1,17 @@
 var InterviewerModel = require('../models/interviewer');
 var Converter = require('csvtojson').Converter;
-var converter = new Converter({});
 var fs = require('fs');
 var StudentModel = require('../models/student');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 var Interviewer = {
     bulkImport: function(file, callback){
-        fs.createReadStream(file).pipe(converter);
-
+        var converter = new Converter({});
         converter.on("end_parsed", function(array){
             array.forEach(function(interviewer){
                 Interviewer.add(interviewer, function(err, interviewer){
                     if(err){
                         console.log(err);
-                        next(err);
                     } else {
                         console.log('added ' + interviewer.fName + " " + interviewer.lName);
                     }
@@ -22,6 +19,8 @@ var Interviewer = {
             });
             callback(null, array);
         });
+
+        fs.createReadStream(file).pipe(converter);
     },
     add: function(body, callback){
         var newInterviewer = new InterviewerModel(body);

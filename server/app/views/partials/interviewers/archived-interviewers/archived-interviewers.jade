@@ -24,6 +24,7 @@
                      th(name="Last Name" order-by="name") Last Name
                      th(name="company" order-by="name") Company
                      th(name="title" order-by="name") Title
+                     th(name="unarchive") Unarchive
                tbody
                   tr(md-auto-select ng-repeat="interviewer in interviewers")
                      td {{interviewer.fName}}
@@ -31,4 +32,6 @@
                      td {{interviewer.company}}
                      td {{interviewer.title}}
                      td
-                        md-button.md-raised(ng-click="unarchive(interviewer._id)") Unarchive
+                        md-button.md-icon-button(ng-click="unarchive(interviewer._id)")
+                           md-icon.material-icons.md-dark archive
+                           .md-ripple-container
