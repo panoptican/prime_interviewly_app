@@ -15,7 +15,7 @@
                             p.md-body-1(layout="row" layout-margin="auto") End time: {{event.endTime}}
                             p.md-body-1(layout="row" layout-margin="auto") Interview duration: {{event.interviewDuration}}
                             span(flex)
-                            md-button(ng-click="edit(event)") EDIT
+                            md-button(ng-click="edit()") EDIT
         md-tab(label="Students")
             div(ng-include="'views/partials/events/add-students/add-students.html'")
         md-tab(label="Student Rankings")

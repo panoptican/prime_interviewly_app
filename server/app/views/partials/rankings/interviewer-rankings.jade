@@ -12,7 +12,6 @@ div(ng-controller="interviewerRank" layout-margin)
                   md-option(ng-repeat="student in students" value="{{student._id}}") {{student.fName}} {{student.lName}}
             md-button(ng-click="save(interviewer, student, weight)") SAVE
          md-slider(flex="30" min="-1" max="1" md-discrete ng-model="weight.value" value="0" aria-label="Slider")
-
          md-card
             md-data-table-container
                table(md-data-table md-row-select="selected" md-progress="deferred")
