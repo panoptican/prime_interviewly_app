@@ -11,7 +11,7 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
 
         $scope.event = {
             id: response.data[0]._id,
-            title: response.data[0].cohort,
+            cohort: response.data[0].cohort,
             type: response.data[0].type,
             date: $filter('date')(new Date(response.data[0].date), 'MM/dd/yy'),
             startTime: response.data[0].startTime,
