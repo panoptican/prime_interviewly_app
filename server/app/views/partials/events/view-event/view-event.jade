@@ -1,7 +1,7 @@
 .welcome(ng-controller="viewEventCtrl" layout="column")
     .header(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
         md-subheader(class="md-primary")
-            h1.md-display-1 {{eventTitle}}
+            h1.md-display-1 {{event.cohort}} {{event.type}}
             span(flex)
     md-tabs.md-primary(md-dynamic-height md-border-bottom)
         md-tab(label="Event Details")
@@ -10,14 +10,12 @@
                     span(flex="20")
                     .md-whiteframe-z2(layout="column" flex="60")
                         form(name="new-event")
-                            p.md-body-1(layout="row" layout-margin="auto") Date: {{eventDate}}
-                            p.md-body-1(layout="row" layout-margin="auto") Start time: {{eventStime}}
-                            p.md-body-1(layout="row" layout-margin="auto") End time: {{eventEtime}}
-                            p.md-body-1(layout="row" layout-margin="auto") Interview duration: {{eventDur}}
-                            p.md-body-1(layout="row" layout-margin="auto") Location: {{eventLoc}}
-                            p.md-body-1(layout="row" layout-margin="auto") Organizer: {{eventOrg}}
+                            p.md-body-1(layout="row" layout-margin="auto") Date: {{event.date}}
+                            p.md-body-1(layout="row" layout-margin="auto") Start time: {{event.startTime}}
+                            p.md-body-1(layout="row" layout-margin="auto") End time: {{event.endTime}}
+                            p.md-body-1(layout="row" layout-margin="auto") Interview duration: {{event.interviewDuration}}
                             span(flex)
-                            md-button EDIT
+                            md-button(ng-click="edit(event)") EDIT
         md-tab(label="Students")
             div(ng-include="'views/partials/events/add-students/add-students.html'")
         md-tab(label="Student Rankings")
