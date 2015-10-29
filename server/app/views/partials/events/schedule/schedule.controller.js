@@ -25,6 +25,19 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleCon
         enableSorting: false,
         enableGridMenu: true,
         enableFiltering: false,
+        exporterCsvFilename: 'myFile.csv',
+        exporterPdfDefaultStyle: {fontSize: 8},
+        exporterPdfTableStyle: {margin: [20, 20, 20, 20]},
+        exporterPdfTableHeaderStyle: {fontSize: 8, bold: true, italics: true, color: 'red'},
+        //exporterPdfCustomFormatter: function ( docDefinition ) {
+        //    docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
+        //    docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
+        //    return docDefinition;
+        //},
+        exporterPdfOrientation: 'landscape',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 550,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
         }

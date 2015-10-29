@@ -23,6 +23,8 @@ gulp.task('copy-images', function() {
 // Copies library scripts from node_modules to client
 gulp.task('copy-libraries', function() {
     return gulp.src([
+        'bower_components/pdfmake/build/pdfmake.min.js',
+        'bower_components/pdfmake/build/vfs_fonts.js',
         'node_modules/underscore/underscore-min.js',
         'node_modules/moment/min/moment.min.js',
         'node_modules/angular/angular.min.js',
