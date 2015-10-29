@@ -9,7 +9,6 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
 
     var getEvents = function(){
         $http.get('/api/event?_id=' + eventParam).then(function(response){
-
             $scope.event = {
                 id: response.data[0]._id,
                 cohort: response.data[0].cohort,
