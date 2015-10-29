@@ -60,8 +60,8 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
 
             $scope.edit = function (edit) {
                 edit._id = event.id;
-                edit.startTime = $filter('date')(new Date(event.startTime), 'HH:mm');
-                edit.endTime = $filter('date')(new Date(event.endTime), 'HH:mm');
+                edit.startTime = $filter('date')(new Date(edit.startTime), 'HH:mm');
+                edit.endTime = $filter('date')(new Date(edit.endTime), 'HH:mm');
 
                 $http.put('api/event?_id=' + event.id, edit)
                     .then(function (response) {
