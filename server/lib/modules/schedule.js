@@ -62,7 +62,8 @@ var scheduler = {
             slots = scheduler.getSlots(interviewSlots),
             l = slots.length,
             lng = l,
-            m = interviewers.length;
+            m = interviewers.length,
+            interviewMin = interviewSlots - 2;
 
         //this function updates the student and interviewer objects to reflect the interviews scheduled
         var book = (student, interviewer, match) => {
@@ -100,6 +101,7 @@ var scheduler = {
                             book(student, interviewer, match);
                             sortedCombinations.splice(k, 1);
                             schedule.push(match);
+                            shifter++;
                             return true;
                         }
                         //if student has no breaks AND interviewer has no breaks AND interviewer is not single
@@ -121,6 +123,7 @@ var scheduler = {
                             book(student, interviewer, match);
                             sortedCombinations.splice(k, 1);
                             schedule.push(match);
+                            shifter++;
                             return true;
                         }
                         else {
@@ -138,12 +141,11 @@ var scheduler = {
                     }
                 })
             })
-            shifter++;
             slots.splice(0, 1);
         }
 
         //check to see if each student has interviewMax, if so, then sort slots and return, if not run scheduler.match again
-        if(scheduler.check(students, interviewMax)){
+        if(scheduler.check(students, interviewMax) || counter > 20){
             var lng = m;
             while(m){
                 var interviewer = interviewers[lng-m--];
@@ -166,11 +168,10 @@ var scheduler = {
             }
             counter++;
             //if no matches can be found after 10 tries, decrement interviewMax
-            if(counter > 10){
+            if(counter > 10 && interviewMax > interviewMin){
                 counter = 0;
                 interviewMax--;
             }
-
             return this.match(interviewSlots, initInterviewers, initStudents, initCombinations, interviewMax, companyMax);
         }
     }

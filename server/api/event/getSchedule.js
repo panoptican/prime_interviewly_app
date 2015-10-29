@@ -39,7 +39,7 @@ router.get('/', function(req, res, next){
         function(event, interviewers, students, combinations, callback){
             var duration = (parseInt(event.endTime) - parseInt(event.startTime)) * 60,
                 slots = Math.floor(duration / event.interviewDuration),
-                interviewMax = slots - 1,
+                interviewMax = slots,
                 companyMax;
             if(event.type == 'Career Day'){
                 companyMax = 1;
