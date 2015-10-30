@@ -34,7 +34,6 @@ User.pre('save', function(next){
 });
 
 User.methods.comparePassword = function (candidatePassword, callback) {
-    console.log(candidatePassword);
     bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
         console.log(isMatch);
         if (err) return callback(err);
@@ -43,7 +42,6 @@ User.methods.comparePassword = function (candidatePassword, callback) {
 };
 
 User.statics.getAuthenticated = function (user, callback) {
-    console.log('getAuthenticated', user);
     this.findOne({username: user.username}, function (err, doc) {
         if (err) {
             console.log(err);
