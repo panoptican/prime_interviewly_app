@@ -23,7 +23,8 @@
   ],
   "private": true,
   "scripts": {
-    "start": "node ./server/bin/www"
+    "start": "node ./server/bin/www",
+    "postinstall": "bower install && gulp"
   },
   "main": "server/app.js",
   "repository": {
