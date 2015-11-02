@@ -40,8 +40,8 @@
     "prime digital academy"
   ],
   "engines": {
-    "node": "5.0.0",
-    "npm": "3.3.9"
+    "node": "4.2.1",
+    "npm": "2.14.7"
   },
   "dependencies": {
     "angular": "^1.4.7",
