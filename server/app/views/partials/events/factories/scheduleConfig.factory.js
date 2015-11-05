@@ -26,7 +26,7 @@ app.factory('scheduleConfig', ['$http', function($http) {
                     field: item.company + '_' + item.fName,
                     enableColumnMenu: false,
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                        if (grid.getCellValue(row,col) === 'Break') {
+                        if (grid.getCellValue(row,col) === 'Break' || grid.getCellValue(row,col) === 'Unavailable') {
                             return 'breakCell';
                         }
                     },
