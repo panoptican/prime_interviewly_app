@@ -9,13 +9,35 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
 
     var getEvents = function(){
         $http.get('/api/event?_id=' + eventParam).then(function(response){
+            var start = (response.data[0].startTime);
+            var newStart = start.split(':');
+            var hour = parseInt(newStart[0]);
+            if(hour > 12){
+                hour = hour  - 12;
+                tod = "PM"
+            }   else {
+                tod = "AM"
+            }
+            var startTime =  hour + ":" +newStart[1]+" "+tod;
+
+            var end = (response.data[0].endTime);
+            var newEnd = end.split(':');
+            var ehour = parseInt(newEnd[0]);
+            if(ehour > 12){
+                ehour = ehour  - 12;
+                etod = "PM"
+            }   else {
+                etod = "AM"
+            }
+            var endTime =  ehour + ":" +newEnd[1]+" "+etod;
+            console.log(startTime);
             $scope.event = {
                 id: response.data[0]._id,
                 cohort: response.data[0].cohort,
                 type: response.data[0].type,
                 date: $filter('date')(new Date(response.data[0].date), 'MM/dd/yy'),
-                startTime: response.data[0].startTime,
-                endTime: response.data[0].endTime,
+                startTime: startTime,
+                endTime: endTime,
                 interviewDuration: response.data[0].interviewDuration
             };
         });

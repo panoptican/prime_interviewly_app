@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 
 // MongoDB connection
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/interviewly_dev');
+mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/interviewly_dev');
 
 // require routes
 var index = require('./routes/index');

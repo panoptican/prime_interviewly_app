@@ -116,6 +116,31 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleCon
     };
 
     $scope.saveEvent = function() {
-        console.log($scope.gridOptions.data);
+        $http.get('api/event?_id=' + eventParam).then(function(response){
+            var oldSchedule = response.data[0].schedule[0];
+            var newSchedule = $scope.gridOptions.data;
+
+            newSchedule.forEach(function(slot, index){
+                for (prop in slot){
+                    if(prop !== '$$hashKey' && prop !== 'intTime'){
+                        var string = prop.split('_'),
+                            company = string[0],
+                            fName = string[1],
+                            slotNumber = index + 1;
+
+                        oldSchedule.interviewer.forEach(function(interviewer){
+                            if(interviewer.company == company && interviewer.fName == fName){
+                                interviewer.scheduled['slot' + slotNumber] = slot[prop];
+                            }
+                        });
+                    }
+                }
+                return oldSchedule;
+            });
+
+            $http.put('api/event?_id=' + eventParam, {schedule: oldSchedule}).then(function(response){
+                console.log(response);
+            })
+        })
     };
 }]);

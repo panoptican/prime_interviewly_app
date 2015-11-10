@@ -138,7 +138,9 @@ var scheduler = {
                             schedule.push(match);
                             return true;
                         }
-                    }
+                    } else if (interview.interviewerID == interviewer._id && interview.unavailable['slot' + currentSlot]){
+                    interviewer.scheduled['slot' + currentSlot] = "Unavailable";
+                }
                 })
             })
             slots.splice(0, 1);
