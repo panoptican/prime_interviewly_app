@@ -70,6 +70,7 @@ var scheduler = {
             student.scheduled.count.total = 1 + (student.scheduled.count.total || 0);
             student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
             student.scheduled.with[match.interviewerID] = true;
+            student.scheduled.count['slot' + currentSlot] = interviewer.fName + ' ' + interviewer.lName;
             interviewer.scheduled['slot' + currentSlot] = student.fName + ' ' + student.lName;
         }
         //this function updates the student and interviewer objects to schedule a break
@@ -91,7 +92,8 @@ var scheduler = {
                     interview.student == student.fName + ' ' + student.lName &&
                     !interview.unavailable['slot' + currentSlot] &&
                     student.scheduled.count.total < interviewMax &&
-                    !student.scheduled.with[interview.interviewerID]
+                    !student.scheduled.with[interview.interviewerID] &&
+                    !student.scheduled.count['slot' + currentSlot]
                      ){
                         var match = interview;
                         match.slot = currentSlot;
@@ -155,6 +157,7 @@ var scheduler = {
                 interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
             }
             counter = 0;
+            console.log(currentStudents);
             return {interviewer: interviewers};
         } else {
             var l = initStudents.length, m = initInterviewers.length, lng = l, lng2 = m;
