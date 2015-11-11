@@ -1,10 +1,10 @@
-.welcome(ng-controller="addInterviewer" layout="column")
+.welcome(ng-controller="eventInterviewers" layout="column")
     md-content.eventBg
         md-card
             md-data-table-toolbar.eventBg
                 h2(class="md-title") Interviewers
                 div(flex)
-                md-button.md-icon-button
+                md-button.md-icon-button(ng-click="addInterviewerDialog()")
                     md-icon add
                         md-tooltip Add Interviewers
             md-data-table-container.eventBg

@@ -1,4 +1,4 @@
-app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog', '$rootScope', function($scope, $http, $routeParams, $mdDialog, $rootScope){
+app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDialog', '$rootScope', function($scope, $http, $routeParams, $mdDialog, $rootScope){
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
 
@@ -9,6 +9,8 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog'
     };
 
     getEventInterviewers();
+
+    $rootScope.$on('eventInterviewers', getEventInterviewers);
 
     $scope.remove = function(id){
         $http.post('api/event/removeInterviewer?_id=' + eventParam, {_id: id}).then(function(response){
@@ -33,5 +35,30 @@ app.controller('addInterviewer', ['$scope', '$http', '$routeParams', '$mdDialog'
                     clickOutsideToClose: true
                 })
             })
-    }
+    };
+
+    $scope.addInterviewerDialog = function(){
+        $http.get('api/interviewer')
+            .then(function(response){
+                var interviewers = response.data;
+                var addedInterviewers = $scope.interviewers;
+
+                for(var i = 0; i < interviewers.length; i++){
+                    addedInterviewers.forEach(function(interviewer){
+                        if(interviewer._id == interviewers[i]._id){
+                            interviewers.splice(i, 1);
+                        }
+                    });
+                }
+
+                $mdDialog.show({
+                    controller: 'addInterviewers',
+                    locals: {
+                        items: interviewers
+                    },
+                    templateUrl: 'views/partials/dialogs/Event/addInterviewers.html',
+                    parent: angular.element(document.body)
+                })
+            })
+    };
 }]);
