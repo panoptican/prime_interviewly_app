@@ -45,7 +45,7 @@ app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDial
 
                 for(var i = 0; i < interviewers.length; i++){
                     addedInterviewers.forEach(function(interviewer){
-                        if(interviewer._id == interviewers[i]._id){
+                        if(interviewers[i] && interviewers[i]._id == interviewer._id){
                             interviewers.splice(i, 1);
                         }
                     });
