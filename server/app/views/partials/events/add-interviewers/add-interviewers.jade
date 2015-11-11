@@ -3,6 +3,10 @@
         md-card
             md-data-table-toolbar.eventBg
                 h2(class="md-title") Interviewers
+                div(flex)
+                md-button.md-icon-button
+                    md-icon add
+                        md-tooltip Add Interviewers
             md-data-table-container.eventBg
                 table(md-data-table md-row-select="selected" md-progress="deferred")
                     thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
@@ -11,7 +15,7 @@
                             th(name="Last Name" order-by="name") Last Name
                             th(name="company" order-by="name") Company
                             th(name="title" order-by="name") Title
-                            th(name="addRemove" order-by="name") Add / Remove
+                            th(name="remove" order-by="name") Remove From Event
                             th(name="availability" order-by="availability") Availability
                     tbody.eventBg
                         tr(md-auto-select ng-repeat="interviewer in interviewers")
@@ -20,9 +24,7 @@
                             td {{interviewer.company}}
                             td {{interviewer.title}}
                             td
-                                md-button.md-icon-button(ng-hide="interviewer.added" ng-click="addInterviewer(interviewer._id)")
-                                    md-icon add
-                                md-button.md-icon-button(ng-show="interviewer.added" ng-click="remove(interviewer._id)")
+                                md-button.md-icon-button(ng-click="remove(interviewer._id)")
                                     md-icon remove
                             td
                                 md-button.md-icon-button(ng-click="editAvailability(interviewer._id)")

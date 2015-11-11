@@ -157,7 +157,6 @@ var scheduler = {
                 interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
             }
             counter = 0;
-            console.log(currentStudents);
             return {interviewer: interviewers};
         } else {
             var l = initStudents.length, m = initInterviewers.length, lng = l, lng2 = m;
