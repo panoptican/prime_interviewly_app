@@ -42,6 +42,7 @@ app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDial
             .then(function(response){
                 var interviewers = response.data;
                 var addedInterviewers = $scope.interviewers;
+                console.log(interviewers, addedInterviewers);
 
                 for(var i = 0; i < interviewers.length; i++){
                     addedInterviewers.forEach(function(interviewer){
