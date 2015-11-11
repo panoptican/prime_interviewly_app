@@ -42,13 +42,14 @@ app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDial
             .then(function(response){
                 var interviewers = response.data;
                 var addedInterviewers = $scope.interviewers;
+                var i = interviewers.length;
 
-                for(var i = 0; i < interviewers.length; i++){
+                while(i--){
                     addedInterviewers.forEach(function(interviewer){
                         if(interviewers[i] && interviewers[i]._id == interviewer._id){
                             interviewers.splice(i, 1);
                         }
-                    });
+                    })
                 }
 
                 $mdDialog.show({
