@@ -35,6 +35,13 @@ var Student = {
         callback(null, newStudent);
     },
     find: function(query, callback){
+        if(query.cohort){
+            var keys = Object.keys(query);
+            var value = query[keys[0]];
+            var re = new RegExp(value, "i");
+            query.cohort = re;
+        }
+        console.log(query);
         StudentModel.find(query, function(err, doc){
             if(err){
                 console.log(err);

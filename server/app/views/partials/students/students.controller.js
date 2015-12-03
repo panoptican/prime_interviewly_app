@@ -1,29 +1,25 @@
 app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory', function($scope, $mdDialog, $rootScope, StudentFactory){
-    $scope.students = StudentFactory.query();
+    var getStudents = function(query){
+        $scope.students = StudentFactory.query(query);
+    };
 
     $rootScope.$on('got/students', function(){
-        $scope.students = StudentFactory.query();
+        getStudents();
     });
-
-    $scope.query = {
-        order: 'name',
-        limit: 50,
-        page: 1
-    };
 
     $scope.filter = {
         options: {
-            debounce: 500
+            debounce: 1000
         }
+    };
+
+    $scope.search = function(query){
+        getStudents(query);
     };
 
     $scope.removeFilter = function () {
         $scope.filter.show = false;
-        $scope.query.filter = '';
-
-        if($scope.filter.form.$dirty) {
-            $scope.filter.form.$setPristine();
-        }
+        getStudents();
     };
 
     $scope.editStudent = function(id) {
@@ -43,6 +39,8 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
         StudentFactory.update({_id: id}, {isArchived: true});
         $rootScope.$broadcast('got/students');
     };
+
+    getStudents();
 }]);
 
 app.controller('editStudent', ['$scope', '$mdDialog', 'items', '$rootScope', 'StudentFactory', function($scope, $mdDialog, items, $rootScope, StudentFactory){
