@@ -3,17 +3,32 @@ var router = express.Router();
 var Student = require('../../db/student');
 
 /* GET CURRENT students */
-router.get('/', function(req, res, next) {
-    var query = req.query || {};
-    query.isArchived = false;
-    Student.find(query, function(err, data){
-        if(err){
-            console.log(err);
-            next(err);
+router.get('/:id?', function(req, res, next) {
+    if(req.params.id) {
+        var query = {_id: req.params.id, isArchived: false};
+        Student.findOne(query, null, function(err, data){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                res.json(data);
+            }
+        })
+    } else {
+        if(Object.keys(req.query).length){
+            var query = req.query;
         } else {
-            res.json(data);
+            var query = {isArchived: false};
         }
-    })
+        Student.find(query, function(err, data){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                res.json(data);
+            }
+        })
+    }
 });
 
 /* GET ARCHIVED students */
