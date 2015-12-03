@@ -15,8 +15,8 @@ var Event = {
         });
         callback(null, newEvent);
     },
-    find: function(query, callback){
-        EventModel.find(query, function(err, doc){
+    find: function(query, collection, callback){
+        EventModel.find(query,collection, function(err, doc){
             if(err){
                 console.log(err);
             } else {
@@ -25,12 +25,13 @@ var Event = {
         });
     },
     findOne: function(query, callback){
-      EventModel.findOne({_id: ObjectId(query)}, function(err, doc){
-          if(err){
-              console.log(err);
-          } else {
+        query._id = ObjectId(query._id);
+        EventModel.findOne(query, function(err, doc){
+            if(err){
+                console.log(err);
+            } else {
               callback(err, doc);
-          }
+            }
       })
     },
     delete: function(query, callback){

@@ -1,12 +1,16 @@
 .welcome(ng-controller="addStudents" layout="column")
     md-content.eventBg
         md-card
-            md-data-table-toolbar.eventBg
-                h2(class="md-title") Students
+            md-data-table-toolbar.eventBg(ng-show="!selected.length")
+                h2.md-title Students
+            md-data-table-toolbar.alternate(ng-show="selected.length")
+                h2.md-title {{selected.length}} Students Selected
             md-data-table-container.eventBg
                 table(md-data-table md-row-select="selected" md-progress="deferred")
-                    thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
+                    thead.eventBg(md-order="query.order" md-trigger="onOrderChange" md-table-head)
                         tr
+                            th(md-select-all="students")
+                                md-checkbox(aria-label="Select All" ng-click="toggleAll()" ng-model="student.selected" role="checkbox")
                             th(name="First Name" order-by="name") First Name
                             th(name="Last Name" order-by="name") Last Name
                             th(name="email" order-by="name") Email
@@ -14,6 +18,8 @@
                             th(name="addRemove" order-by="name") Add / Remove
                     tbody.eventBg
                         tr(md-auto-select ng-repeat="student in students")
+                            td
+                                md-checkbox(aria-label="Select Row" ng-click="toggleRow(student)" ng-checked="student.selected")
                             td {{student.fName}}
                             td {{student.lName}}
                             td {{student.email}}

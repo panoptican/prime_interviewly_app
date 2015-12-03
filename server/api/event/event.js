@@ -3,17 +3,28 @@ var router = express.Router();
 var Event = require('../../db/event');
 
 /* GET event */
-router.get('/', function(req, res, next) {
-    var query = req.query || {};
-    query.isArchived = false;
-    Event.find(query, function(err, data){
-        if(err){
-            console.log(err);
-            next(err);
-        } else {
-            res.json(data);
-        }
-    })
+router.get('/:id?', function(req, res, next) {
+    if(req.params.id) {
+        var query = {_id: req.params.id, isArchived: false};
+        Event.findOne(query, function(err, data){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                res.json(data);
+            }
+        })
+    } else {
+        var query = {isArchived: false};
+        Event.find(query, function(err, data){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                res.json(data);
+            }
+        })
+    }
 });
 
 /* GET event */

@@ -1,8 +1,34 @@
-app.controller('addStudents', ['$scope', '$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope){
+app.controller('addStudents', ['$scope', '$http', '$routeParams', '$rootScope', 'StudentFactory', 'EventFactory', function($scope, $http, $routeParams, $rootScope, StudentFactory, EventFactory){
+    var eventParam = $routeParams._id;
+    $scope.selected = [];
+    $scope.eventId = eventParam;
+    $scope.students = StudentFactory.query();
 
-    $http.get('/api/student').then(function (response) {
-        $scope.students = response.data
-    });
+    $scope.toggleRow = function(student) {
+        var i = $scope.selected.indexOf(student._id);
+        if(i === -1){
+            $scope.selected.push(student._id);
+            student.selected = true;
+        } else {
+            $scope.selected.splice(i, 1);
+            student.selected = false;
+        }
+    };
+
+    $scope.toggleAll = function() {
+        if($scope.selected.length < $scope.students.length){
+            $scope.selected = [];
+            $scope.students.forEach(function(student){
+                $scope.selected.push(student._id);
+                student.selected = true;
+            })
+        } else {
+            $scope.selected = [];
+            $scope.students.forEach(function(student){
+                student.selected = false;
+            })
+        }
+    };
 
     $http.get('/api/event?_id='+$routeParams._id).then(function(response){
         var added = response.data[0].students.slice();
@@ -16,9 +42,6 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', '$rootScope', 
             }
         }
     });
-
-    var eventParam = $routeParams._id;
-    $scope.eventId = eventParam;
 
     $scope.addStudent = function(id) {
         $http({
@@ -42,6 +65,7 @@ app.controller('addStudents', ['$scope', '$http', '$routeParams', '$rootScope', 
             // hide row
         });
     };
+
     $scope.remove = function(id){
         var students = $scope.students;
         for(var i=0; i <students.length; i++){
