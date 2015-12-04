@@ -1,4 +1,3 @@
-
 /*
  View events controller
  */
@@ -8,8 +7,8 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
     $scope.eventId = eventParam;
 
     var getEvents = function(){
-        $http.get('/api/event?_id=' + eventParam).then(function(response){
-            var start = (response.data[0].startTime);
+        $http.get('/api/event/' + eventParam).then(function(response){
+            var start = (response.data.startTime);
             var newStart = start.split(':');
             var hour = parseInt(newStart[0]);
             if(hour > 12){
@@ -20,7 +19,7 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
             }
             var startTime =  hour + ":" +newStart[1]+" "+tod;
 
-            var end = (response.data[0].endTime);
+            var end = (response.data.endTime);
             var newEnd = end.split(':');
             var ehour = parseInt(newEnd[0]);
             if(ehour > 12){
@@ -32,13 +31,13 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
             var endTime =  ehour + ":" +newEnd[1]+" "+etod;
             console.log(startTime);
             $scope.event = {
-                id: response.data[0]._id,
-                cohort: response.data[0].cohort,
-                type: response.data[0].type,
-                date: $filter('date')(new Date(response.data[0].date), 'MM/dd/yy'),
+                id: response.data._id,
+                cohort: response.data.cohort,
+                type: response.data.type,
+                date: $filter('date')(new Date(response.data.date), 'MM/dd/yy'),
                 startTime: startTime,
                 endTime: endTime,
-                interviewDuration: response.data[0].interviewDuration
+                interviewDuration: response.data.interviewDuration
             };
         });
     };
@@ -50,16 +49,16 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
     getEvents();
 
     $scope.edit = function() {
-        $http.get('/api/event?_id=' + eventParam).then(function(response){
+        $http.get('/api/event/' + eventParam).then(function(response){
 
             $scope.event2 = {
-                id: response.data[0]._id,
-                cohort: response.data[0].cohort,
-                type: response.data[0].type,
-                date: $filter('date')(new Date(response.data[0].date), 'MM/dd/yy'),
-                startTime: response.data[0].startTime,
-                endTime: response.data[0].endTime,
-                interviewDuration: response.data[0].interviewDuration
+                id: response.data._id,
+                cohort: response.data.cohort,
+                type: response.data.type,
+                date: $filter('date')(new Date(response.data.date), 'MM/dd/yy'),
+                startTime: response.data.startTime,
+                endTime: response.data.endTime,
+                interviewDuration: response.data.interviewDuration
             };
 
             $mdDialog.show({
