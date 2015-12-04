@@ -1,5 +1,6 @@
 app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory', function($scope, $mdDialog, $rootScope, StudentFactory){
     $scope.selected = [];
+    $scope.selectAll = false;
 
     var getStudents = function(query){
         $scope.students = StudentFactory.query(query);
@@ -18,6 +19,20 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
     $scope.removeFilter = function () {
         $scope.filter.show = false;
         getStudents();
+    };
+
+    $scope.cancelSelected = function(selected) {
+        var l = selected.length;
+        $scope.selected = [];
+        while(l--){
+            var id = selected[l];
+            $scope.students.forEach(function(student){
+                if(student._id === id){
+                    student.selected = false;
+                }
+            })
+        }
+        $scope.selectAll = false;
     };
 
     $scope.editStudent = function(id) {

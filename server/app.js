@@ -59,7 +59,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse cookies
 app.use(cookieParser());
 
-// serve client
+// serve clientnpm sta
 app.use(express.static(path.join(__dirname, '..', 'client', 'app')));
 
 // use routes
