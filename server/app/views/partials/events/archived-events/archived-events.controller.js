@@ -3,7 +3,7 @@ Archived events controller
  */
 app.controller('archivedEventsCtrl', ['$scope', '$http', '$filter', '$rootScope', function($scope, $http, $filter, $rootScope) {
     var archived = function(){
-        $http.get('/api/event/archived').then(function success(response) {
+        $http.get('/api/event?isArchived=true').then(function success(response) {
 
             // set get request to a variable
             eventsList = response.data;

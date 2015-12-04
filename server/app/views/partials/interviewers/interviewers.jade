@@ -1,28 +1,35 @@
 md-content.md-default(ng-controller="interviewers" layout="column")
     md-card.md-whiteframe-5dp
-        md-data-table-toolbar.eventBg(ng-hide="filter.show")
+        md-data-table-toolbar.eventBg(ng-show="selected.length" layout-align="space-between")
+            h2.md-title {{selected.length}} Interviewers Selected
+            div(flex)
+            md-button.md-icon-button(ng-click="archiveSelected(selected)")
+                md-icon archive
+                md-tooltip Archive
+            md-button.md-icon-button(ng-click="cancelSelected(selected)")
+                md-icon close
+                md-tooltip Cancel
+        md-data-table-toolbar.eventBg(ng-hide="filter.show || selected.length")
             h2.md-title Interviewers
             div(flex)
             md-button.md-icon-button.md-default(ng-click="filter.show = true")
-                md-icon.material-icons.md-dark filter_list
+                md-icon filter_list
                 md-tooltip Filter
-                .md-ripple-container
-            md-button.md-icon-button.md-default(ng-controller="interviewer" ng-click="openInterviewer($event)")
-                md-icon.material-icons.md-dark add
+            md-button.md-icon-button.md-default(ng-controller="interviewer" ng-click="openInterviewer()")
+                md-icon add
                 md-tooltip Add
-            md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads($event)")
-                md-icon.material-icons.md-dark file_upload
+            md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads()")
+                md-icon file_upload
                 md-tooltip Upload
         md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && interviewers.length")
-            md-icon.material-icons.md-dark search
+            md-icon search
             form(flex name="filter.form")
                 md-input-container
                     label search
                     input(type="text" ng-model="query.filter" ng-model-options="filter.options")
             span(flex="70")
-            md-button.md-icon-button.md-default(ng-click="removeFilter()")
-                md-icon.material-icons.md-dark close
-                .md-ripple-container
+            md-button.md-icon-button(ng-click="removeFilter()")
+                md-icon close
         md-data-table-container.eventBg
             table(md-data-table md-row-select="selected" md-progress="deferred")
                 thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
@@ -41,9 +48,7 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         td {{interviewer.company}}
                         td
                             md-button.md-icon-button(ng-click="archive(interviewer._id)")
-                                md-icon.material-icons.md-dark archive
-                                .md-ripple-container
+                                md-icon archive
                         td
                             md-button.md-icon-button(ng-click="editInterviewer(interviewer._id)")
-                                md-icon.material-icons.md-dark edit
-                                .md-ripple-container
+                                md-icon edit

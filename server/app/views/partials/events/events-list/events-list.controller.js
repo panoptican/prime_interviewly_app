@@ -4,7 +4,7 @@
   */
 app.controller('eventsCtrl', ['$scope', '$http', '$filter', '$rootScope', function($scope, $http, $filter, $rootScope) {
     var getEvents = function(){
-        $http.get('/api/event').then(function success(response) {
+        $http.get('/api/event?isArchived=false').then(function success(response) {
 
             // set get request to a variable
             eventsList = response.data;

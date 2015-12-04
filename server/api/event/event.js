@@ -15,8 +15,7 @@ router.get('/:id?', function(req, res, next) {
             }
         })
     } else {
-        var query = {isArchived: false};
-        Event.find(query, function(err, data){
+        Event.find(req.query, function(err, data){
             if(err){
                 console.log(err);
                 next(err);
@@ -25,20 +24,6 @@ router.get('/:id?', function(req, res, next) {
             }
         })
     }
-});
-
-/* GET event */
-router.get('/archived', function(req, res, next) {
-    var query = req.query || {};
-    query.isArchived = true;
-    Event.find(query, function(err, data){
-        if(err){
-            console.log(err);
-            next(err);
-        } else {
-            res.json(data);
-        }
-    })
 });
 
 /* POST add new event */
