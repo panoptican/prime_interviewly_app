@@ -12,7 +12,8 @@ var Student = {
 
         converter.on("end_parsed", function(array){
             array.forEach(function(student){
-                Student.add(student, function(err, student){
+                var normStudent = newObject(student);
+                Student.add(normStudent, function(err, student){
                     if(err){
                         console.log(err);
                         next(err);
@@ -41,7 +42,6 @@ var Student = {
             var re = new RegExp(value, "i");
             query.cohort = re;
         }
-        console.log(query);
         StudentModel.find(query, function(err, doc){
             if(err){
                 console.log(err);
@@ -105,5 +105,22 @@ var Student = {
         })
     }
 };
+
+function newObject(oldObject){
+    var newObject = {};
+    var newKeys = ['fName', 'lName', 'email', 'cohort'];
+    var values = [];
+    var i;
+
+    for(key in oldObject) {
+        values = Object.keys(oldObject).map(key => oldObject[key]);
+    }
+
+    for(i = 0; i < newKeys.length; i++){
+        newObject[newKeys[i]] = values[i]
+    }
+
+    return newObject;
+}
 
 module.exports = Student;

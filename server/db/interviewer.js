@@ -9,7 +9,8 @@ var Interviewer = {
         var converter = new Converter({});
         converter.on("end_parsed", function(array){
             array.forEach(function(interviewer){
-                Interviewer.add(interviewer, function(err, interviewer){
+                var normInterviewer = newObject(interviewer);
+                Interviewer.add(normInterviewer, function(err, interviewer){
                     if(err){
                         console.log(err);
                     } else {
@@ -95,5 +96,22 @@ var Interviewer = {
         })
     }
 };
+
+function newObject(oldObject){
+    var newObject = {};
+    var newKeys = ['fName', 'lName', 'email', 'company'];
+    var values = [];
+    var i;
+
+    for(key in oldObject) {
+        values = Object.keys(oldObject).map(key => oldObject[key]);
+    }
+
+    for(i = 0; i < newKeys.length; i++){
+        newObject[newKeys[i]] = values[i]
+    }
+
+    return newObject;
+}
 
 module.exports = Interviewer;

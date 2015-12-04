@@ -5,11 +5,14 @@ md-content.md-default(ng-controller="interviewers" layout="column")
             div(flex)
             md-button.md-icon-button.md-default(ng-click="filter.show = true")
                 md-icon.material-icons.md-dark filter_list
+                md-tooltip Filter
                 .md-ripple-container
             md-button.md-icon-button.md-default(ng-controller="interviewer" ng-click="openInterviewer($event)")
                 md-icon.material-icons.md-dark add
+                md-tooltip Add
             md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads($event)")
                 md-icon.material-icons.md-dark file_upload
+                md-tooltip Upload
         md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && interviewers.length")
             md-icon.material-icons.md-dark search
             form(flex name="filter.form")
@@ -28,7 +31,6 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         th(name="Last Name" order-by="name") Last Name
                         th(name="EMail" order-by="name") Email
                         th(name="company" order-by="name") Company
-                        th(name="title" order-by="name") Title
                         th(name="archive") Archive
                         th(name="edit") Edit
                 tbody.eventBg
@@ -37,7 +39,6 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         td {{interviewer.lName}}
                         td {{interviewer.email}}
                         td {{interviewer.company}}
-                        td {{interviewer.title}}
                         td
                             md-button.md-icon-button(ng-click="archive(interviewer._id)")
                                 md-icon.material-icons.md-dark archive
