@@ -15,6 +15,16 @@ app.factory('scheduleConfig', ['$http', function($http) {
             // store schedule ID in case it is saved
             schedDetails.id = uglySchedule._id;
 
+            //sort schedule by company name
+            uglySchedule.interviewer.sort(function (a, b){
+                if (a.company < b.company){
+                    return -1
+                } else if (a.company > b.company) {
+                    return 1
+                }
+                return 0;
+            });
+
             // iterate over the interviewer array within the response
             // create various arrays and objects to meet UI Grid data requirements
             uglySchedule.interviewer.forEach(function (item, pos) {

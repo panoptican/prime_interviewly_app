@@ -1,4 +1,6 @@
 app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory', function($scope, $mdDialog, $rootScope, StudentFactory){
+    $scope.selected = [];
+
     var getStudents = function(query){
         $scope.students = StudentFactory.query(query);
     };
@@ -7,11 +9,7 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
         getStudents();
     });
 
-    $scope.filter = {
-        options: {
-            debounce: 1000
-        }
-    };
+    $scope.filter = {options: {debounce: 1000}};
 
     $scope.search = function(query){
         getStudents(query);
@@ -35,9 +33,46 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
         });
     };
 
+    $scope.archiveSelected = function(students){
+        var l = students.length;
+        while(l--){
+            var student = students[l];
+            var i = $scope.selected.indexOf(student);
+            StudentFactory.update({_id: student}, {isArchived: true});
+            $scope.selected.splice(i, 1);
+        }
+        $rootScope.$broadcast('got/students');
+    };
+
     $scope.archive = function(id){
         StudentFactory.update({_id: id}, {isArchived: true});
         $rootScope.$broadcast('got/students');
+    };
+
+    $scope.toggleRow = function(student) {
+        var i = $scope.selected.indexOf(student._id);
+        if(i === -1){
+            $scope.selected.push(student._id);
+            student.selected = true;
+        } else {
+            $scope.selected.splice(i, 1);
+            student.selected = false;
+        }
+    };
+
+    $scope.toggleAll = function() {
+        if($scope.selected.length < $scope.students.length){
+            $scope.selected = [];
+            $scope.students.forEach(function(student){
+                $scope.selected.push(student._id);
+                student.selected = true;
+            })
+        } else {
+            $scope.selected = [];
+            $scope.students.forEach(function(student){
+                student.selected = false;
+            })
+        }
     };
 
     getStudents();

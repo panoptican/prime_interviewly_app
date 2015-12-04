@@ -17,7 +17,9 @@ router.get('/:id?', function(req, res, next) {
     } else {
         if(Object.keys(req.query).length){
             var query = req.query;
-            query.isArchived = false;
+            if(!query.isArchived){
+                query.isArchived = false;
+            }
         } else {
             var query = {isArchived: false};
         }

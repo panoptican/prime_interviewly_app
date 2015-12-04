@@ -94,7 +94,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleCon
         gridCols.push(timeColLabel);
         gridData.push(timeCol);
 
-        $http.get('api/event/getSchedule?_id=' + eventParam).then(function (response) {
+        $http.get('api/getSchedule?_id=' + eventParam).then(function (response) {
 
             // store the schedule ID in case it is saved
             scheduleId = response.data._id;

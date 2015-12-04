@@ -128,6 +128,7 @@ sftp-config.json
 .env
 client/
 resources/slides/
+server/uploads/
 
 ### Code ###
 .settings/

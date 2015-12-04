@@ -4,7 +4,7 @@
             md-data-table-toolbar.eventBg(ng-show="!selected.length")
                 h2.md-title Students
             md-data-table-toolbar.alternate(ng-show="selected.length" layout-align="space-between")
-                h2.md-display {{selected.length}} Students Selected
+                h2.md-title {{selected.length}} Students Selected
                 md-button.md-icon-button(ng-click="addBulkStudents(selected)")
                     md-icon add
             md-data-table-container.eventBg

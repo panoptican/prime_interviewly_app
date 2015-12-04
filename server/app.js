@@ -81,7 +81,7 @@ app.use('/api/event/addBulkStudents', addBulkStudentsToEvent);
 app.use('/api/event/addBulkInterviewers', addBulkInterviewersToEvent);
 app.use('/api/event/removeInterviewer', removeInterviewerFromEvent);
 app.use('/api/event/removeStudent', removeStudentFromEvent);
-app.use('/api/event/getSchedule', getSchedule);
+app.use('/api/getSchedule', getSchedule);
 app.use('/api/interviewer/unavail', interviewerUnavail);
 app.use('/api/event/saveSchedule', saveScheduleToEvent);
 app.use('/api/student/archive', archiveStudent);
