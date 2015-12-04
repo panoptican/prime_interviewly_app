@@ -10,7 +10,7 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
         getStudents();
     });
 
-    $scope.filter = {options: {debounce: 1000}};
+    $scope.filter = {options: {debounce: 500}};
 
     $scope.search = function(query){
         getStudents(query);

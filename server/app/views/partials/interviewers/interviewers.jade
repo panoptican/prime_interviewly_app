@@ -34,6 +34,8 @@ md-content.md-default(ng-controller="interviewers" layout="column")
             table(md-data-table md-row-select="selected" md-progress="deferred")
                 thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
                     tr
+                        th
+                            md-checkbox(aria-label="Select All" ng-click="toggleAll()" ng-model="selectAll")
                         th(name="First Name" order-by="name") First Name
                         th(name="Last Name" order-by="name") Last Name
                         th(name="EMail" order-by="name") Email
@@ -42,6 +44,8 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         th(name="edit") Edit
                 tbody.eventBg
                     tr.eventBg(md-auto-select ng-repeat="interviewer in interviewers")
+                        td
+                            md-checkbox(aria-label="Select Row" ng-click="toggleRow(interviewer)" ng-checked="interviewer.selected")
                         td {{interviewer.fName}}
                         td {{interviewer.lName}}
                         td {{interviewer.email}}

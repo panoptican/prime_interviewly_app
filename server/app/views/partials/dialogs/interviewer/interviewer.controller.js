@@ -2,7 +2,7 @@
 /*
 Interviewer dialog controller
  */
-app.controller('interviewer', ['$scope', '$mdDialog', '$http', '$rootScope', function($scope, $mdDialog, $http, $rootScope){
+app.controller('interviewer', ['$scope', '$mdDialog', '$http', '$rootScope', function($scope, $mdDialog){
     $scope.openInterviewer = function(ev){
         $mdDialog.show({
             controller: 'addInterviewer',
