@@ -18,15 +18,15 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
             md-button.md-icon-button(ng-controller="student" ng-click="openStudents()")
                 md-icon add
                 md-tooltip Add
-            md-button.md-icon-button(ng-controller="uploads" ng-click="openUploads($event)")
+            md-button.md-icon-button(ng-controller="uploads" ng-click="openUploads()")
                 md-icon file_upload
                 md-tooltip Upload
         md-data-table-toolbar.eventBg(layout="row" ng-show="filter.show && !selected.length")
             md-icon search
             form(flex name="filter.form")
                 md-input-container
-                    label cohort
-                    input(type="text" ng-model="query.cohort" ng-model-options="filter.options" ng-change="search(query)")
+                    label search
+                    input(type="text" ng-model="search.$" ng-model-options="{debounce: 500}")
             span(flex="70")
             md-button.md-icon-button(ng-click="removeFilter()")
                 md-icon close
@@ -35,7 +35,7 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
                 thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
                     tr
                         th
-                            md-checkbox(aria-label="Select All" ng-click="toggleAll()" ng-model="selectAll")
+                            md-checkbox(aria-label="Select All" ng-click="toggleAll(students)" ng-model="selectAll")
                         th(name="First Name" order-by="name") First Name
                         th(name="Last Name" order-by="type") Last Name
                         th(name="email" order-by="email") Email
@@ -43,7 +43,7 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
                         th(name="archive") Archive
                         th(name="edit") Edit
                 tbody.eventBg
-                    tr(md-auto-select ng-repeat="student in students")
+                    tr(md-auto-select ng-repeat="student in students | filter:search")
                         td
                             md-checkbox(aria-label="Select Row" ng-click="toggleRow(student)" ng-checked="student.selected")
                         td {{student.fName}}
@@ -51,7 +51,7 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
                         td {{student.email}}
                         td {{student.cohort}}
                         td
-                            md-button.md-icon-button(ng-click="archive(student._id)" aria-label="archive")
+                            md-button.md-icon-button(ng-click="archive(student)" aria-label="archive")
                                 md-icon archive
                         td
                             md-button.md-icon-button(ng-click="editStudent(student._id)" aria-label="edit")

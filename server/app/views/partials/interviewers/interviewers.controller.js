@@ -28,7 +28,7 @@ app.controller('interviewers', ['$scope', '$rootScope', '$mdDialog', '$filter', 
         $scope.filter.show = false;
     };
 
-    // clear filter and cancel and selected items
+    // clear filter and cancel any selected items
     $scope.cancelSelected = function() {
         $scope.selected = [];
         $scope.search.$ = '';
@@ -38,6 +38,7 @@ app.controller('interviewers', ['$scope', '$rootScope', '$mdDialog', '$filter', 
         $scope.selectAll = false;
     };
 
+    // edit interviewer
     $scope.editInterviewer = function(id) {
         $scope.interviewer = InterviewerFactory.get({id: id});
         $mdDialog.show({
@@ -55,6 +56,7 @@ app.controller('interviewers', ['$scope', '$rootScope', '$mdDialog', '$filter', 
         $scope.interviewers.splice(i, 1);
     };
 
+    // toggle a selected interviewer
     $scope.toggleRow = function(interviewer) {
         var i = $scope.selected.indexOf(interviewer);
         if(i === -1){

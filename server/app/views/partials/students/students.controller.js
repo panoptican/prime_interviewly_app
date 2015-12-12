@@ -1,96 +1,112 @@
-app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory', function($scope, $mdDialog, $rootScope, StudentFactory){
+app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory', '$filter', function($scope, $mdDialog, $rootScope, StudentFactory, $filter){
     $scope.selected = [];
     $scope.selectAll = false;
+    $scope.filtered = [];
+    $scope.search = {$: ''};
 
+    //GET all students
     var getStudents = function(query){
         $scope.students = StudentFactory.query(query);
     };
+
+    getStudents();
+
+    // filter students depending on search input
+    $scope.$watch('search.$', function(newValue, oldValue) {
+        if(newValue || oldValue){
+            $scope.filtered = $filter('filter')($scope.students, $scope.search);
+        }
+    });
 
     $rootScope.$on('got/students', function(){
         getStudents();
     });
 
-    $scope.filter = {options: {debounce: 500}};
-
-    $scope.search = function(query){
-        getStudents(query);
-    };
-
+    // clear search field and remove filter toolbar view
     $scope.removeFilter = function () {
+        $scope.search.$ = '';
         $scope.filter.show = false;
-        getStudents();
-    };
-
-    $scope.cancelSelected = function(selected) {
-        var l = selected.length;
-        $scope.selected = [];
-        while(l--){
-            var id = selected[l];
-            $scope.students.forEach(function(student){
-                if(student._id === id){
-                    student.selected = false;
-                }
-            })
-        }
         $scope.selectAll = false;
     };
 
+    // clear filter and cancel any selected items
+    $scope.cancelSelected = function() {
+        $scope.selected = [];
+        $scope.search.$ = '';
+        $scope.students.forEach(function(student){
+            student.selected = false;
+        });
+        $scope.selectAll = false;
+    };
+
+    // edit student
     $scope.editStudent = function(id) {
         $scope.student = StudentFactory.get({id: id});
         $mdDialog.show({
             controller: 'editStudent',
-            locals: {
-                items: $scope.student
-            },
+            locals: {items: $scope.student},
             templateUrl: 'views/partials/dialogs/student/studentEdit.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         });
     };
 
+    // archive a group of students
     $scope.archiveSelected = function(students){
         var l = students.length;
         while(l--){
             var student = students[l];
+            archiveStudent(student);
             var i = $scope.selected.indexOf(student);
-            StudentFactory.update({_id: student}, {isArchived: true});
             $scope.selected.splice(i, 1);
         }
-        $rootScope.$broadcast('got/students');
     };
 
-    $scope.archive = function(id){
-        StudentFactory.update({_id: id}, {isArchived: true});
-        $rootScope.$broadcast('got/students');
+    // archive a single student
+    $scope.archive = function(student){
+        archiveStudent(student);
     };
 
+    // toggle a selected student
     $scope.toggleRow = function(student) {
-        var i = $scope.selected.indexOf(student._id);
+        var i = $scope.selected.indexOf(student);
         if(i === -1){
-            $scope.selected.push(student._id);
+            $scope.selected.push(student);
             student.selected = true;
         } else {
             $scope.selected.splice(i, 1);
             student.selected = false;
         }
+        $scope.selectAll = false;
     };
 
-    $scope.toggleAll = function() {
-        if($scope.selected.length < $scope.students.length){
-            $scope.selected = [];
-            $scope.students.forEach(function(student){
-                $scope.selected.push(student._id);
-                student.selected = true;
-            })
-        } else {
+    // toggle all students
+    $scope.toggleAll = function(students) {
+        if($scope.selected.length == students.length ||
+            $scope.selected.length == $scope.filtered.length &&
+            $scope.filtered.length > 0){
             $scope.selected = [];
             $scope.students.forEach(function(student){
                 student.selected = false;
-            })
+            });
+        } else if ($scope.filtered.length > 0) {
+            $scope.selected = $scope.filtered.slice();
+            $scope.filtered.forEach(function(student){
+                student.selected = true;
+            });
+        } else {
+            $scope.selected = $scope.students.slice();
+            $scope.students.forEach(function(student){
+                student.selected = true;
+            });
         }
     };
 
-    getStudents();
+    function archiveStudent(student){
+        StudentFactory.update({_id: student._id}, {isArchived: true});
+        var i = $scope.students.indexOf(student);
+        $scope.students.splice(i, 1);
+    }
 }]);
 
 app.controller('editStudent', ['$scope', '$mdDialog', 'items', '$rootScope', 'StudentFactory', function($scope, $mdDialog, items, $rootScope, StudentFactory){

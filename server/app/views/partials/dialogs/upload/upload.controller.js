@@ -1,4 +1,3 @@
-
 /*
 Student dialog controller
  */
