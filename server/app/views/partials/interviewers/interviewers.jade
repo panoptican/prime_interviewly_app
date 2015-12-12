@@ -21,12 +21,12 @@ md-content.md-default(ng-controller="interviewers" layout="column")
             md-button.md-icon-button.md-default(ng-controller="uploads" ng-click="openUploads()")
                 md-icon file_upload
                 md-tooltip Upload
-        md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && interviewers.length")
+        md-data-table-toolbar.eventBg(layout="row" layout-align="center center" ng-show="filter.show && !selected.length")
             md-icon search
             form(flex name="filter.form")
                 md-input-container
                     label search
-                    input(type="text" ng-model="query.filter" ng-model-options="filter.options")
+                    input(type="text" ng-model="search.$" ng-model-options="{debounce: 1000}")
             span(flex="70")
             md-button.md-icon-button(ng-click="removeFilter()")
                 md-icon close
@@ -35,7 +35,7 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                 thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
                     tr
                         th
-                            md-checkbox(aria-label="Select All" ng-click="toggleAll()" ng-model="selectAll")
+                            md-checkbox(aria-label="Select All" ng-click="toggleAll(interviewers)" ng-model="selectAll")
                         th(name="First Name" order-by="name") First Name
                         th(name="Last Name" order-by="name") Last Name
                         th(name="EMail" order-by="name") Email
@@ -43,7 +43,7 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         th(name="archive") Archive
                         th(name="edit") Edit
                 tbody.eventBg
-                    tr.eventBg(md-auto-select ng-repeat="interviewer in interviewers")
+                    tr.eventBg(md-auto-select ng-repeat="interviewer in interviewers | filter:search ")
                         td
                             md-checkbox(aria-label="Select Row" ng-click="toggleRow(interviewer)" ng-checked="interviewer.selected")
                         td {{interviewer.fName}}
@@ -51,7 +51,7 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         td {{interviewer.email}}
                         td {{interviewer.company}}
                         td
-                            md-button.md-icon-button(ng-click="archive(interviewer._id)")
+                            md-button.md-icon-button(ng-click="archive(interviewer)")
                                 md-icon archive
                         td
                             md-button.md-icon-button(ng-click="editInterviewer(interviewer._id)")

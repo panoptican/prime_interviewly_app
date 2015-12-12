@@ -1,7 +1,7 @@
 /*
 Archived events controller
  */
-app.controller('archivedEventsCtrl', ['$scope', 'EventFactory', '$filter', '$rootScope', function($scope, EventFactory, $filter, $rootScope) {
+app.controller('archivedEventsCtrl', ['$scope', 'EventFactory', '$rootScope', function($scope, EventFactory, $rootScope) {
 
     var archived = function(){
         $scope.tiles = EventFactory.query({isArchived: true});

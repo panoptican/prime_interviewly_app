@@ -3,17 +3,27 @@ var router = express.Router();
 var Interviewer = require('../../db/interviewer');
 
 /* GET interviewers */
-router.get('/', function(req, res, next) {
-    var query = req.query || {};
-    query.isArchived = false;
-    Interviewer.findMany(query, function(err, data){
-        if(err){
-            console.log(err);
-            next(err);
-        } else {
-            res.json(data);
-        }
-    })
+router.get('/:id?', function(req, res, next) {
+    if(req.params.id){
+        Interviewer.find({_id: req.params.id}, null, function(err, doc){
+            if(err){
+                console.log(err);
+            } else {
+                res.json(doc);
+            }
+        })
+    } else {
+        var query = req.query || {};
+        query.isArchived = false;
+        Interviewer.findMany(query, function(err, data){
+            if(err){
+                console.log(err);
+                next(err);
+            } else {
+                res.json(data);
+            }
+        })
+    }
 });
 
 /* GET archived interviewers */
@@ -63,9 +73,9 @@ router.delete('/', function(req, res, next){
 });
 
 /* PUT update interviewer */
-router.put('/', function(req, res, next){
-    if(Object.keys(req.query).length > 0){
-        Interviewer.update(req.query, req.body, function(err, data){
+router.put('/:id?', function(req, res, next){
+    if(req.params.id){
+        Interviewer.update({_id: req.params.id}, req.body, function(err, data){
             if(err){
                 console.log(err);
                 next(err);

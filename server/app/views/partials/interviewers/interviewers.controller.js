@@ -1,95 +1,101 @@
-app.controller('interviewers', ['$scope', '$http', '$rootScope', '$mdDialog', function($scope, $http, $rootScope, $mdDialog){
+app.controller('interviewers', ['$scope', '$rootScope', '$mdDialog', '$filter', 'InterviewerFactory', function($scope, $rootScope, $mdDialog, $filter, InterviewerFactory){
     $scope.selected = [];
     $scope.selectAll = false;
+    $scope.filtered = [];
+    $scope.search = {$: ''};
 
+    //GET all interviewers
     var getInterviewers = function(){
-        $http.get('/api/interviewer').then(function(response){
-            $scope.interviewers = response.data
-        });
+        $scope.interviewers = InterviewerFactory.query();
     };
 
-    $rootScope.$on('got/interviewers', function(){
-        getInterviewers();
+    getInterviewers();
+
+    //filter interviewers depending on search input
+    $scope.$watch('search.$', function(newValue, oldValue) {
+        if(newValue || oldValue){
+            $scope.filtered = $filter('filter')($scope.interviewers, $scope.search);
+        }
     });
 
-    $scope.filter = {options: {debounce: 500}};
+    //$rootScope.$on('got/interviewers', function(){
+    //    getInterviewers();
+    //});
 
+    // clear search box and remove filter toolbar view
     $scope.removeFilter = function () {
+        $scope.search.$ = '';
         $scope.filter.show = false;
-        getInterviewers();
     };
 
-    $scope.cancelSelected = function(selected) {
-        var l = selected.length;
+    // clear filter and cancel and selected items
+    $scope.cancelSelected = function() {
         $scope.selected = [];
-        while(l--){
-            var id = selected[l];
-            $scope.interviewers.forEach(function(interviewer){
-                if(interviewer._id === id){
-                    interviewer.selected = false;
-                }
-            })
-        }
+        $scope.search.$ = '';
+        $scope.interviewers.forEach(function(interviewer){
+            interviewer.selected = false;
+        });
         $scope.selectAll = false;
     };
 
     $scope.editInterviewer = function(id) {
-        $http.get('/api/interviewer?_id=' + id).then(function (response) {
-            $scope.interviewer = response.data[0];
-            $mdDialog.show({
-                controller: 'editInterviewer',
-                locals: {items: $scope.interviewer},
-                templateUrl: 'views/partials/dialogs/interviewer/interviewerEdit.html',
-                parent: angular.element(document.body),
-                clickOutsideToClose: true
-            })
-        })
+        $scope.interviewer = InterviewerFactory.get({id: id});
+        $mdDialog.show({
+            controller: 'editInterviewer',
+            locals: {items: $scope.interviewer},
+            templateUrl: 'views/partials/dialogs/interviewer/interviewerEdit.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        });
     };
 
-    $scope.archive = function(id){
-        $http.post('api/interviewer/archive?_id='+id, {isArchived: true}).then(function(response){
-            $rootScope.$broadcast('got/interviewers');
-        })
+    $scope.archive = function(interviewer){
+        InterviewerFactory.update({id: interviewer._id}, {isArchived: true});
+        var i = $scope.interviewers.indexOf(interviewer);
+        $scope.interviewers.splice(i, 1);
     };
 
     $scope.toggleRow = function(interviewer) {
-        var i = $scope.selected.indexOf(interviewer._id);
+        var i = $scope.selected.indexOf(interviewer);
         if(i === -1){
-            $scope.selected.push(interviewer._id);
+            $scope.selected.push(interviewer);
             interviewer.selected = true;
         } else {
             $scope.selected.splice(i, 1);
             interviewer.selected = false;
         }
+        $scope.selectAll = false;
     };
 
-    $scope.toggleAll = function() {
-        if($scope.selected.length < $scope.interviewers.length){
-            $scope.selected = [];
-            $scope.interviewers.forEach(function(interviewer){
-                $scope.selected.push(interviewer._id);
+    $scope.toggleAll = function(interviewers) {
+        if($scope.selected.length == interviewers.length ||
+            $scope.selected.length == $scope.filtered.length &&
+            $scope.filtered.length > 0){
+                $scope.selected = [];
+                $scope.interviewers.forEach(function(interviewer){
+                    interviewer.selected = false;
+                });
+        } else if ($scope.filtered.length > 0) {
+            $scope.selected = $scope.filtered.slice();
+            $scope.filtered.forEach(function(interviewer){
                 interviewer.selected = true;
-            })
+            });
         } else {
-            $scope.selected = [];
+            $scope.selected = $scope.interviewers.slice();
             $scope.interviewers.forEach(function(interviewer){
-                interviewer.selected = false;
-            })
+                interviewer.selected = true;
+            });
         }
     };
-
-    getInterviewers();
 }]);
 
-app.controller('editInterviewer', ['$scope', '$mdDialog', 'items', '$http', '$rootScope', function($scope, $mdDialog, items, $http, $rootScope){
+app.controller('editInterviewer', ['$scope', '$mdDialog', 'items', 'InterviewerFactory', '$rootScope', function($scope, $mdDialog, items, InterviewerFactory, $rootScope){
  $scope.interviewer = items;
 
  $scope.edit = function(interviewer){
-  $http.put('api/interviewer?_id=' + interviewer._id, interviewer)
-      .then(function(response){
-       $rootScope.$broadcast('got/interviewers');
-       $mdDialog.hide();
-      });
+     InterviewerFactory.update({id: interviewer._id}, interviewer);
+     $rootScope.$broadcast('got/interviewers');
+     $mdDialog.hide();
  };
 
  $scope.close = function(){
