@@ -18,9 +18,9 @@ app.controller('interviewers', ['$scope', '$rootScope', '$mdDialog', '$filter', 
         }
     });
 
-    //$rootScope.$on('got/interviewers', function(){
-    //    getInterviewers();
-    //});
+    $rootScope.$on('got/interviewers', function(){
+        getInterviewers();
+    });
 
     // clear search box and remove filter toolbar view
     $scope.removeFilter = function () {
