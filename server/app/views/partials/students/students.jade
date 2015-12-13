@@ -31,21 +31,17 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
             md-button.md-icon-button(ng-click="removeFilter()")
                 md-icon close
         md-data-table-container.eventBg
-            table.md-primary.eventBg(md-data-table md-row-select="selected" md-progress="deferred")
-                thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
+            table.md-primary.eventBg(md-data-table md-row-select="selected")
+                thead.eventBg(md-order="order")
                     tr
-                        th
-                            md-checkbox(aria-label="Select All" ng-click="toggleAll(students)" ng-model="selectAll")
-                        th(name="First Name" order-by="name") First Name
-                        th(name="Last Name" order-by="type") Last Name
-                        th(name="email" order-by="email") Email
-                        th(name="cohort" order-by="cohort") Cohort
-                        th(name="archive") Archive
-                        th(name="edit") Edit
+                        th(order-by="fName" name="First Name")
+                        th(order-by="lName" name="Last Name")
+                        th(order-by="email" name="Email")
+                        th(order-by="cohort" name="Cohort")
+                        th(name="Archive")
+                        th(name="Edit")
                 tbody.eventBg
-                    tr(md-auto-select ng-repeat="student in students | filter:search")
-                        td
-                            md-checkbox(aria-label="Select Row" ng-click="toggleRow(student)" ng-checked="student.selected")
+                    tr(md-auto-select ng-repeat="student in students | filter:search | orderBy:order")
                         td {{student.fName}}
                         td {{student.lName}}
                         td {{student.email}}

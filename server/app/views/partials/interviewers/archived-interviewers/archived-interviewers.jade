@@ -2,36 +2,26 @@
    .interviewersheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
       md-subheader(class="md-primary")
          h1.md-display-1 Archived Interviewers
-
-      .searchsheader(layout="row" layout-align="start center" layout-margin="auto" flex="auto")
-         //md-content(layout-margin="auto")
-         //   md-input-container
-         //      label Search Archived Interviewers
-         //      input(ng-model="search" type="text")
-         //.searchbut(layout="row" layout-align="center center")
-         //   md-button.md-raised(ng-click="submit()") Go
-         //      span(flex)
    span(flex="5")
    md-content
       md-card(ng-show="interviewers.length")
          md-data-table-toolbar
             h2(class="md-title") Interviewers
          md-data-table-container
-            table(md-data-table md-row-select="selected" md-progress="deferred")
-               thead(md-order="query.order" md-trigger="onOrderChange")
+            table(md-data-table md-row-select="selected")
+               thead(md-order="order")
                   tr
-                     th(name="First Name" order-by="name") First Name
-                     th(name="Last Name" order-by="name") Last Name
-                     th(name="company" order-by="name") Company
-                     th(name="title" order-by="name") Title
-                     th(name="unarchive") Unarchive
+                     th(name="First Name" order-by="fName")
+                     th(name="Last Name" order-by="lName")
+                     th(name="Email" order-by="email")
+                     th(name="Company" order-by="company")
+                     th(name="Unarchive")
                tbody
-                  tr(md-auto-select ng-repeat="interviewer in interviewers")
+                  tr(md-auto-select ng-repeat="interviewer in interviewers | orderBy: order")
                      td {{interviewer.fName}}
                      td {{interviewer.lName}}
+                     td {{interviewer.email}}
                      td {{interviewer.company}}
-                     td {{interviewer.title}}
                      td
                         md-button.md-icon-button(ng-click="unarchive(interviewer._id)")
                            md-icon.material-icons.md-dark archive
-                           .md-ripple-container

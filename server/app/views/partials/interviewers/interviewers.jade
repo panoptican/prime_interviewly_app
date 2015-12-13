@@ -31,21 +31,17 @@ md-content.md-default(ng-controller="interviewers" layout="column")
             md-button.md-icon-button(ng-click="removeFilter()")
                 md-icon close
         md-data-table-container.eventBg
-            table(md-data-table md-row-select="selected" md-progress="deferred")
-                thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
+            table(md-data-table md-row-select="selected")
+                thead.eventBg(md-order="order")
                     tr
-                        th
-                            md-checkbox(aria-label="Select All" ng-click="toggleAll(interviewers)" ng-model="selectAll")
-                        th(name="First Name" order-by="name") First Name
-                        th(name="Last Name" order-by="name") Last Name
-                        th(name="EMail" order-by="name") Email
-                        th(name="company" order-by="name") Company
-                        th(name="archive") Archive
-                        th(name="edit") Edit
+                        th(name="First Name" order-by="fName")
+                        th(name="Last Name" order-by="lName")
+                        th(name="Email" order-by="email")
+                        th(name="Company" order-by="company")
+                        th(name="archive")
+                        th(name="edit")
                 tbody.eventBg
-                    tr.eventBg(md-auto-select ng-repeat="interviewer in interviewers | filter:search ")
-                        td
-                            md-checkbox(aria-label="Select Row" ng-click="toggleRow(interviewer)" ng-checked="interviewer.selected")
+                    tr.eventBg(md-auto-select ng-repeat="interviewer in interviewers | filter:search | orderBy: order")
                         td {{interviewer.fName}}
                         td {{interviewer.lName}}
                         td {{interviewer.email}}

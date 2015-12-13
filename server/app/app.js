@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter', 'ui.grid.pinning', 'ngFileUpload', 'ngResource']);
+var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.exporter', 'ui.grid.pinning', 'ngFileUpload', 'ngResource', 'md.data.table']);
 
 /*
  Angular configuration
