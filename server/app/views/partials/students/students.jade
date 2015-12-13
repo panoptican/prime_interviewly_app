@@ -1,7 +1,7 @@
 md-content.md-default.eventBg(ng-controller="students" layout="column")
     md-card.md-whiteframe-5dp
-        md-data-table-toolbar.eventBg(ng-show="selected.length" layout-align="space-between")
-            h2.md-title {{selected.length}} Students Selected
+        md-data-table-toolbar.eventBg.alternate(ng-show="selected.length" layout-align="space-between")
+            h2.md-title {{selected.length}} {{selected.length > 1 ? 'students' : 'student'}} selected
             div(flex)
             md-button.md-icon-button(ng-click="archiveSelected(selected)")
                 md-icon archive
@@ -26,13 +26,13 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
             form(flex name="filter.form")
                 md-input-container
                     label search
-                    input(type="text" ng-model="search.$" ng-model-options="{debounce: 500}")
+                    input(type="text" ng-model="query.filter.$" ng-model-options="{debounce: 500}")
             span(flex="70")
             md-button.md-icon-button(ng-click="removeFilter()")
                 md-icon close
         md-data-table-container.eventBg
             table.md-primary.eventBg(md-data-table md-row-select="selected")
-                thead.eventBg(md-order="order")
+                thead.eventBg(md-order="query.order")
                     tr
                         th(order-by="fName" name="First Name")
                         th(order-by="lName" name="Last Name")
@@ -41,7 +41,7 @@ md-content.md-default.eventBg(ng-controller="students" layout="column")
                         th(name="Archive")
                         th(name="Edit")
                 tbody.eventBg
-                    tr(md-auto-select ng-repeat="student in students | filter:search | orderBy:order")
+                    tr(md-auto-select ng-repeat="student in filtered | orderBy: query.order")
                         td {{student.fName}}
                         td {{student.lName}}
                         td {{student.email}}

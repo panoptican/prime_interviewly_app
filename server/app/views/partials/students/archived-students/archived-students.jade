@@ -13,11 +13,11 @@
             table(md-data-table md-row-select="selected" md-progress="deferred")
                thead(md-order="query.order" md-trigger="onOrderChange")
                   tr
-                     th(name="First Name" order-by="name") First Name
-                     th(name="Last Name" order-by="name") Last Name
-                     th(name="email" order-by="name") Email
-                     th(name="cohort" order-by="name") Cohort
-                     th(name="unarchive") Unarchive
+                     th(name="First Name" order-by="name")
+                     th(name="Last Name" order-by="name")
+                     th(name="email" order-by="name")
+                     th(name="cohort" order-by="name")
+                     th(name="unarchive")
                tbody
                   tr(md-auto-select ng-repeat="student in students")
                      td {{student.fName}}

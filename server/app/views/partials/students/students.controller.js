@@ -1,20 +1,26 @@
 app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory', '$filter', function($scope, $mdDialog, $rootScope, StudentFactory, $filter){
+    'use strict';
     $scope.selected = [];
+    $scope.query = {
+        filter: '',
+        order: 'fName'
+    };
     $scope.selectAll = false;
     $scope.filtered = [];
-    $scope.search = {$: ''};
 
     //GET all students
     var getStudents = function(query){
-        $scope.students = StudentFactory.query(query);
+        $scope.students = StudentFactory.query(query, function(response){
+            $scope.filtered = $scope.students.slice();
+        });
     };
 
     getStudents();
 
     // filter students depending on search input
-    $scope.$watch('search.$', function(newValue, oldValue) {
+    $scope.$watch('query.filter.$', function(newValue, oldValue) {
         if(newValue || oldValue){
-            $scope.filtered = $filter('filter')($scope.students, $scope.search);
+            $scope.filtered = $filter('filter')($scope.students, $scope.query.filter);
         }
     });
 
@@ -24,7 +30,7 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
 
     // clear search field and remove filter toolbar view
     $scope.removeFilter = function () {
-        $scope.search.$ = '';
+        $scope.query.filter = '';
         $scope.filter.show = false;
         $scope.selectAll = false;
     };
@@ -32,7 +38,7 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
     // clear filter and cancel any selected items
     $scope.cancelSelected = function() {
         $scope.selected = [];
-        $scope.search.$ = '';
+        $scope.query.filter = '';
         $scope.students.forEach(function(student){
             student.selected = false;
         });
@@ -60,6 +66,7 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
             var i = $scope.selected.indexOf(student);
             $scope.selected.splice(i, 1);
         }
+        $scope.removeFilter();
     };
 
     // archive a single student
@@ -67,45 +74,12 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
         archiveStudent(student);
     };
 
-    // toggle a selected student
-    $scope.toggleRow = function(student) {
-        var i = $scope.selected.indexOf(student);
-        if(i === -1){
-            $scope.selected.push(student);
-            student.selected = true;
-        } else {
-            $scope.selected.splice(i, 1);
-            student.selected = false;
-        }
-        $scope.selectAll = false;
-    };
-
-    // toggle all students
-    $scope.toggleAll = function(students) {
-        if($scope.selected.length == students.length ||
-            $scope.selected.length == $scope.filtered.length &&
-            $scope.filtered.length > 0){
-            $scope.selected = [];
-            $scope.students.forEach(function(student){
-                student.selected = false;
-            });
-        } else if ($scope.filtered.length > 0) {
-            $scope.selected = $scope.filtered.slice();
-            $scope.filtered.forEach(function(student){
-                student.selected = true;
-            });
-        } else {
-            $scope.selected = $scope.students.slice();
-            $scope.students.forEach(function(student){
-                student.selected = true;
-            });
-        }
-    };
-
     function archiveStudent(student){
         StudentFactory.update({_id: student._id}, {isArchived: true});
-        var i = $scope.students.indexOf(student);
-        $scope.students.splice(i, 1);
+        var i = $scope.filtered.indexOf(student);
+        var j = $scope.students.indexOf(student);
+        $scope.students.splice(j, 1);
+        $scope.filtered.splice(i, 1);
     }
 }]);
 
