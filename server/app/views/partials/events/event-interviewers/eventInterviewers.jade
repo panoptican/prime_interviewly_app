@@ -8,21 +8,21 @@
                     md-icon add
                         md-tooltip Add Interviewers
             md-data-table-container.eventBg
-                table(md-data-table md-row-select="selected" md-progress="deferred")
-                    thead.eventBg(md-order="query.order" md-trigger="onOrderChange")
+                table(md-data-table md-row-select="selected")
+                    thead.eventBg(md-order="order")
                         tr.eventBg
-                            th(name="First Name" order-by="name") First Name
-                            th(name="Last Name" order-by="name") Last Name
-                            th(name="company" order-by="name") Company
-                            th(name="title" order-by="name") Title
-                            th(name="remove" order-by="name") Remove From Event
-                            th(name="availability" order-by="availability") Availability
+                            th(name="First Name" order-by="fName")
+                            th(name="Last Name" order-by="lName")
+                            th(name="Email" order-by="email")
+                            th(name="Company" order-by="company")
+                            th(name="Remove")
+                            th(name="Availability")
                     tbody.eventBg
-                        tr(md-auto-select ng-repeat="interviewer in interviewers")
+                        tr(md-auto-select ng-repeat="interviewer in interviewers | orderBy: order")
                             td {{interviewer.fName}}
                             td {{interviewer.lName}}
+                            td {{interviewer.email}}
                             td {{interviewer.company}}
-                            td {{interviewer.title}}
                             td
                                 md-button.md-icon-button(ng-click="remove(interviewer._id)")
                                     md-icon remove

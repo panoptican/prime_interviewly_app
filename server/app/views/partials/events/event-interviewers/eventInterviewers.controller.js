@@ -1,6 +1,7 @@
 app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDialog', '$rootScope', function($scope, $http, $routeParams, $mdDialog, $rootScope){
     var eventParam = $routeParams._id;
     $scope.eventId = eventParam;
+    $scope.selected = [];
 
     var getEventInterviewers = function(){
         $http.get('/api/event?_id=' + eventParam).then(function (response) {
