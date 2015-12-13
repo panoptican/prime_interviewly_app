@@ -2,7 +2,7 @@ app.controller('archStudents', ['$scope', 'StudentFactory', function($scope, Stu
     $scope.students = StudentFactory.query({isArchived: true});
 
     $scope.unarchive = function(id){
-        StudentFactory.update({_id: id}, {isArchived: false}, function(response){
+        StudentFactory.update({id: id}, {isArchived: false}, function(response){
             $scope.students = StudentFactory.query({isArchived: true});
         });
     }

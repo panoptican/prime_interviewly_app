@@ -1,11 +1,9 @@
-app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory', '$filter', function($scope, $mdDialog, $rootScope, StudentFactory, $filter){
-    'use strict';
+app.controller('students', ['$scope', '$mdDialog', '$mdToast', '$rootScope', 'StudentFactory', '$filter', function($scope, $mdDialog, $mdToast, $rootScope, StudentFactory, $filter){
     $scope.selected = [];
     $scope.query = {
         filter: '',
         order: 'fName'
     };
-    $scope.selectAll = false;
     $scope.filtered = [];
 
     //GET all students
@@ -32,17 +30,12 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
     $scope.removeFilter = function () {
         $scope.query.filter = '';
         $scope.filter.show = false;
-        $scope.selectAll = false;
     };
 
     // clear filter and cancel any selected items
     $scope.cancelSelected = function() {
         $scope.selected = [];
         $scope.query.filter = '';
-        $scope.students.forEach(function(student){
-            student.selected = false;
-        });
-        $scope.selectAll = false;
     };
 
     // edit student
@@ -60,6 +53,7 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
     // archive a group of students
     $scope.archiveSelected = function(students){
         var l = students.length;
+        $mdToast.showSimple('Archived ' + l + ' students.');
         while(l--){
             var student = students[l];
             archiveStudent(student);
@@ -72,10 +66,11 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
     // archive a single student
     $scope.archive = function(student){
         archiveStudent(student);
+        $mdToast.showSimple('Archived ' + student.fName + ' ' + student.lName + '.');
     };
 
     function archiveStudent(student){
-        StudentFactory.update({_id: student._id}, {isArchived: true});
+        StudentFactory.update({id: student._id}, {isArchived: true});
         var i = $scope.filtered.indexOf(student);
         var j = $scope.students.indexOf(student);
         $scope.students.splice(j, 1);
@@ -83,11 +78,12 @@ app.controller('students', ['$scope', '$mdDialog', '$rootScope', 'StudentFactory
     }
 }]);
 
-app.controller('editStudent', ['$scope', '$mdDialog', 'items', '$rootScope', 'StudentFactory', function($scope, $mdDialog, items, $rootScope, StudentFactory){
+app.controller('editStudent', ['$scope', '$mdDialog', '$mdToast', 'items', '$rootScope', 'StudentFactory', function($scope, $mdDialog, $mdToast, items, $rootScope, StudentFactory){
     $scope.student = items;
 
     $scope.edit = function(student){
-        StudentFactory.update({_id: student._id}, student);
+        StudentFactory.update({id: student._id}, student);
+        $mdToast.showSimple('Edited ' + student.fName + ' ' + student.lName + '.');
         $rootScope.$broadcast('got/students');
         $mdDialog.hide();
     };

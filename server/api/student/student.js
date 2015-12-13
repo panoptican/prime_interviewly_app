@@ -81,14 +81,14 @@ router.delete('/', function(req, res, next){
 });
 
 /* PUT update student */
-router.put('/', function(req, res, next){
-    if(Object.keys(req.query).length > 0){
-        Student.update(req.query, req.body, function(err, data){
+router.put('/:id?', function(req, res, next){
+    if(req.params.id){
+        Student.update({_id: req.params.id}, req.body, function(err, data){
             if(err){
                 console.log(err);
                 next(err);
             } else {
-                res.send('Updated student ' + data._id);
+                res.json(data);
             }
         })
     }else{

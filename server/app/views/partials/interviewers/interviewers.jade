@@ -1,7 +1,7 @@
-md-content.md-default(ng-controller="interviewers" layout="column")
+md-content.md-default.eventBg(ng-controller="interviewers" layout="column")
     md-card.md-whiteframe-5dp
         md-data-table-toolbar.eventBg(ng-show="selected.length" layout-align="space-between")
-            h2.md-title {{selected.length}} Interviewers Selected
+            h2.md-title {{selected.length}} {{selected.length > 1 ? 'interviewers' : 'interviewer'}} selected
             div(flex)
             md-button.md-icon-button(ng-click="archiveSelected(selected)")
                 md-icon archive
@@ -26,13 +26,13 @@ md-content.md-default(ng-controller="interviewers" layout="column")
             form(flex name="filter.form")
                 md-input-container
                     label search
-                    input(type="text" ng-model="search.$" ng-model-options="{debounce: 500}")
+                    input(type="text" ng-model="query.filter.$" ng-model-options="{debounce: 500}")
             span(flex="70")
             md-button.md-icon-button(ng-click="removeFilter()")
                 md-icon close
         md-data-table-container.eventBg
-            table(md-data-table md-row-select="selected")
-                thead.eventBg(md-order="order")
+            table.md-primary.eventBg(md-data-table md-row-select="selected")
+                thead.eventBg(md-order="query.order")
                     tr
                         th(name="First Name" order-by="fName")
                         th(name="Last Name" order-by="lName")
@@ -41,7 +41,7 @@ md-content.md-default(ng-controller="interviewers" layout="column")
                         th(name="archive")
                         th(name="edit")
                 tbody.eventBg
-                    tr.eventBg(md-auto-select ng-repeat="interviewer in interviewers | filter:search | orderBy: order")
+                    tr.eventBg(md-auto-select ng-repeat="interviewer in filtered | orderBy: query.order")
                         td {{interviewer.fName}}
                         td {{interviewer.lName}}
                         td {{interviewer.email}}
