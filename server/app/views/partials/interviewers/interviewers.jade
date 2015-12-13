@@ -1,6 +1,6 @@
 md-content.md-default.eventBg(ng-controller="interviewers" layout="column")
     md-card.md-whiteframe-5dp
-        md-data-table-toolbar.eventBg(ng-show="selected.length" layout-align="space-between")
+        md-data-table-toolbar.alternate.eventBg(ng-show="selected.length" layout-align="space-between")
             h2.md-title {{selected.length}} {{selected.length > 1 ? 'interviewers' : 'interviewer'}} selected
             div(flex)
             md-button.md-icon-button(ng-click="archiveSelected(selected)")
@@ -38,8 +38,8 @@ md-content.md-default.eventBg(ng-controller="interviewers" layout="column")
                         th(name="Last Name" order-by="lName")
                         th(name="Email" order-by="email")
                         th(name="Company" order-by="company")
-                        th(name="archive")
-                        th(name="edit")
+                        th(name="Archive")
+                        th(name="Edit")
                 tbody.eventBg
                     tr.eventBg(md-auto-select ng-repeat="interviewer in filtered | orderBy: query.order")
                         td {{interviewer.fName}}
