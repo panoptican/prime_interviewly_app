@@ -8,6 +8,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var expressJwt = require('express-jwt');
+var config = require('../config.json');
 
 // MongoDB connection
 var mongoose = require('mongoose');
@@ -70,6 +72,7 @@ app.use('/reset', reset);
 app.use('/change', change);
 
 // use APIs
+app.use('/api/*', expressJwt({secret: config.SECRET}));
 app.use('/api/interviewer', interviewer);
 app.use('/api/student', student);
 app.use('/api/event', event);
@@ -96,6 +99,13 @@ app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
+});
+
+// error handling for unauthorized API requests
+app.use(function(err, req, res, next) {
+  if(err.name === 'UnauthorizedError') {
+    res.status(401).send('invalid token');
+  }
 });
 
 // development error handler

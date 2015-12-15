@@ -46,7 +46,11 @@ gulp.task('copy-libraries', function() {
 
 // Copies and uglifies app.js and all associated controllers from server to client
 gulp.task('build-app', function() {
-    return gulp.src(['./server/app/app.js', './server/app/factories/**/*.js', './server/app/views/partials/**/*.js', './server/app/views/partials/dialogs/**/*.js'])
+    return gulp.src(['./server/app/app.js',
+        './server/app/factories/**/*.js',
+        './server/app/services/**/*.js',
+        './server/app/views/partials/**/*.js',
+        './server/app/views/partials/dialogs/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('app.min.js'))
         .pipe(uglify())

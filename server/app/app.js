@@ -3,7 +3,7 @@ var app = angular.module('app', ['ngMaterial', 'ngRoute', 'ngMessages', 'ui.grid
 /*
  Angular configuration
  */
-app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function($routeProvider, $locationProvider, $mdThemingProvider){
+app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', '$httpProvider', function($routeProvider, $locationProvider, $mdThemingProvider, $httpProvider){
 
     // Color palette
     $mdThemingProvider.theme('default')
@@ -78,32 +78,27 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', functio
         }).
         otherwise({
             redirectTo: '/'
-    })
+    });
+
+    $httpProvider.interceptors.push('authInterceptor');
 }]);
 
 /*
 Toolbar controller
  */
-app.controller('toolbar', ['$rootScope','$location','$scope', '$window', function($rootScope, $location, $scope, $window){
+app.controller('toolbar', ['$location','$scope', 'authService', function($location, $scope, authService){
     $scope.paths = true;
-    $rootScope.$on('logged In', function(){
-        if($window.sessionStorage.token == undefined){
-            $scope.paths = true;
-        }else{
-            $scope.paths = false;
-            $scope.user = {
-                username: $window.sessionStorage.username.replace(/^"(.*)"$/, '$1')
-            };
-        }
+    $scope.user = authService.getUser();
+
+    authService.observeUser().then(null, null, function(user){
+        $scope.user = user;
+        $scope.paths = false;
     });
-    $scope.goHome = function(){
+
+    $scope.logout = function () {
+        authService.logout();
         $location.path('/');
     };
-    $scope.loggedEvent = function(){
-        if($window.sessionStorage.token != undefined){
-            $location.path('/events')
-        }
-    }
 }]);
 
 /*
@@ -151,4 +146,4 @@ angular.module('app')
                 })
             }
         }
-    })
+    });

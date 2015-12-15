@@ -1,24 +1,23 @@
-
 /*
  Login controller
   */
-app.controller('login', ['$rootScope','$scope', '$http', '$location', '$mdToast', function($rootScope, $scope, $http, $location, $mdToast){
-    $scope.submit = function(username, password){
-        $http.post('/authenticate', {username: username, password: password}).then(function(response){
-                if(response.data.token){
-                    sessionStorage.username = angular.toJson(response.data.user.username);
-                    sessionStorage.email = angular.toJson(response.data.user.email);
-                    sessionStorage.token = angular.toJson(response.data.token);
+app.controller('login', ['$scope', '$http', '$location', '$mdToast', 'authService', function($scope, $http, $location, $mdToast, authService){
+    $scope.submit = function(user) {
+        $http.post('/authenticate', user)
+            .then(function(response){
+                    //save json web token in session storage
+                    authService.saveToken(response.data);
+
+                    // redirect to events page
                     $location.path('/events');
-                    $rootScope.$broadcast('logged In')
-                }else{
-                    $mdToast.showSimple(response.data.error)
-                }
 
-            }
-
-        )
+            }, function(response) {
+                    // wipe out the stored token
+                    authService.logout();
+                    $mdToast.showSimple(response.data);
+            })
     };
+
     $scope.forgot = function(){
         $location.path('/forgot');
     }

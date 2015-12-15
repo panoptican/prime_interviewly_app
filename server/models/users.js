@@ -2,11 +2,10 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt'),
     jsonwebtoken = require('jsonwebtoken'),
+    config = require('../../config.json');
     SALT_WORK_FACTOR = 12,
     MAX_LOGIN_ATTEMPTS = 5,
     LOCK_TIME = 1200000;
-
-
 
 var User = new Schema({
     username:{type: String, required: true, index: {unique: true}},
@@ -63,11 +62,16 @@ User.statics.getAuthenticated = function (user, callback) {
                 // check if the password was a match
                 if (isMatch) {
 
+                    var user = {
+                        username: doc.username,
+                        _id: doc._id
+                    };
+
                     // return the jwt
-                    var token = jsonwebtoken.sign(doc, 'taylorisawesome', {
+                    var token = jsonwebtoken.sign(user, config.SECRET, {
                         expiresIn: 86400 // expires in 24 hours
                     });
-                    return callback(null, token, doc);
+                    return callback(null, token, user);
                 }
                 else {
                     return callback(new Error('Invalid username or password.'), null);
