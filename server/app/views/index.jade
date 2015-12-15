@@ -9,7 +9,6 @@ block content
         md-button.md-primary.md-raised.md-hue-1(href="/new-event" ng-hide="paths") Create New Event
         span(flex)
         .menu(layout-align="center center")
-            md-button(ng-hide="!paths") Login
             md-menu(cascade="true" direction="'down'" ng-hide="paths" md-offset="60,0")
                 md-button(ng-click="$mdOpenMenu($event)") WELCOME {{user.username}}!
                     md-icon.i.material-icons(layout-margin) menu

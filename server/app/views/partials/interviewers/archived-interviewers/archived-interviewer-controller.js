@@ -1,14 +1,18 @@
-app.controller('ArchInterviewers', ['$scope', '$http', function($scope, $http){
+app.controller('ArchInterviewers', ['$scope', 'InterviewerFactory', function($scope, InterviewerFactory){
+    $scope.selected = [];
+    $scope.interviewers = InterviewerFactory.query({isArchived: true});
 
-    $http.get('api/interviewer/archived').then(function(response){
-        $scope.interviewers = response.data;
-    });
+    $scope.cancelSelected = function() {
+        $scope.selected = [];
+    };
 
     $scope.unarchive = function(id){
-        $http.post('api/interviewer/archive?_id='+id, {isArchived: false}).then(function(response){
-            $http.get('api/interviewer/archived').then(function(response){
-                $scope.interviewers = response.data;
-            });
-        })
+        unarchive(interviewer);
+    };
+
+    function unarchive(interviewer){
+        StudentFactory.update({id: interviewer._id}, {isArchived: false});
+        var i = $scope.interviewers.indexOf(interviewer);
+        $scope.interviewers.splice(i, 1);
     }
 }]);

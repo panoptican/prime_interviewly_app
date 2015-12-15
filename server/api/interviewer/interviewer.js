@@ -13,8 +13,12 @@ router.get('/:id?', function(req, res, next) {
             }
         })
     } else {
-        var query = req.query || {};
-        query.isArchived = false;
+        if(!req.query){
+            var query = {};
+            query.isArchived = false;
+        } else {
+            var query = req.query;
+        }
         Interviewer.findMany(query, function(err, data){
             if(err){
                 console.log(err);
@@ -26,19 +30,6 @@ router.get('/:id?', function(req, res, next) {
     }
 });
 
-/* GET archived interviewers */
-router.get('/archived', function(req, res, next){
-    var query = req.query || {};
-    query.isArchived = true;
-    Interviewer.findMany(query, function(err, data){
-        if(err){
-            console.log(err);
-            next(err);
-        } else {
-            res.json(data);
-        }
-    })
-});
 
 /* POST add new interviewer */
 router.post('/', function(req, res, next){

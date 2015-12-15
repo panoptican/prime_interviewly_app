@@ -34,20 +34,6 @@ router.get('/:id?', function(req, res, next) {
     }
 });
 
-/* GET ARCHIVED students */
-router.get('/archived', function(req, res, next){
-    var query = req.query || {};
-    query.isArchived = true;
-    Student.find(query, function(err, data){
-        if(err){
-            console.log(err);
-            next(err);
-        } else {
-            res.json(data);
-        }
-    })
-});
-
 /* POST add new student */
 router.post('/', function(req, res, next){
     if(Object.keys(req.body).length > 0){
