@@ -9,7 +9,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressJwt = require('express-jwt');
-var config = require('../config.json');
+//var config = require('../config.json');
 
 // MongoDB connection
 var mongoose = require('mongoose');
@@ -72,7 +72,7 @@ app.use('/forgot', forgot);
 app.use('/reset', reset);
 
 // use APIs
-app.use('/api/*', expressJwt({secret: config.SECRET}));
+app.use('/api/*', expressJwt({secret: process.env.SECRET}));
 app.use('/api/profile', profile);
 app.use('/api/interviewer', interviewer);
 app.use('/api/student', student);
