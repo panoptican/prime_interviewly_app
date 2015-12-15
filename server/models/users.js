@@ -64,7 +64,8 @@ User.statics.getAuthenticated = function (user, callback) {
 
                     var user = {
                         username: doc.username,
-                        _id: doc._id
+                        _id: doc._id,
+                        email: doc.email
                     };
 
                     // return the jwt

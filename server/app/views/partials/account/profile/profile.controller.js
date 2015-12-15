@@ -1,28 +1,22 @@
-
 /*
  Profile controller
   */
-app.controller('profile', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location){
-    $scope.username = $window.sessionStorage.username.replace(/^"(.*)"$/, '$1');
-    $scope.email = $window.sessionStorage.email.replace(/^"(.*)"$/, '$1');
-    $scope.save = function(password){
-        var username = $scope.username;
-        var email = $scope.email;
-        $http.post('/change', {username: username, email: email, password: password}).then(function(response){
+app.controller('profile', ['$scope', '$http', 'authService', '$location', function($scope, $http, authService, $location){
+    $scope.user = authService.getUser();
+
+    $scope.save = function(user){
+        var edit = {
+            _id: user._id,
+            username: user.username,
+            password: user.password,
+            email: user.email
+        };
+        $http.put('/api/profile', edit)
+            .then(function(response){
+                console.log(response);
             if(response.status === 200){
                 $location.path('/events')
             }
         });
     };
-    $scope.switch = function(){
-        var off = disabled;
-        var on = enabled;
-
-        if($scope.enabled = off){
-            $scope.enabled = on
-        } else {
-            $scope.enabled = off;
-        }
-        console.log($scope.enabled)
-    }
 }]);

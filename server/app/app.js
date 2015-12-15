@@ -83,23 +83,6 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', '$httpP
     $httpProvider.interceptors.push('authInterceptor');
 }]);
 
-/*
-Toolbar controller
- */
-app.controller('toolbar', ['$location','$scope', 'authService', function($location, $scope, authService){
-    $scope.paths = true;
-    $scope.user = authService.getUser();
-
-    authService.observeUser().then(null, null, function(user){
-        $scope.user = user;
-        $scope.paths = false;
-    });
-
-    $scope.logout = function () {
-        authService.logout();
-        $location.path('/');
-    };
-}]);
 
 /*
 Directive to check the passwords are the same

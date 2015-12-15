@@ -20,9 +20,10 @@ var index = require('./routes/index');
 var authenticate = require('./routes/authenticate');
 var forgot = require('./routes/forgot');
 var reset = require('./routes/reset');
-var change = require('./routes/change');
+var change = require('./routes/profile');
 
 // require APIs
+var profile = require('./routes/profile');
 var interviewer = require('./api/interviewer/interviewer');
 var student = require('./api/student/student');
 var users = require('./api/user');
@@ -69,10 +70,10 @@ app.use('/', index);
 app.use('/authenticate', authenticate);
 app.use('/forgot', forgot);
 app.use('/reset', reset);
-app.use('/change', change);
 
 // use APIs
 app.use('/api/*', expressJwt({secret: config.SECRET}));
+app.use('/api/profile', profile);
 app.use('/api/interviewer', interviewer);
 app.use('/api/student', student);
 app.use('/api/event', event);
