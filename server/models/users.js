@@ -2,7 +2,6 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     bcrypt = require('bcrypt'),
     jsonwebtoken = require('jsonwebtoken'),
-    config = require('../../config.json');
     SALT_WORK_FACTOR = 12,
     MAX_LOGIN_ATTEMPTS = 5,
     LOCK_TIME = 1200000;
@@ -69,7 +68,7 @@ User.statics.getAuthenticated = function (user, callback) {
                     };
 
                     // return the jwt
-                    var token = jsonwebtoken.sign(user, config.SECRET, {
+                    var token = jsonwebtoken.sign(user, process.env.SECRET, {
                         expiresIn: 86400 // expires in 24 hours
                     });
                     return callback(null, token, user);
