@@ -1,6 +1,8 @@
 .welcome(ng-controller="addStudents" layout="column")
     md-content.eventBg
         md-card
+            md-data-table-toolbar.eventBg(ng-hide="selected.length")
+                h2.md-title Students
             md-data-table-toolbar.alternate(ng-show="selected.length" layout-align="space-between")
                 h2.md-title {{selected.length}} {{selected.length > 1 ? 'students' : 'student'}} selected
             md-data-table-container.eventBg

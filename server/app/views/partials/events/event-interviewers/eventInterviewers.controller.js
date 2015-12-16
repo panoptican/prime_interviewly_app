@@ -1,24 +1,12 @@
-app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDialog', '$rootScope', function($scope, $http, $routeParams, $mdDialog, $rootScope){
+app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDialog', function($scope, $http, $routeParams, $mdDialog){
     var eventParam = $routeParams._id;
-    $scope.eventId = eventParam;
     $scope.selected = [];
+    $scope.interviewers = $scope.$parent.fullEvent.interviewers;
 
-    var getEventInterviewers = function(){
-        $http.get('/api/event?_id=' + eventParam).then(function (response) {
-            $scope.interviewers = response.data[0].interviewers;
-        });
-    };
-
-    getEventInterviewers();
-
-    $rootScope.$on('eventInterviewers', getEventInterviewers);
-
-    $scope.remove = function(id){
-        $http.post('api/event/removeInterviewer?_id=' + eventParam, {_id: id}).then(function(response){
-            if(response.status == 200){
-                getEventInterviewers();
-            }
-        })
+    $scope.remove = function(interviewer){
+        var i = $scope.interviewers.indexOf(interviewer);
+        $scope.interviewers.splice(i, 1);
+        $http.post('api/removeInterviewer?_id=' + eventParam, {_id: interviewer._id});
     };
 
     $scope.editAvailability = function(id){
@@ -28,7 +16,7 @@ app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDial
                 $mdDialog.show({
                     controller: 'availability',
                     locals: {
-                        event: $scope.eventId,
+                        event: eventParam,
                         items: $scope.interviewer
                     },
                     templateUrl: 'views/partials/dialogs/availability/availability.html',

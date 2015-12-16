@@ -1,8 +1,12 @@
-app.controller('studentRank', ['$scope','$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope){
+app.controller('studentRank', ['$scope','$http', '$routeParams', function($scope, $http, $routeParams){
     var event = $routeParams._id;
     $scope.weight = {
         value: 0
     };
+
+    $scope.interviewers = $scope.$parent.fullEvent.interviewers;
+    $scope.students = $scope.$parent.fullEvent.students;
+    $scope.weights = $scope.$parent.fullEvent.studentWeight;
 
     var getWeights = function(){
         $http.get('api/event?_id='+ event).then(function(response){
@@ -12,19 +16,15 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', '$rootScope', f
         });
     };
 
-    getWeights();
-
-    $rootScope.$on('eventStudents', function(){
-        getWeights();
-    });
-
     $scope.save = function(student, interviewer, weight){
-        $http.post('api/event/studentWeight?_id=' + event, {
+        var weight = {
             studentId: student,
             interviewerId: interviewer,
             weight: weight.value
-        }).then(function(response){
-            getWeights();
+        };
+        $http.post('api/event/studentWeight?_id=' + event, weight)
+            .then(function(response){
+            $scope.weights.push(weight);
         })
     };
 
@@ -41,11 +41,14 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', '$rootScope', f
 
 }]);
 
-app.controller('interviewerRank', ['$scope','$http', '$routeParams', '$rootScope', function($scope, $http, $routeParams, $rootScope){
+app.controller('interviewerRank', ['$scope','$http', '$routeParams', function($scope, $http, $routeParams){
     var event = $routeParams._id;
     $scope.weight = {
         value: 0
     };
+
+    $scope.interviewers = $scope.$parent.fullEvent.interviewers;
+    $scope.weights = $scope.$parent.interviewerWeight;
 
     var getWeights = function(){
         $http.get('api/event?_id='+ event).then(function(response){
@@ -54,11 +57,7 @@ app.controller('interviewerRank', ['$scope','$http', '$routeParams', '$rootScope
             $scope.weights = response.data[0].interviewerWeight;
         });
     };
-    getWeights();
 
-    $rootScope.$on('eventInterviewers', function(){
-        getWeights();
-    });
 
     $scope.remove = function(weight){
         $http.post('api/event/interviewerWeight/remove?_id=' + event, {

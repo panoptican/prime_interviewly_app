@@ -29,7 +29,7 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
                 etod = "AM"
             }
             var endTime =  ehour + ":" +newEnd[1]+" "+etod;
-            console.log(startTime);
+            $scope.fullEvent = response.data;
             $scope.event = {
                 id: response.data._id,
                 cohort: response.data.cohort,

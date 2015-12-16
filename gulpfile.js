@@ -53,7 +53,7 @@ gulp.task('build-app', function() {
         './server/app/views/partials/dialogs/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('app.min.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./client/app/assets/js'))
 });
