@@ -9,10 +9,10 @@ md-dialog
             table(md-data-table)
                 thead
                     tr
-                        th(name="FirstName") First Name
-                        th(name="LastName") Last Name
-                        th(name="company") Company
-                        th(name="add") Add
+                        th(name="First Name")
+                        th(name="Last Name")
+                        th(name="Company")
+                        th(name="Add")
                 tbody
                     tr(md-auto-select ng-repeat="interviewer in interviewers" ng-if="interviewer.unadded")
                         td {{interviewer.fName}}

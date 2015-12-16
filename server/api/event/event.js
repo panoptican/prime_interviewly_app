@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Event = require('../../db/event');
+var Students = require('../../db/student');
 
 /* GET event */
 router.get('/:id?', function(req, res, next) {
@@ -29,12 +30,22 @@ router.get('/:id?', function(req, res, next) {
 /* POST add new event */
 router.post('/', function(req, res, next){
     if(Object.keys(req.body).length > 0){
-        Event.add(req.body, function(err, data){
+        Event.add(req.body, function(err, event){
             if(err){
                 console.log(err);
                 next(err);
             } else {
-                res.json(data);
+                var re = new RegExp(req.body.cohort, "i");
+                Students.findCohort({cohort: re}, "_id fName lName scheduled", function(err, docs){
+                    if(err){
+                        console.log(err);
+                    } else {
+                        event.update({$set: {students: docs}}, function(err, status){
+                            if(err){console.log(err);}
+                            res.json(event);
+                        })
+                    };
+                });
             }
         })
     } else {
