@@ -58,7 +58,6 @@ router.delete('/', function(req, res, next){
 
 /* PUT update interviewer */
 router.put('/:id?', function(req, res, next){
-    console.log(req.body);
     if(req.params.id){
         Interviewer.update({_id: req.params.id}, req.body, function(err, data){
             if(err){
