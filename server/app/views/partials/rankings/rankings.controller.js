@@ -4,10 +4,6 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', function($scope
         value: 0
     };
 
-    $scope.interviewers = $scope.$parent.fullEvent.interviewers;
-    $scope.students = $scope.$parent.fullEvent.students;
-    $scope.weights = $scope.$parent.fullEvent.studentWeight;
-
     var getWeights = function(){
         $http.get('api/event?_id='+ event).then(function(response){
             $scope.interviewers = response.data[0].interviewers;
@@ -16,17 +12,15 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', function($scope
         });
     };
 
+    getWeights();
+
     $scope.save = function(student, interviewer, weight){
-        var weight = {
-            studentName: student.fName + ' ' + student.lName,
-            interviewerName: interviewer.fName + ' ' + interviewer.lName,
-            studentId: student._id,
-            interviewerId: interviewer._id,
-            weight: weight.value || 0
-        };
-        $http.post('api/event/studentWeight?_id=' + event, weight)
-            .then(function(response){
-            $scope.weights.push(weight);
+        $http.post('api/event/studentWeight?_id=' + event, {
+            studentId: student,
+            interviewerId: interviewer,
+            weight: weight.value
+        }).then(function(response){
+            getWeights();
         })
     };
 
@@ -49,8 +43,6 @@ app.controller('interviewerRank', ['$scope','$http', '$routeParams', function($s
         value: 0
     };
 
-    $scope.interviewers = $scope.$parent.fullEvent.interviewers;
-    $scope.weights = $scope.$parent.interviewerWeight;
 
     var getWeights = function(){
         $http.get('api/event?_id='+ event).then(function(response){
@@ -59,6 +51,8 @@ app.controller('interviewerRank', ['$scope','$http', '$routeParams', function($s
             $scope.weights = response.data[0].interviewerWeight;
         });
     };
+
+    getWeights();
 
 
     $scope.remove = function(weight){

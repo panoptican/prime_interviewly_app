@@ -5,11 +5,11 @@ div(ng-controller="studentRank")
             md-input-container(flex="33")
                label Student
                md-select(ng-model="student")
-                  md-option(ng-repeat="student in students" value="{{student}}") {{student.fName}} {{student.lName}}
+                  md-option(ng-repeat="student in students" value="{{student._id}}") {{student.fName}} {{student.lName}}
             md-input-container(flex="33")
                label Interviewer
                md-select(ng-model="interviewer")
-                  md-option(ng-repeat="interviewer in interviewers" value="{{interviewer}}") {{interviewer.fName}} {{interviewer.lName}} {{interviewer.company}}
+                  md-option(ng-repeat="interviewer in interviewers" value="{{interviewer._id}}") {{interviewer.fName}} {{interviewer.lName}} {{interviewer.company}}
             .slider.md-body(flex="20") Priority
                md-slider(min="-1" max="1" md-discrete ng-model="weight.value" value="0" aria-label="Slider")
             md-button.md-raised.md-primary(ng-click="save(student, interviewer, weight)") SAVE
