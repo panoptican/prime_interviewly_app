@@ -7,7 +7,7 @@ app.controller('interviewers', ['$scope', '$rootScope', '$mdDialog', '$mdToast',
 
     //GET all interviewers
     var getInterviewers = function(query){
-        $scope.interviewers = InterviewerFactory.query(query, function(response){
+        $scope.interviewers = InterviewerFactory.query({isArchived:false}, function(response){
             $scope.filtered = $scope.interviewers.slice();
         });
     };

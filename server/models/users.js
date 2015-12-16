@@ -67,8 +67,10 @@ User.statics.getAuthenticated = function (user, callback) {
                         email: doc.email
                     };
 
+                    var secret = process.env.SECRET || "devsecret";
+
                     // return the jwt
-                    var token = jsonwebtoken.sign(user, process.env.SECRET, {
+                    var token = jsonwebtoken.sign(user, secret, {
                         expiresIn: 86400 // expires in 24 hours
                     });
                     return callback(null, token, user);

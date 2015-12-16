@@ -9,7 +9,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressJwt = require('express-jwt');
-//var config = require('../config.json');
 
 // MongoDB connection
 var mongoose = require('mongoose');
@@ -20,7 +19,6 @@ var index = require('./routes/index');
 var authenticate = require('./routes/authenticate');
 var forgot = require('./routes/forgot');
 var reset = require('./routes/reset');
-var change = require('./routes/profile');
 
 // require APIs
 var profile = require('./routes/profile');
@@ -72,7 +70,7 @@ app.use('/forgot', forgot);
 app.use('/reset', reset);
 
 // use APIs
-app.use('/api/*', expressJwt({secret: process.env.SECRET}));
+app.use('/api/*', expressJwt({secret: process.env.SECRET || "devsecret"}));
 app.use('/api/profile', profile);
 app.use('/api/interviewer', interviewer);
 app.use('/api/student', student);
