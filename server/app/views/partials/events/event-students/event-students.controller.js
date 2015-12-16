@@ -1,9 +1,11 @@
-app.controller('addStudents', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+app.controller('addStudents', ['$scope', '$http', '$routeParams', 'EventFactory', function($scope, $http, $routeParams, EventFactory){
     var eventParam = $routeParams._id;
 
     $scope.selected = [];
 
-    $scope.students = $scope.$parent.fullEvent.students;
+    EventFactory.query({_id: eventParam}, function(data){
+        $scope.students = data[0].students;
+    });
 
     $scope.remove = function(student){
         var i = $scope.students.indexOf(student);

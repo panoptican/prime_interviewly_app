@@ -42,10 +42,6 @@ app.controller('viewEventCtrl', ['$scope', '$mdDialog' ,'$http', '$filter', '$ro
         });
     };
 
-    $rootScope.$on('getEvent', function(){
-        getEvents();
-    });
-
     getEvents();
 
     $scope.edit = function() {

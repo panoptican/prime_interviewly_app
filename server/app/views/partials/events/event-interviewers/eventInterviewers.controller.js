@@ -1,7 +1,10 @@
-app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDialog', function($scope, $http, $routeParams, $mdDialog){
+app.controller('eventInterviewers', ['$scope', '$http', '$routeParams', '$mdDialog', 'EventFactory', function($scope, $http, $routeParams, $mdDialog, EventFactory){
     var eventParam = $routeParams._id;
     $scope.selected = [];
-    $scope.interviewers = $scope.$parent.fullEvent.interviewers;
+
+    EventFactory.query({_id: eventParam}, function(data){
+       $scope.interviewers = data[0].interviewers;
+    });
 
     $scope.remove = function(interviewer){
         var i = $scope.interviewers.indexOf(interviewer);

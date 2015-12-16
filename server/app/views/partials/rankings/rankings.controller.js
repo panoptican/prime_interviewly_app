@@ -18,9 +18,11 @@ app.controller('studentRank', ['$scope','$http', '$routeParams', function($scope
 
     $scope.save = function(student, interviewer, weight){
         var weight = {
-            studentId: student,
-            interviewerId: interviewer,
-            weight: weight.value
+            studentName: student.fName + ' ' + student.lName,
+            interviewerName: interviewer.fName + ' ' + interviewer.lName,
+            studentId: student._id,
+            interviewerId: interviewer._id,
+            weight: weight.value || 0
         };
         $http.post('api/event/studentWeight?_id=' + event, weight)
             .then(function(response){

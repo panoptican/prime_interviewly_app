@@ -47,6 +47,7 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleCon
 
         // schedule information
         hasSchedule = response.schedule;
+        $scope.currentSchedule = response.schedule;
 
         // push first time slot into time columns variable
         timeCol = [{intTime: moment(response.startTime, 'HH:mm').format('h:mm A')}];
@@ -116,8 +117,8 @@ app.controller('eventSchedule', ['$scope', '$http', '$routeParams', 'scheduleCon
     };
 
     $scope.saveEvent = function() {
-        $http.get('api/event?_id=' + eventParam).then(function(response){
-            var oldSchedule = response.data[0].schedule[0];
+        $http.get('api/event/' + eventParam).then(function(response){
+            var oldSchedule = response.data.schedule[0];
             var newSchedule = $scope.gridOptions.data;
 
             newSchedule.forEach(function(slot, index){
