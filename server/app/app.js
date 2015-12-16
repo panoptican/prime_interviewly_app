@@ -33,8 +33,8 @@ app.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', '$httpP
         when('/event?:eventId', {
             templateUrl: 'views/partials/events/view-event/view-event.html'
         }).
-        when('/event/add-students?:eventId', {
-            templateUrl: 'views/partials/events/add-students/add-students.html'
+        when('/event/event-students?:eventId', {
+            templateUrl: 'views/partials/events/event-students/event-students.html'
         }).
         when('/event/event-interviewers?:eventId', {
             templateUrl: 'views/partials/events/event-interviewers/event-interviewers.html'

@@ -36,7 +36,7 @@ router.post('/', function(req, res, next){
                 next(err);
             } else {
                 var re = new RegExp(req.body.cohort, "i");
-                Students.findCohort({cohort: re}, "_id fName lName scheduled", function(err, docs){
+                Students.findCohort({cohort: re}, "_id fName lName email scheduled", function(err, docs){
                     if(err){
                         console.log(err);
                     } else {
