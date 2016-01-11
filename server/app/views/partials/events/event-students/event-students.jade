@@ -6,7 +6,7 @@
             md-data-table-toolbar.alternate(ng-show="selected.length" layout-align="space-between")
                 h2.md-title {{selected.length}} {{selected.length > 1 ? 'students' : 'student'}} selected
             md-data-table-container.eventBg
-                table.md-primary.eventBg(md-data-table md-row-select="selected")
+                table.md-primary.eventBg(md-data-table)
                     thead.eventBg(md-order="query.order")
                         tr
                             th(name="First Name" order-by="fName")
@@ -14,7 +14,7 @@
                             th(name="Email" order-by="email")
                             th(name="Remove From Event")
                     tbody.eventBg
-                        tr(md-auto-select ng-repeat="student in students | orderBy: query.order")
+                        tr(ng-repeat="student in students | orderBy: query.order")
                             td {{student.fName}}
                             td {{student.lName}}
                             td {{student.email}}

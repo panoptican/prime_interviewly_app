@@ -15,15 +15,15 @@ div(ng-controller="studentRank")
             md-button.md-raised.md-primary(ng-click="save(student, interviewer, weight)") SAVE
          md-card
             md-data-table-container
-               table(md-data-table md-row-select="selected")
-                  thead(md-order="query.order" md-trigger="onOrderChange")
+               table(md-data-table)
+                  thead(md-order="query.order")
                      tr
                         th(name="Student" order-by="studentName")
                         th(name="Interviewer" order-by="interviewerName")
                         th(name="Rating" order-by="weight")
                         th(name="Remove Rating")
                   tbody
-                     tr(md-auto-select ng-repeat="info in weights")
+                     tr(ng-repeat="info in weights")
                         td {{info.studentName}}
                         td {{info.interviewerName}}
                         td {{info.weight}}

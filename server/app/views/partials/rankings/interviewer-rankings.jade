@@ -15,13 +15,13 @@ div(ng-controller="interviewerRank" layout-margin)
             md-button.md-raised.md-primary(ng-click="save(interviewer, student, weight)") SAVE
          md-card
             md-data-table-container
-               table(md-data-table md-row-select="selected" md-progress="deferred")
-                  thead(md-order="query.order" md-trigger="onOrderChange")
+               table(md-data-table)
+                  thead(md-order="query.order")
                      tr
-                        th(name="First Name" order-by="name") Interviewer Name
-                        th(name="Last Name" order-by="name") Student Name
-                        th(name="ranking" order-by="name") Ranking
-                        th(name="remove") Remove
+                        th(name="Interviewer" order-by="interviewerName")
+                        th(name="Student" order-by="studentName")
+                        th(name="Rating" order-by="weight")
+                        th(name="Remove Rating")
                   tbody
                      tr(md-auto-select ng-repeat="info in weights")
                         td {{info.interviewerName}}

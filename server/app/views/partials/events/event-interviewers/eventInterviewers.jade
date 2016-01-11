@@ -8,7 +8,7 @@
                     md-icon add
                         md-tooltip Add Interviewers
             md-data-table-container.eventBg
-                table.md-primary(md-data-table md-row-select="selected")
+                table.md-primary(md-data-table)
                     thead.eventBg(md-order="query.order")
                         tr.eventBg
                             th(name="First Name" order-by="fName")
@@ -18,7 +18,7 @@
                             th(name="Remove")
                             th(name="Availability")
                     tbody.eventBg
-                        tr(md-auto-select ng-repeat="interviewer in interviewers | orderBy: query.order")
+                        tr(ng-repeat="interviewer in interviewers | orderBy: query.order")
                             td {{interviewer.fName}}
                             td {{interviewer.lName}}
                             td {{interviewer.email}}
