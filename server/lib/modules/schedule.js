@@ -1,5 +1,6 @@
 var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
+var findMatching = require('bipartite-matching');
 
 var counter = 0;
 
@@ -14,14 +15,6 @@ var scheduler = {
         }
         return scheduled;
     },
-    //this sorts the slot times in numerical order
-    sortKeys: function(object){
-            var temporary = object, sorted = {};
-        Object.getOwnPropertyNames(temporary)
-            .sort((a,b) => a < b ? 1 : a > b ? -1 : 0)
-            .forEach((elem) => sorted[elem] = temporary[elem]);
-            return sorted;
-    },
     //this populates an array with the required interview slots and randomizes the order
     getSlots: function(interviewSlots){
         var array = [], i=1;
@@ -32,153 +25,63 @@ var scheduler = {
         array = shuffle.get(array);
         return array;
     },
-    //returns true if count of all student interviews are within 1 of interviewTarget
-    check: function(students, interviewTarget){
-        var counts = [], studentL = students.length, lng = studentL;
-        while(studentL){
-            var student = students[lng-studentL--];
-            counts.push(student.scheduled.count.total);
-        }
-        console.log(counts);
-        var c = counts.length, cng = c;
-        while(c){
-            if(counts[cng-c--] < interviewTarget - 1){
-                return false;
-            }
-        }
-        return true;
-    },
     //matches interviews
-    match: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, eventId){
+    match: function(interviewSlots, interviewers, students, eventId){
+        interviewers = shuffle.get(interviewers);
+        students = shuffle.get(students);
+        var slots = scheduler.getSlots(interviewSlots);
+        var l = slots.length;
+        var schedule = {};
+        var counter = {};
+        var graph = [];
 
-        var initCombinations = combinations.slice(),
-            initInterviewers = interviewers.slice(),
-            initStudents = students.slice(),
-            currentStudents = shuffle.get(students),
-            interviewers = shuffle.get(interviewers),
-            sortedCombinations = sort.high(combinations),
-            schedule = [],
-            shifter = 0,
-            slots = scheduler.getSlots(interviewSlots),
-            l = slots.length,
-            lng = l,
-            m = interviewers.length,
-            interviewMin = interviewSlots - 2;
+        // create a bipartite graph of all possible interview matches
+        interviewers.forEach(function(interviewer, index){
+            for(var n = 0; n < students.length; n++) {
+                var match = [index, n];
+                graph.push(match);
+            }
+        });
 
-        //this function updates the student and interviewer objects to reflect the interviews scheduled
-        var book = (student, interviewer, match) => {
-            student.scheduled.count.total = 1 + (student.scheduled.count.total || 0);
-            student.scheduled.count[match.company] = 1 + (student.scheduled.count[match.company] || 0);
-            student.scheduled.with[match.interviewerID] = true;
-            student.scheduled.count['slot' + currentSlot] = interviewer.fName + ' ' + interviewer.lName;
-            interviewer.scheduled['slot' + currentSlot] = student.fName + ' ' + student.lName;
-        }
-        //this function updates the student and interviewer objects to schedule a break
-        var scheduleBreak = (student, interviewer, currentSlot) => {
-            student.scheduled.count.break = 1 + (student.scheduled.count.break || 0);
-            interviewer.scheduled['slot' + currentSlot] = "Break";
-            interviewer.breaks += 1;
-        }
-
-        //iterate through interview slots
+        // while there are interview slots to schedule...
         while(l--){
             var currentSlot = slots[0];
-            // for each interviewer, iterate through all possible combinations
-            interviewers.forEach((interviewer, i) => {
-                sortedCombinations.some((interview, k) => {
-                    var student = currentStudents[(i + shifter) % students.length];
-                    //if interview ID matches the current interviewer AND interview student matches current student AND interview is available AND student has less than max interviews AND student has not interviewed with this person before AND the last interview was not with this company
-                if( interview.interviewerID == interviewer._id &&
-                    interview.student == student.fName + ' ' + student.lName &&
-                    !interview.unavailable['slot' + currentSlot] &&
-                    student.scheduled.count.total < interviewMax &&
-                    !student.scheduled.with[interview.interviewerID] &&
-                    !student.scheduled.count['slot' + currentSlot]
-                     ){
-                        var match = interview;
-                        match.slot = currentSlot;
 
-                        //if student has no previous matches with this company, book interview
-                        if(!student.scheduled.count[interview.company]){
-                            book(student, interviewer, match);
-                            sortedCombinations.splice(k, 1);
-                            schedule.push(match);
-                            shifter++;
-                            return true;
-                        }
-                        //if student has no breaks AND interviewer has no breaks AND interviewer is not single
-                        else if(!student.scheduled.count.break && interviewer.breaks < 1 && !interviewer.single){
-                            var match = {
-                                name: interviewer.fName,
-                                company: interviewer.company,
-                                student: "Break",
-                                interviewerID: interviewer.id,
-                                slot: currentSlot
-                            };
-                            scheduleBreak(student, interviewer, currentSlot);
-                            sortedCombinations.splice(k, 1);
-                            schedule.push(match);
-                            return true;
-                        }
-                        //if student has less than companyMax with this company, book interview
-                        else if(student.scheduled.count[interview.company] < companyMax){
-                            book(student, interviewer, match);
-                            sortedCombinations.splice(k, 1);
-                            schedule.push(match);
-                            shifter++;
-                            return true;
-                        }
-                        else {
-                            var match = {
-                                name: interviewer.fName,
-                                company: interviewer.company,
-                                student: "Break - No Match",
-                                interviewerID: interviewer.id,
-                                slot: currentSlot
-                            };
-                            scheduleBreak(student, interviewer, currentSlot);
-                            schedule.push(match);
-                            return true;
-                        }
-                    } else if (interview.interviewerID == interviewer._id && interview.unavailable['slot' + currentSlot]){
-                    interviewer.scheduled['slot' + currentSlot] = "Unavailable";
-                }
-                })
-            })
+            // find the maximum matching in graph
+            var slotSchedule = findMatching(interviewers.length, students.length, graph);
+            schedule['slot' + currentSlot] = slotSchedule;
+
+            // and remove the selected matches from the graph
+            slotSchedule.forEach(function(match){
+                // increment interview counts for student and interviewer
+                //counter.students[match[1]] = counter.students[match[1]] + 1 || 1;
+                //counter.interviewers[match[0]] = counter.interviewers[match[0]] + 1 || 1;
+
+                graph.forEach(function(edge, index){
+                    if(edge[0] === match[0] && edge[1] === match[1]){
+                        graph.splice(index, 1);
+                    }
+                });
+            });
             slots.splice(0, 1);
         }
 
-        //check to see if each student has interviewMax, if so, then sort slots and return, if not run scheduler.match again
-        if(scheduler.check(students, interviewMax) || counter > 20){
-            var lng = m;
-            while(m){
-                var interviewer = interviewers[lng-m--];
-                interviewer.scheduled = scheduler.fillGaps(interviewer.scheduled, interviewSlots);
-                interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
+        // replace the index numbers in the graph schedule with student data
+        interviewers.forEach(function(interviewer, index){
+            for(slot in schedule){
+                schedule[slot].forEach(function(match){
+                    if(match[0] === index){
+                        studentIndex = match[1];
+                        interviewer.scheduled[slot] = students[studentIndex].fName + ' ' + students[studentIndex].lName;
+                    }
+                });
             }
-            counter = 0;
-            return {interviewer: interviewers};
-        } else {
-            var l = initStudents.length, m = initInterviewers.length, lng = l, lng2 = m;
-            while(l){
-                var student = students[lng-l--];
-                student.scheduled.with = {};
-                student.scheduled.count = {total: 0};
-            }
-            while(m){
-                var interviewer = interviewers[lng2-m--];
-                interviewer.scheduled = {};
-                interviewer.breaks = 0;
-            }
-            counter++;
-            //if no matches can be found after 10 tries, decrement interviewMax
-            if(counter > 10 && interviewMax > interviewMin){
-                counter = 0;
-                interviewMax--;
-            }
-            return this.match(interviewSlots, initInterviewers, initStudents, initCombinations, interviewMax, companyMax);
-        }
+        });
+
+        return {interviewer: interviewers};
     }
 };
+
+
 
 module.exports = scheduler;

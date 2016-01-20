@@ -31,23 +31,13 @@ router.get('/', function(req, res, next){
             })
         },
         function(event, students, interviewers, callback){
-            //create all possible interview combinations
-            Tools.combine(interviewers, students, event, function(combinations){
-                callback(null, event, interviewers, students, combinations);
-            })
-        },
-        function(event, interviewers, students, combinations, callback){
-            var duration = (parseInt(event.endTime) - parseInt(event.startTime)) * 60,
-                slots = Math.floor(duration / event.interviewDuration),
-                interviewMax = slots,
-                companyMax;
-            if(event.type == 'Career Day'){
-                companyMax = 1;
-            } else {
-                companyMax = 2;
-            }
+            var duration = (parseInt(event.endTime) - parseInt(event.startTime)) * 60;
+            var slots = Math.floor(duration / event.interviewDuration);
+            var b = {fName: 'Break', lName: ''};
+            students.push(b);
+            students.push(b);
             //create interview schedule
-            Tools.schedule(slots, interviewers, students, combinations, interviewMax, companyMax, event._id, function(schedule){
+            Tools.schedule(slots, interviewers, students, event._id, function(schedule){
                 callback(null, schedule);
             })
         },

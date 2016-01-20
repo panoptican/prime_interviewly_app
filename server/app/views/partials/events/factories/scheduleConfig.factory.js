@@ -28,7 +28,7 @@ app.factory('scheduleConfig', ['$http', function($http) {
             // iterate over the interviewer array within the response
             // create various arrays and objects to meet UI Grid data requirements
             uglySchedule.interviewer.forEach(function (item, pos) {
-
+                console.log(item);
                 // push the company and interviewer name into the column names array
                 // this will be the column header for a particular interviewer
                 gridCols.push({
@@ -36,7 +36,7 @@ app.factory('scheduleConfig', ['$http', function($http) {
                     field: item.company + '_' + item.fName,
                     enableColumnMenu: false,
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                        if (grid.getCellValue(row,col) === 'Break' || grid.getCellValue(row,col) === 'Unavailable') {
+                        if (grid.getCellValue(row,col).trim() === 'Break' || grid.getCellValue(row,col) === 'Unavailable') {
                             return 'breakCell';
                         }
                     },

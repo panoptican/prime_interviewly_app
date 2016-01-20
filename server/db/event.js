@@ -26,11 +26,12 @@ var Event = {
     },
     findOne: function(query, callback){
         query._id = ObjectId(query._id);
-        EventModel.findOne(query, function(err, doc){
+        EventModel.findById(query, function(err, doc){
             if(err){
                 console.log(err);
             } else {
-              callback(err, doc);
+
+              callback(null, doc);
             }
       })
     },

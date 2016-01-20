@@ -9,8 +9,8 @@ var Tools = {
     combine: function(interviewers, students, eventId, cb){
         cb(getCombinations.generate(interviewers,students, eventId));
     },
-    schedule: function(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, eventId, cb){
-        cb(scheduler.match(interviewSlots, interviewers, students, combinations, interviewMax, companyMax, eventId));
+    schedule: function(interviewSlots, interviewers, students, eventId, cb){
+        cb(scheduler.match(interviewSlots, interviewers, students, eventId));
     },
     random: function(min, max, cb){
         cb(getRandom.between(min, max));
