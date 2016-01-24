@@ -24,11 +24,11 @@ app.factory('scheduleConfig', ['$http', function($http) {
                 }
                 return 0;
             });
-
+            console.log(uglySchedule);
             // iterate over the interviewer array within the response
             // create various arrays and objects to meet UI Grid data requirements
             uglySchedule.interviewer.forEach(function (item, pos) {
-                console.log(item);
+
                 // push the company and interviewer name into the column names array
                 // this will be the column header for a particular interviewer
                 gridCols.push({

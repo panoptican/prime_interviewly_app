@@ -5,15 +5,21 @@ var findMatching = require('bipartite-matching');
 var counter = 0;
 
 var scheduler = {
-    //this fills in 'break' where there were no possible scheduled interviews
-    fillGaps: function(scheduled, interviewSlots){
-        while(interviewSlots){
-            if(!scheduled['slot' + interviewSlots]){
-                scheduled['slot' + interviewSlots] = 'Break';
+    //sort keys of schedule before returning object
+    sortKeys: function(object){
+        var ordered = {};
+        Object.keys(object).sort(function(a, b){
+            if(a < b){
+                return 1;
             }
-            interviewSlots--;
-        }
-        return scheduled;
+            if(a > b){
+                return -1;
+            }
+            return 0;
+        }).forEach(function(key){
+            ordered[key] = object[key];
+        });
+        return ordered;
     },
     //this populates an array with the required interview slots and randomizes the order
     getSlots: function(interviewSlots){
@@ -53,9 +59,8 @@ var scheduler = {
 
             // and remove the selected matches from the graph
             slotSchedule.forEach(function(match){
-                // increment interview counts for student and interviewer
-                //counter.students[match[1]] = counter.students[match[1]] + 1 || 1;
-                //counter.interviewers[match[0]] = counter.interviewers[match[0]] + 1 || 1;
+                // increment interview counts for student
+                counter[match[1]] = counter[match[1]] + 1 || 1;
 
                 graph.forEach(function(edge, index){
                     if(edge[0] === match[0] && edge[1] === match[1]){
@@ -68,14 +73,23 @@ var scheduler = {
 
         // replace the index numbers in the graph schedule with student data
         interviewers.forEach(function(interviewer, index){
+            var isUnavailable = interviewer.unavailable[eventId];
             for(slot in schedule){
                 schedule[slot].forEach(function(match){
-                    if(match[0] === index){
+                    if(match[0] === index && isUnavailable[slot]){
+                        interviewer.scheduled[slot] = 'Unavailable';
+                    }
+                    else if(match[0] === index){
                         studentIndex = match[1];
                         interviewer.scheduled[slot] = students[studentIndex].fName + ' ' + students[studentIndex].lName;
                     }
                 });
             }
+        });
+
+        // sort slots in schedule before returning
+        interviewers.forEach(function(interviewer){
+            interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
         });
 
         return {interviewer: interviewers};
