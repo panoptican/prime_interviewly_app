@@ -1,10 +1,24 @@
 var shuffle = require('./shuffle');
 var sort = require('./sortByNum');
-var findMatching = require('bipartite-matching');
-
-var counter = 0;
+var match = require('hopcroft-karp');
 
 var scheduler = {
+    //sort keys of schedule before returning object
+    sortKeys: function(object){
+        var ordered = {};
+        Object.keys(object).sort(function(a, b){
+            if(a < b){
+                return 1;
+            }
+            if(a > b){
+                return -1;
+            }
+            return 0;
+        }).forEach(function(key){
+            ordered[key] = object[key];
+        });
+        return ordered;
+    },
     //this fills in 'break' where there were no possible scheduled interviews
     fillGaps: function(scheduled, interviewSlots){
         while(interviewSlots){
@@ -26,58 +40,77 @@ var scheduler = {
         return array;
     },
     //matches interviews
-    match: function(interviewSlots, interviewers, students, eventId){
-        interviewers = shuffle.get(interviewers);
-        students = shuffle.get(students);
+    match: function(interviewSlots, interviewers, students){
         var slots = scheduler.getSlots(interviewSlots);
         var l = slots.length;
         var schedule = {};
         var counter = {};
-        var graph = [];
+        var available = {};
+        var maxInterviews = l - 2;
 
-        // create a bipartite graph of all possible interview matches
-        interviewers.forEach(function(interviewer, index){
-            for(var n = 0; n < students.length; n++) {
-                var match = [index, n];
-                graph.push(match);
-            }
+        // create the initial object of available pairs of interviewer / students 
+        interviewers.forEach(function(interviewer) {
+            var currentInterviewer = interviewer.fName + ' - ' + interviewer.company;
+            available[currentInterviewer] = students.map( (student) => student.fName + ' ' + student.lName );
+            // randomize the array
+            available[currentInterviewer] = shuffle.get(available[currentInterviewer]);
         });
 
-        // while there are interview slots to schedule...
+        // while there are interview slots remaining...
         while(l--){
+            // grab the current slot to schedule
             var currentSlot = slots[0];
-
-            // find the maximum matching in graph
-            var slotSchedule = findMatching(interviewers.length, students.length, graph);
-            schedule['slot' + currentSlot] = slotSchedule;
-
-            // and remove the selected matches from the graph
-            slotSchedule.forEach(function(match){
-                // increment interview counts for student and interviewer
-                //counter.students[match[1]] = counter.students[match[1]] + 1 || 1;
-                //counter.interviewers[match[0]] = counter.interviewers[match[0]] + 1 || 1;
-
-                graph.forEach(function(edge, index){
-                    if(edge[0] === match[0] && edge[1] === match[1]){
-                        graph.splice(index, 1);
+            // find the maximum matching available for this slot 
+            schedule['slot' + currentSlot] = match.hopcroftKarp(available);
+            var slot = schedule['slot' + currentSlot];
+            
+            // remove the selected matches for this slot from the available pairs
+            for(interviewer in slot){
+                var interviewerAvail = available[interviewer];
+                var scheduledStudent = slot[interviewer];
+                interviewerAvail.forEach(function(student, index){
+                    if(student == scheduledStudent && scheduledStudent !== null) {
+                        interviewerAvail.splice(index, 1);
                     }
                 });
-            });
+                // increment the student interview counter
+                counter[scheduledStudent] = counter[scheduledStudent] + 1 || 1;
+            }
+           
+            // iterate through the counter and remove students that have received max interview count
+            for (student in counter) {
+                if(counter[student] >= maxInterviews && counter[student] !== null){
+                    for(interviewer in available){
+                        var avail = available[interviewer];
+                        avail.forEach(function(availStudent, index){
+                            if(student == availStudent) {
+                                avail.splice(index, 1);
+                            }
+                        })
+                    }
+                }
+            }
             slots.splice(0, 1);
         }
-
-        // replace the index numbers in the graph schedule with student data
-        interviewers.forEach(function(interviewer, index){
-            for(slot in schedule){
-                schedule[slot].forEach(function(match){
-                    if(match[0] === index){
-                        studentIndex = match[1];
-                        interviewer.scheduled[slot] = students[studentIndex].fName + ' ' + students[studentIndex].lName;
+        console.log(counter);
+        
+        // reformat the schedule to be the way the front end likes it (TODO refactor the front end but i'm tired)
+        interviewers.forEach(function(interviewer){
+            var iName = interviewer.fName + ' - ' + interviewer.company;
+            for(slot in schedule) {
+                for(name in schedule[slot]) {
+                    if(name == iName){
+                        interviewer.scheduled[slot] = schedule[slot][name]; 
                     }
-                });
+                }
             }
         });
 
+        // sort slots in schedule before returning
+        interviewers.forEach(function(interviewer){
+            interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
+        });
+        
         return {interviewer: interviewers};
     }
 };
