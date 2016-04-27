@@ -35,7 +35,6 @@ router.get('/', function(req, res, next){
             var slots = Math.floor(duration / event.interviewDuration);
             var b = {fName: 'Break', lName: ''};
             students.push(b);
-            students.push(b);
             //create interview schedule
             Tools.schedule(slots, interviewers, students, event._id, function(schedule){
                 callback(null, schedule);

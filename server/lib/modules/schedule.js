@@ -48,7 +48,7 @@ var scheduler = {
         var available = {};
         var maxInterviews = l - 2;
 
-        // create the initial object of available pairs of interviewer / students 
+        // create the initial object of available pairs of interviewer / students
         interviewers.forEach(function(interviewer) {
             var currentInterviewer = interviewer.fName + ' - ' + interviewer.company;
             available[currentInterviewer] = students.map( (student) => student.fName + ' ' + student.lName );
@@ -60,10 +60,10 @@ var scheduler = {
         while(l--){
             // grab the current slot to schedule
             var currentSlot = slots[0];
-            // find the maximum matching available for this slot 
+            // find the maximum matching available for this slot
             schedule['slot' + currentSlot] = match.hopcroftKarp(available);
             var slot = schedule['slot' + currentSlot];
-            
+
             // remove the selected matches for this slot from the available pairs
             for(interviewer in slot){
                 var interviewerAvail = available[interviewer];
@@ -76,7 +76,7 @@ var scheduler = {
                 // increment the student interview counter
                 counter[scheduledStudent] = counter[scheduledStudent] + 1 || 1;
             }
-           
+
             // iterate through the counter and remove students that have received max interview count
             for (student in counter) {
                 if(counter[student] >= maxInterviews && counter[student] !== null){
@@ -93,14 +93,14 @@ var scheduler = {
             slots.splice(0, 1);
         }
         console.log(counter);
-        
+
         // reformat the schedule to be the way the front end likes it (TODO refactor the front end but i'm tired)
         interviewers.forEach(function(interviewer){
             var iName = interviewer.fName + ' - ' + interviewer.company;
             for(slot in schedule) {
                 for(name in schedule[slot]) {
                     if(name == iName){
-                        interviewer.scheduled[slot] = schedule[slot][name]; 
+                        interviewer.scheduled[slot] = schedule[slot][name];
                     }
                 }
             }
@@ -110,7 +110,7 @@ var scheduler = {
         interviewers.forEach(function(interviewer){
             interviewer.scheduled = scheduler.sortKeys(interviewer.scheduled);
         });
-        
+
         return {interviewer: interviewers};
     }
 };
