@@ -51,19 +51,29 @@ var scheduler = {
         // create the initial object of available pairs of interviewer / students
         interviewers.forEach(function(interviewer) {
             var currentInterviewer = interviewer.fName + ' - ' + interviewer.company;
+            available[currentInterviewer] = {};
             available[currentInterviewer] = students.map( (student) => student.fName + ' ' + student.lName );
+            available[currentInterviewer].company = interviewer.company;
             // randomize the array
             available[currentInterviewer] = shuffle.get(available[currentInterviewer]);
         });
-
+        
+        // build the counter object for tracking student scheduled interviews
+        students.forEach(function(student){
+            var fullName = student.fName + ' ' + student.lName;
+            counter[fullName] = {}; 
+            counter[fullName].interviews = 0;
+            counter[fullName].companies = {};
+        });
         // while there are interview slots remaining...
         while(l--){
             // grab the current slot to schedule
             var currentSlot = slots[0];
+            
             // find the maximum matching available for this slot
             schedule['slot' + currentSlot] = match.hopcroftKarp(available);
             var slot = schedule['slot' + currentSlot];
-
+            
             // remove the selected matches for this slot from the available pairs
             for(interviewer in slot){
                 var interviewerAvail = available[interviewer];
@@ -73,22 +83,38 @@ var scheduler = {
                         interviewerAvail.splice(index, 1);
                     }
                 });
-                // increment the student interview counter
-                counter[scheduledStudent] = counter[scheduledStudent] + 1 || 1;
+                
+                // increment the student interview counter and add the company 
+                if(counter[scheduledStudent]){
+                    counter[scheduledStudent].interviews++; 
+                    var scheduledCompany = available[interviewer].company;
+                    counter[scheduledStudent].companies[scheduledCompany] = counter[scheduledStudent].companies[scheduledCompany] + 1 || 1;     
+                }
+               
             }
+        
 
             // iterate through the counter and remove students that have received max interview count
             for (student in counter) {
-                if(counter[student] >= maxInterviews && counter[student] !== null){
+                if(counter[student].interviews >= maxInterviews && counter[student].interviews !== null){
                     for(interviewer in available){
-                        var avail = available[interviewer];
-                        avail.forEach(function(availStudent, index){
+                        available[interviewer].forEach(function(availStudent, index){
                             if(student == availStudent) {
-                                avail.splice(index, 1);
+                                available[interviewer].splice(index, 1);
                             }
                         })
                     }
                 }
+            }
+            
+            // iterate through the counter and remove avails if the student has already been with this company twice
+            for(interviewer in available){
+                var currentCompany = available[interviewer].company;
+                available[interviewer].forEach(function(student, index){
+                    if(counter[student].companies[currentCompany]){
+                        available[interviewer].splice(index, 1);
+                    }
+                })
             }
             slots.splice(0, 1);
         }
